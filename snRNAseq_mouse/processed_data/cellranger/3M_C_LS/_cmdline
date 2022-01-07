@@ -1,0 +1,1 @@
+cellranger count --id=3M_C_LS --transcriptome=/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-mm10-2020-A --fastqs=/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/raw_data/FASTQ/3M_C_LS --sample=3M-C-LS --jobmode=local --localcores=4 --localmem=20 --include-introns --r1-length=28

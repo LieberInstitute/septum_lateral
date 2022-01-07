@@ -1,0 +1,795 @@
+{
+    "count": 588,
+    "size": 100919028741,
+    "timestamp": "2021-12-24 20:49:10",
+    "paths": [
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/FULL_COUNT_INPUTS/WRITE_GENE_INDEX/fork0/chnk0-u1cdac5ef88/files/gene_index.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/CHOOSE_DIMENSION_REDUCTION_OUTPUT/fork0/chnk0-u1cdac67651/files/pca_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/CHOOSE_DIMENSION_REDUCTION_OUTPUT/fork0/chnk0-u1cdac67651/files/pca_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/COMBINE_CLUSTERING/fork0/chnk0-u1cdac67745/files/clustering_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/COMBINE_CLUSTERING/fork0/chnk0-u1cdac67745/files/clustering_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/PREPROCESS_MATRIX/fork0/join-u1cdac675aa/files/cloupe_matrix_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/PREPROCESS_MATRIX/fork0/join-u1cdac675aa/files/preprocessed_matrix_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk0-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk1-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk2-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk3-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk4-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk5-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk6-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk7-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/chnk8-u1cdac67747/files/diffexp.bincode.lz4",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/join-u1cdac67747/files/diffexp_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_DIFFERENTIAL_EXPRESSION/fork0/join-u1cdac67747/files/diffexp_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_GRAPH_CLUSTERING/fork0/join-u1cdac67653/files/clusters_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_GRAPH_CLUSTERING/fork0/join-u1cdac67653/files/clusters_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk0-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk0-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk1-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk1-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk2-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk2-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk3-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk3-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk4-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk4-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk5-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk5-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk6-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk6-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk7-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk7-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk8-u1cdac67657/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/chnk8-u1cdac67657/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/join-u1cdac67653/files/kmeans_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_KMEANS/fork0/join-u1cdac67653/files/kmeans_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_PCA/fork0/join-u1cdac675fd/files/pca_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_PCA/fork0/join-u1cdac675fd/files/pca_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_TSNE/fork0/chnk0-u1cdac67653/files/tsne_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_TSNE/fork0/chnk0-u1cdac67653/files/tsne_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_TSNE/fork0/join-u1cdac67653/files/tsne_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_TSNE/fork0/join-u1cdac67653/files/tsne_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_UMAP/fork0/chnk0-u1cdac67653/files/umap_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_UMAP/fork0/chnk0-u1cdac67653/files/umap_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_UMAP/fork0/join-u1cdac67653/files/umap_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/RUN_UMAP/fork0/join-u1cdac67653/files/umap_h5.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/SUMMARIZE_ANALYSIS/fork0/chnk0-u1cdac67830/files/analysis",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/SUMMARIZE_ANALYSIS/fork0/chnk0-u1cdac67830/files/analysis_csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/SUMMARIZE_ANALYSIS/fork0/join-u1cdac6782f/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/COUNT_ANALYZER/SC_RNA_ANALYZER/SUMMARIZE_ANALYSIS/fork0/join-u1cdac6782f/files/analysis",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/FILTER_BARCODES/fork0/join-u1cdac66633/files/nonambient_calls.csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/FILTER_BARCODES/fork0/join-u1cdac66633/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/FILTER_BARCODES/fork0/join-u1cdac66633/files/filtered_barcodes.csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/MERGE_METRICS/fork0/chnk0-u1cdac675f3/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk00-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk01-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk02-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk03-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk04-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk05-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk06-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk07-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk08-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk09-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk10-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk11-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk12-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk13-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk14-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk15-u1cdac665f5/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk16-u1cdac665f8/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk17-u1cdac665f8/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk18-u1cdac665f8/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk19-u1cdac665f8/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/WRITE_POS_BAM/fork0/chnk20-u1cdac665f8/files/pos_sortednon_multiplexed.bam",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_ASSIGN_TAGS/MERGE_METRICS/fork0/chnk0-u1cdac675aa/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk0-u1cdac672fd/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk1-u1cdac67302/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk2-u1cdac67302/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk3-u1cdac67305/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk4-u1cdac67306/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk5-u1cdac67306/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk6-u1cdac67317/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk7-u1cdac67318/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/chnk8-u1cdac67318/files/metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/join-u1cdac672da/files/merged_metrics.pickle",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUBSAMPLE_READS/fork0/join-u1cdac672da/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/SUMMARIZE_BASIC_REPORTS/fork0/join-u1cdac67592/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_CELLS_REPORTER/WRITE_MOLECULE_INFO/fork0/chnk0-u1cdac671ea/files/non_multiplexed_summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk00-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk00-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk00-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk01-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk01-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk01-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk02-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk02-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk02-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk03-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk03-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk03-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk04-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk04-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk04-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk05-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk05-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk05-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk06-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk06-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk06-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk07-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk07-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk07-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk08-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk08-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk08-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk09-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk09-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk09-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk10-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk10-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk10-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk11-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk11-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk11-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk12-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk12-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk12-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk13-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk13-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk13-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk14-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk14-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk14-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk15-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk15-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk15-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk16-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk16-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk16-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk17-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk17-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk17-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk18-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk18-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk18-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk19-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk19-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk19-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk20-u1cdac5fd9e/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk20-u1cdac5fd9e/files/barcode_summary.bsf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk20-u1cdac5fd9e/files/feature_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk00-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk01-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk02-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk03-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk04-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk05-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk06-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk07-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk08-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk09-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk10-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk11-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk12-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk13-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk14-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk15-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk16-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk17-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk18-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk19-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk20-u1cdac5fd9e/files/bc_sort.csf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/join-u1cdac5fd9d/files/barcode_summary.csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk00-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk00-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk00-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk01-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk01-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk01-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk02-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk02-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk02-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk03-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk03-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk03-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk04-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk04-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk04-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk05-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk05-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk05-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk06-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk06-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk06-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk07-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk07-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk07-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk08-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk08-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk08-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk09-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk09-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk09-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk10-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk10-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk10-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk11-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk11-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk11-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk12-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk12-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk12-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk13-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk13-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk13-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk14-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk14-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk14-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk15-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk15-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk15-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk16-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk16-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk16-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk17-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk17-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk17-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk18-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk18-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk18-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk19-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk19-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk19-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk20-u1cdac5fd9e/files/bc_umi_info.bui",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk20-u1cdac5fd9e/files/metrics_shard.bmsf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/chnk20-u1cdac5fd9e/files/pos_sorted.asf",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/ALIGN_AND_COUNT/fork0/join-u1cdac5fd9d/files/bam_header",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk00-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk00-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk00-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk01-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk01-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk01-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk02-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk02-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk02-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk03-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk03-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk03-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk04-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk04-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk04-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk05-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk05-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk05-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk06-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk06-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk06-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk07-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk07-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk07-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk08-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk08-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk08-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk09-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk09-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk09-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk10-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk10-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk10-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk11-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk11-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk11-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk12-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk12-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk12-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk13-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk13-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk13-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk14-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk14-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk14-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk15-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk15-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk15-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk16-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk16-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk16-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk17-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk17-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk17-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk18-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk18-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk18-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk19-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk19-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk19-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk20-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk20-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk20-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk21-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk21-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk21-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk22-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk22-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk22-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk23-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk23-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk23-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk24-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk24-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk24-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk25-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk25-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk25-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk26-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk26-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk26-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk27-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk27-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk27-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk28-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk28-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk28-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk29-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk29-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk29-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk30-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk30-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk30-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk31-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk31-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk31-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk32-u1cdac5fbb6/files/chunk_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk32-u1cdac5fbb6/files/corrected_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk32-u1cdac5fbb6/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/join-u1cdac5fbb5/files/correct_barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk00-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk00-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk01-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk01-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk02-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk02-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk03-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk03-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk04-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk04-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk05-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk05-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk06-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk06-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk07-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk07-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk08-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk08-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk09-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk09-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk10-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk10-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk11-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk11-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk12-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk12-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk13-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk13-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk14-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk14-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk15-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk15-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk16-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk16-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk17-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk17-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk18-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk18-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk19-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk19-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk20-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk20-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk21-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk21-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk22-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk22-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk23-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk23-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk24-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk24-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk25-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk25-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk26-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk26-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk27-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk27-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk28-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk28-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk29-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk29-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk30-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk30-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk31-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk31-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk32-u1cdac5fbb6/files/invalid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/chnk32-u1cdac5fbb6/files/valid_shard.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/join-u1cdac5fbb5/files/total_barcode_counts.tbcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/BARCODE_CORRECTION/fork0/join-u1cdac5fbb5/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/COLLATE_METRICS/fork0/chnk0-u1cdac665f1/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/COLLATE_METRICS/fork0/chnk0-u1cdac665f1/files/per_barcode_metrics.csv",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/chnk0-u1cdac5efc9/files/bc_correct_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/chnk0-u1cdac5efc9/files/chunk_hist.msh.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/chnk0-u1cdac5efc9/files/chunk_summary.msm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/chnk0-u1cdac5efc9/files/feature_counts.fbc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/join-u1cdac5efc2/files/sequencing_metrics.smf.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/chnk0-u1cdac5efc9/files/invalid.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/join-u1cdac5efc2/files/barcode_counts.bcc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/join-u1cdac5efc2/files/barcode_segment_counts.bsc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/join-u1cdac5efc2/files/bc_correct_summary.bcm.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/chnk0-u1cdac5efc9/files/valid.shard",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/join-u1cdac5efc2/files/feature_counts.fbc.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/join-u1cdac5efc2/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MAKE_SHARD/fork0/split-u1cdac5efc2/files/feature_reference.frf.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/MERGE_METRICS/fork0/chnk0-u1cdac66d31/files/summary.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/WRITE_BARCODE_INDEX/fork0/chnk0-u1cdac5fd9c/files/barcode_index.bi.bincode",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_GEM_WELL_PROCESSOR/COUNT_GEM_WELL_PROCESSOR/_BASIC_SC_RNA_COUNTER/_MATRIX_COMPUTER/WRITE_BARCODE_SUMMARY/fork0/chnk0-u1cdac665f1/files/barcode_summary.h5",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_REPORTER/CLOUPE_PREPROCESS/fork0/chnk0-u1cdac67855/files/gem_group_index_json.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_REPORTER/CLOUPE_PREPROCESS/fork0/chnk0-u1cdac67855/files/output_for_cloupe.cloupe",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_REPORTER/CLOUPE_PREPROCESS/fork0/join-u1cdac67853/files/output_for_cloupe.cloupe",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/SC_MULTI_CORE/MULTI_REPORTER/SUMMARIZE_REPORTS/fork0/chnk0-u1cdac67837/files/ws_data.json",
+        "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_align/4F_C_LS/SC_RNA_COUNTER_CS/WRITE_GENE_INDEX/fork0/chnk0-u1cdac5ef88/files/gene_index.json"
+    ],
+    "errors": null,
+    "events": [
+        {
+            "Timestamp": "2021-12-24T11:04:20-05:00",
+            "DeltaBytes": 13732
+        },
+        {
+            "Timestamp": "2021-12-24T11:04:24-05:00",
+            "DeltaBytes": 198503781
+        },
+        {
+            "Timestamp": "2021-12-24T11:04:59-05:00",
+            "DeltaBytes": 8797
+        },
+        {
+            "Timestamp": "2021-12-24T11:04:59.134267721-05:00",
+            "DeltaBytes": -99236670
+        },
+        {
+            "Timestamp": "2021-12-24T11:05:20-05:00",
+            "DeltaBytes": 34851
+        },
+        {
+            "Timestamp": "2021-12-24T11:05:21-05:00",
+            "DeltaBytes": 8157
+        },
+        {
+            "Timestamp": "2021-12-24T11:05:22-05:00",
+            "DeltaBytes": 4570535
+        },
+        {
+            "Timestamp": "2021-12-24T11:05:22.533994446-05:00",
+            "DeltaBytes": -99236670
+        },
+        {
+            "Timestamp": "2021-12-24T11:05:29-05:00",
+            "DeltaBytes": 38397858024
+        },
+        {
+            "Timestamp": "2021-12-24T11:56:17-05:00",
+            "DeltaBytes": 137666823
+        },
+        {
+            "Timestamp": "2021-12-24T11:56:21-05:00",
+            "DeltaBytes": 19128
+        },
+        {
+            "Timestamp": "2021-12-24T11:56:21.908855117-05:00",
+            "DeltaBytes": -137648905
+        },
+        {
+            "Timestamp": "2021-12-24T12:04:09-05:00",
+            "DeltaBytes": 2037798810
+        },
+        {
+            "Timestamp": "2021-12-24T12:04:25-05:00",
+            "DeltaBytes": 81991922
+        },
+        {
+            "Timestamp": "2021-12-24T12:04:28-05:00",
+            "DeltaBytes": 140968629
+        },
+        {
+            "Timestamp": "2021-12-24T12:04:28.361817945-05:00",
+            "DeltaBytes": -2366425113
+        },
+        {
+            "Timestamp": "2021-12-24T12:04:29-05:00",
+            "DeltaBytes": 38879
+        },
+        {
+            "Timestamp": "2021-12-24T12:04:36.136917702-05:00",
+            "DeltaBytes": -79569811
+        },
+        {
+            "Timestamp": "2021-12-24T18:58:29-05:00",
+            "DeltaBytes": 39143323119
+        },
+        {
+            "Timestamp": "2021-12-24T19:29:11-05:00",
+            "DeltaBytes": 98518494
+        },
+        {
+            "Timestamp": "2021-12-24T19:29:31.565527843-05:00",
+            "DeltaBytes": -184273596
+        },
+        {
+            "Timestamp": "2021-12-24T19:29:32.122330279-05:00",
+            "DeltaBytes": -2012164750
+        },
+        {
+            "Timestamp": "2021-12-24T19:29:37-05:00",
+            "DeltaBytes": 304755814
+        },
+        {
+            "Timestamp": "2021-12-24T19:29:37.621697778-05:00",
+            "DeltaBytes": -36057590647
+        },
+        {
+            "Timestamp": "2021-12-24T19:31:03.948517553-05:00",
+            "DeltaBytes": -285089744
+        },
+        {
+            "Timestamp": "2021-12-24T19:32:20-05:00",
+            "DeltaBytes": 153503700
+        },
+        {
+            "Timestamp": "2021-12-24T19:57:34-05:00",
+            "DeltaBytes": 19489746264
+        },
+        {
+            "Timestamp": "2021-12-24T19:57:44-05:00",
+            "DeltaBytes": 7143
+        },
+        {
+            "Timestamp": "2021-12-24T20:00:32-05:00",
+            "DeltaBytes": 110296500
+        },
+        {
+            "Timestamp": "2021-12-24T20:13:44-05:00",
+            "DeltaBytes": 19496507254
+        },
+        {
+            "Timestamp": "2021-12-24T20:13:44.297561713-05:00",
+            "DeltaBytes": -98379856
+        },
+        {
+            "Timestamp": "2021-12-24T20:13:46.222315854-05:00",
+            "DeltaBytes": -3525801
+        },
+        {
+            "Timestamp": "2021-12-24T20:18:58-05:00",
+            "DeltaBytes": 55315
+        },
+        {
+            "Timestamp": "2021-12-24T20:19:21.238085346-05:00",
+            "DeltaBytes": -19488201090
+        },
+        {
+            "Timestamp": "2021-12-24T20:19:22.660020152-05:00",
+            "DeltaBytes": -4757
+        },
+        {
+            "Timestamp": "2021-12-24T20:20:42-05:00",
+            "DeltaBytes": 379988353
+        },
+        {
+            "Timestamp": "2021-12-24T20:20:43-05:00",
+            "DeltaBytes": 11908
+        },
+        {
+            "Timestamp": "2021-12-24T20:20:54-05:00",
+            "DeltaBytes": 8854
+        },
+        {
+            "Timestamp": "2021-12-24T20:24:42-05:00",
+            "DeltaBytes": 177597
+        },
+        {
+            "Timestamp": "2021-12-24T20:34:47-05:00",
+            "DeltaBytes": 224919126
+        },
+        {
+            "Timestamp": "2021-12-24T20:34:51-05:00",
+            "DeltaBytes": 16209
+        },
+        {
+            "Timestamp": "2021-12-24T20:35:49-05:00",
+            "DeltaBytes": 7602
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:00-05:00",
+            "DeltaBytes": 25042212
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:05-05:00",
+            "DeltaBytes": 8865
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:18-05:00",
+            "DeltaBytes": 11627
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:18.478226764-05:00",
+            "DeltaBytes": -248523445
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:19-05:00",
+            "DeltaBytes": 14490
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:20-05:00",
+            "DeltaBytes": 9063
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:23-05:00",
+            "DeltaBytes": 9263
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:30-05:00",
+            "DeltaBytes": 78385
+        },
+        {
+            "Timestamp": "2021-12-24T20:36:42-05:00",
+            "DeltaBytes": 22548
+        },
+        {
+            "Timestamp": "2021-12-24T20:37:02-05:00",
+            "DeltaBytes": 58492082
+        },
+        {
+            "Timestamp": "2021-12-24T20:37:33.936354232-05:00",
+            "DeltaBytes": -5870
+        },
+        {
+            "Timestamp": "2021-12-24T20:37:34.003492735-05:00",
+            "DeltaBytes": -153494828
+        },
+        {
+            "Timestamp": "2021-12-24T20:37:36.766781637-05:00",
+            "DeltaBytes": -145509376
+        },
+        {
+            "Timestamp": "2021-12-24T20:37:52.238322492-05:00",
+            "DeltaBytes": -38662031232
+        },
+        {
+            "Timestamp": "2021-12-24T20:37:55-05:00",
+            "DeltaBytes": 47397
+        },
+        {
+            "Timestamp": "2021-12-24T20:38:01.464808021-05:00",
+            "DeltaBytes": -29430877
+        },
+        {
+            "Timestamp": "2021-12-24T20:38:09-05:00",
+            "DeltaBytes": 17875
+        },
+        {
+            "Timestamp": "2021-12-24T20:38:09.005649622-05:00",
+            "DeltaBytes": -36740
+        },
+        {
+            "Timestamp": "2021-12-24T20:38:35-05:00",
+            "DeltaBytes": 18474722
+        },
+        {
+            "Timestamp": "2021-12-24T20:38:43-05:00",
+            "DeltaBytes": 10973
+        },
+        {
+            "Timestamp": "2021-12-24T20:39:30-05:00",
+            "DeltaBytes": 18458469
+        },
+        {
+            "Timestamp": "2021-12-24T20:39:30.998617624-05:00",
+            "DeltaBytes": -18449543
+        },
+        {
+            "Timestamp": "2021-12-24T20:39:31-05:00",
+            "DeltaBytes": 1387805
+        },
+        {
+            "Timestamp": "2021-12-24T20:41:31-05:00",
+            "DeltaBytes": 285889
+        },
+        {
+            "Timestamp": "2021-12-24T20:43:20-05:00",
+            "DeltaBytes": 3271969
+        },
+        {
+            "Timestamp": "2021-12-24T20:43:21.263222216-05:00",
+            "DeltaBytes": -1291211
+        },
+        {
+            "Timestamp": "2021-12-24T20:43:29-05:00",
+            "DeltaBytes": 1779897
+        },
+        {
+            "Timestamp": "2021-12-24T20:43:33-05:00",
+            "DeltaBytes": 2035000
+        },
+        {
+            "Timestamp": "2021-12-24T20:43:33.751825061-05:00",
+            "DeltaBytes": -1811485
+        },
+        {
+            "Timestamp": "2021-12-24T20:43:35-05:00",
+            "DeltaBytes": 13599
+        },
+        {
+            "Timestamp": "2021-12-24T20:43:35.435729442-05:00",
+            "DeltaBytes": -2029464
+        },
+        {
+            "Timestamp": "2021-12-24T20:46:10-05:00",
+            "DeltaBytes": 26251565
+        },
+        {
+            "Timestamp": "2021-12-24T20:47:23-05:00",
+            "DeltaBytes": 141010827
+        },
+        {
+            "Timestamp": "2021-12-24T20:47:27-05:00",
+            "DeltaBytes": 11164
+        },
+        {
+            "Timestamp": "2021-12-24T20:47:27.150883038-05:00",
+            "DeltaBytes": -25899591
+        },
+        {
+            "Timestamp": "2021-12-24T20:47:28-05:00",
+            "DeltaBytes": 191800036
+        },
+        {
+            "Timestamp": "2021-12-24T20:47:32-05:00",
+            "DeltaBytes": 191800673
+        },
+        {
+            "Timestamp": "2021-12-24T20:47:35-05:00",
+            "DeltaBytes": 19554663
+        },
+        {
+            "Timestamp": "2021-12-24T20:47:35.408734502-05:00",
+            "DeltaBytes": -383585953
+        },
+        {
+            "Timestamp": "2021-12-24T20:48:03-05:00",
+            "DeltaBytes": 9061
+        },
+        {
+            "Timestamp": "2021-12-24T20:48:03.238818042-05:00",
+            "DeltaBytes": -27208235
+        },
+        {
+            "Timestamp": "2021-12-24T20:48:05-05:00",
+            "DeltaBytes": 112681180
+        },
+        {
+            "Timestamp": "2021-12-24T20:49:04-05:00",
+            "DeltaBytes": 112638837
+        },
+        {
+            "Timestamp": "2021-12-24T20:49:08-05:00",
+            "DeltaBytes": 112635043
+        },
+        {
+            "Timestamp": "2021-12-24T20:49:08.632316999-05:00",
+            "DeltaBytes": -195744562
+        },
+        {
+            "Timestamp": "2021-12-24T20:49:09.271062589-05:00",
+            "DeltaBytes": -112628919
+        }
+    ]
+}
