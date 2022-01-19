@@ -1,0 +1,143 @@
+
+R version 4.1.2 Patched (2021-11-04 r81138) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### MNT 29Nov2021 =======
+>   # Check Read 1 files for discrepant read lengths, as seen before in Tran-Maynard 2021 project:
+>   # Should be exactly 28bp = 16 [BC] + 12 [UMI]
+> 
+> library(ShortRead)
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: BiocParallel
+Loading required package: Biostrings
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: XVector
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+Loading required package: GenomicRanges
+Loading required package: GenomicAlignments
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+> library(jaffelab)
+Loading required package: rafalib
+> library(sessioninfo)
+> 
+> FASTQ.dir <- "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/raw_data/FASTQ/"
+> 
+> ### Read in abridged sample info (MNT generated for processing through CR)
+> sampleInfo <- read.table("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/raw_data/sample_info/sample_info_simplified.tsv",
++                             sep="\t", header=F)$V1
+> 
+> # Reference folder/sample name (not the edited FASTQ names)
+> R1files <- data.frame(
++   sampleName = unlist(sapply(sampleInfo, function(x){
++     rep(x,length(list.files(paste0(FASTQ.dir, x), pattern="R1")))}), use.names=F),
++   
++   R1 = unlist(sapply(sampleInfo, function(x){list.files(paste0(FASTQ.dir,x),
++                                                    pattern="R1")}), use.names=F)
++ )
+> dim(R1files)  # 
+[1] 4 2
+> 
+> for(i in 1:nrow(R1files)){
++   cat(paste0("Checking R1 length distribution for: ", R1files[i,2], "\n"))
++   temp.R1s <- readFastq(paste0(FASTQ.dir, R1files[i,1], "/", R1files[i,2]),
++                         withIds=F)
++   print(head(sread(temp.R1s), n=4))
++   print(table(width(sread(temp.R1s))))
++   rm(temp.R1s)
++   cat("\n\n")
++ }
+Checking R1 length distribution for: 1M-C-LS_S1_L004_R1_001.fastq.gz
+Error: Input/Output
+  file(s):
+    /dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/raw_data/FASTQ/1M_C_LS/1M-C-LS_S1_L004_R1_001.fastq.gz
+  message: 'Calloc' could not allocate memory (250000000 of 1 bytes)
+Execution halted
