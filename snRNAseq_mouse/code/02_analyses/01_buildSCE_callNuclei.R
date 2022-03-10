@@ -81,37 +81,9 @@ table(sce$Sample)
     #2310153 2555720 2382021 2273417 
 
 sce.ls <- sce
-
 sample.idx <- splitit(sce.ls$Sample)
-e.out.custom <- list()
 
-## Just calculate barcodeRanks and make some plots to diagnose first
-# Sys.time()
-# # 
-# for(i in names(sample.idx)){
-#   
-#   # Re-define the `lower=` param by identifying the 'second knee point'
-#   bcRanks.ls[[i]] <- barcodeRanks(counts(sce.ls[ ,sample.idx[[i]]]),
-#                           fit.bounds=c(10,1e3))
-#   cat(paste0("'Second knee point' for ", i," is: ",
-#              metadata(bcRanks.ls[[i]])$knee,"\n"))
-# 
-#   # Set `lower = bcRanks.ls[[i]] + 100` (to capture the 'plateau' mode of low UMI totals)
-#   cat(paste0("Simulating empty drops for: ", i,"... \n"))
-#   set.seed(109)
-#   e.out.custom[[i]] <- emptyDrops(counts(sce.ls[ ,sample.idx[[i]]]), niters=20000,
-#                                   lower = metadata(bcRanks.ls[[i]])$knee + 100,
-#                                   BPPARAM=BiocParallel::MulticoreParam(2))
-#   cat(paste0("\n\t...Simulations complete. \n\t", Sys.time(), "\n\n\n"))
-# }
-# Sys.time()
-# 'Second knee point' for ms5478_ms5480_LS is: 430
-# 'Second knee point' for ms5479_ms5481_LS is: 583
-# 'Second knee point' for ms5483_ms5484_LS is: 560
-# 'Second knee point' for ms5485_ms5487_LS is: 399
-
-
-## For reference, plot the barcode rank plots
+## First use barcodeRanks to ID the '2nd knee' and make some plots to diagnose ===
 #dir.create(here("snRNAseq_mouse","plots"))
 bcRanks.ls <- list()
 
@@ -158,12 +130,28 @@ Sys.time()
 
 
 
-
 ## NOW run emptyDrops ===
+e.out.custom <- list()
 
+Sys.time()
+    # [1] "2022-03-10 08:46:33 EST"
+for(i in names(sample.idx)){
+  
+  cat(paste0("'Second knee point' for ", i," is: ",
+             metadata(bcRanks.ls[[i]])$knee,"\n"))
+  cat(paste0("\tSetting `lower` for `empyDrops()` to = ",
+             metadata(bcRanks.ls[[i]])$knee+300,"\n\n"))
+  
+  # Set `lower = bcRanks.ls[[i]] + 300` (to capture the 'plateau' mode of low UMI totals)
+  cat(paste0("\tSimulating empty drops for: ", i,"... \n"))
+  set.seed(109)
+  e.out.custom[[i]] <- emptyDrops(counts(sce.ls[ ,sample.idx[[i]]]), niters=20000,
+                                  lower = metadata(bcRanks.ls[[i]])$knee + 300
+                                  )
+  cat(paste0("\n\t...Simulations complete. \n\t", Sys.time(), "\n\n\n"))
 
-
-
+  }
+    # 
 
 
 ## emptyDrops() results ===
@@ -173,102 +161,88 @@ for(i in 1:length(e.out.custom)){
               Limited = e.out.custom[[i]]$Limited))
 }
 
-    #[1] "ms5478_ms5480_LS"
-    #       Limited
-    # Signif  FALSE  TRUE
-    #   FALSE 36701     0
-    #   TRUE     27  6676
+      # [1] "1M"
+      #       Limited
+      # Signif  FALSE TRUE
+      #   FALSE  7918    0
+      #   TRUE     67 6661
 
-    # [1] "ms5479_ms5481_LS"
-    #       Limited
-    # Signif  FALSE  TRUE
-    #   FALSE 33846     0
-    #   TRUE     21  6855
+      # [1] "2F"
+      #       Limited
+      # Signif  FALSE  TRUE
+      #   FALSE 23312     0
+      #   TRUE   1033 18588   - this is still too high...
 
-    # [1] "ms5483_ms5484_LS"
-    #       Limited
-    # Signif  FALSE  TRUE
-    #   FALSE 47113     0
-    #   TRUE    742 17098   - even with a sample-defined `lower=` threshold,
-    #                         this is way higher than should be... (2F_C_LS)
+      # [1] "3M"
+      #       Limited
+      # Signif  FALSE TRUE
+      #   FALSE  6172    0
+      #   TRUE     54 6907
 
-    # [1] "ms5485_ms5487_LS"
-    #       Limited
-    # Signif  FALSE  TRUE
-    #   FALSE 32454     0
-    #   TRUE     30  7786
+      # [1] "4F"
+      #       Limited
+      # Signif  FALSE TRUE
+      #   FALSE  3128    0
+      #   TRUE     70 7786
 
-
-    # and btw these sample names are not exactly the same order:
-    table(ss(colnames(sce.ls),"_",1), sce.ls$Sample)
-        #   ms5478_ms5480_LS ms5479_ms5481_LS ms5483_ms5484_LS ms5485_ms5487_LS
-        # 1          2310153                0                0                0
-        # 2                0                0          2555720                0
-        # 3                0          2382021                0                0
-        # 4                0                0                0          2273417
-    sample.info
-        #        V1             V2            V3      V4
-        # 1 1M_C_LS Lateral_Septum ms5478_ms5480 1M-C-LS
-        # 2 2F_C_LS Lateral_Septum ms5483_ms5484 2F-C-LS
-        # 3 3M_C_LS Lateral_Septum ms5479_ms5481 3M-C-LS
-        # 4 4F_C_LS Lateral_Septum ms5485_ms5487 4F-C-LS
+# For reference:
+sample.info
+    #        V1             V2            V3      V4
+    # 1 1M_C_LS Lateral_Septum ms5478_ms5480 1M-C-LS
+    # 2 2F_C_LS Lateral_Septum ms5483_ms5484 2F-C-LS
+    # 3 3M_C_LS Lateral_Septum ms5479_ms5481 3M-C-LS
+    # 4 4F_C_LS Lateral_Septum ms5485_ms5487 4F-C-LS
 
     
 ## Save this with the raw SCE for interactive downstream analyses ===
 dir.create(here("snRNAseq_mouse","processed_data","SCE"))
 README.custom <- "Object 'e.out.custom' is the output of emptyDrops() with lower= set to the quantified
-  'second knee point' (+100) to better model empty/debris-containing droplets"
+  'second knee point' (+300) to better model empty/debris-containing droplets"
 save(sce.ls,
      e.out.custom, README.custom,
      file=here("snRNAseq_mouse","processed_data","SCE", "sce_raw_LS.rda"))
 
 
+## Btw without a 'lower=' param for barcodeRanks, it'll most likely pick the
+ #    '2nd' inflection point
+bcRanks.2F <- barcodeRanks(counts(sce.ls[ ,sample.idx[["2F"]]]),
+                           fit.bounds=c(1e3,1e5),
+                           lower=bcRanks.ls[["2F"]] + 300)
 
-## Stricter approach for sample 'ms5483_ms5484_LS'? Make refined barcodeRanks stats:
-bcranks.2F <- barcodeRanks(counts(sce.ls[ ,sample.idx[["ms5483_ms5484_LS"]]]),
-                           fit.bounds=c(1e3,1e5), lower=560)
-                                                # setting lower to the above-ID'd '2nd knee'
-                                                # bc otherwise is ID'ing ~the '2nd inflxn point'
-metadata(bcranks.2F)
-    # $knee
-    # [1] 10524
-    # 
-    # $inflection
-    # [1] 6491
+metadata(bcRanks.2F)
+    #      knee inflection 
+    #     10524       6491
 
-table(bcranks.2F$total >= metadata(bcranks.2F)$inflection)  # 3983
+# Re-plot this with that inflection point
+i <- "2F"
+png(here("snRNAseq_mouse","plots",
+         paste0("barcodeRankPlot_2F_w-fitbounds_k2plus100-300UMIs.png")))
+plot(bcRanks.ls[[i]]$rank, bcRanks.ls[[i]]$total,
+     log="xy", xlab="Barcode Rank", ylab="Total UMIs",
+     main=paste0("Barcode rank plot for: ",i,"\n( `fit.bounds=c(10,1e3)` )"),
+     cex.axis=0.8, cex.lab=1.2, las=1)
+o <- order(bcRanks.ls[[i]]$rank)
+lines(bcRanks.ls[[i]]$rank[o], bcRanks.ls[[i]]$fitted[o], col="red")
+# k_2 from above
+abline(h=metadata(bcRanks.ls[[i]])$knee, col="darkblue", lty=2)
+# k_2 + 100:
+abline(h=metadata(bcRanks.ls[[i]])$knee + 100, col="dodgerblue", lty=2)
+# k_2 + 300:
+abline(h=metadata(bcRanks.ls[[i]])$knee + 300, col="darkgreen", lty=2)
+# Re-computed inflection:
+abline(h=metadata(bcRanks.2F)$inflection, col="darkred", lty=2)
+legend("bottomleft", lty=2, col=c("darkblue", "dodgerblue", "darkgreen", "darkred"),
+       legend=c("knee_2", "knee_2+100", "knee_2+300", "inflection"))
+dev.off()
+
 
 # What about restricting to this and having a high scores emptyDrops?
-table(rownames(bcranks.2F) == rownames(e.out.custom[["ms5483_ms5484_LS"]])) # all good
+table(rownames(bcRanks.2F) == rownames(e.out.custom[["2F"]])) # all good
 
-table(bcranks.2F$total >= metadata(bcranks.2F)$inflection &
-        e.out.custom[["ms5483_ms5484_LS"]]$FDR <= 0.001)
-    #  FALSE    TRUE 
-    #2551738    3982   (about the same)
-
-# For reference:
-
-plot(bcranks.2F$rank, bcranks.2F$total,
-     #col=ifelse(e.out.custom[["ms5483_ms5484_LS"]]$FDR <= 0.001,"darkblue","red"),
-     log="xy", xlab="Barcode Rank", ylab="Total UMIs",
-     main=paste0("Barcode rank plot for: 2F_ms5483_ms5484\n( `fit.bounds=c(10,1e3), lower=560` )"),
-     cex.axis=0.8, cex.lab=1.2, las=1)
-o <- order(bcranks.2F$rank)
-lines(bcranks.2F$rank[o], bcranks.2F$fitted[o], col="red")
-# k_1 from barcodeRanks
-abline(h=metadata(bcranks.2F)$knee, col="darkblue", lty=2)
-# k_2 previously ID'd, above:
-abline(h=560, col="dodgerblue", lty=2)
-abline(h=860, col="dodgerblue", lty=2) # k_2+100
-
-# Inflection point to threshold on, with this lower quality sample:
-abline(h=metadata(bcranks.2F)$inflection, col="forestgreen", lty=2)
-legend("bottomleft", lty=2, col=c("darkblue", "dodgerblue", "forestgreen"),
-       legend=c("knee_1", "knee_2", "inflection"))
-
-
-
-
+table(bcRanks.2F$total >= metadata(bcRanks.2F)$inflection &
+        e.out.custom[["2F"]]$FDR <= 0.001)
+    #  FALSE    TRUE
+    #2551738    3982
 
 
 
