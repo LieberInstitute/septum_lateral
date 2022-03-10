@@ -30,15 +30,15 @@ stopifnot(all(file.exists(sample.info$path)))
 
 ## Build basic SCE (will add more subject-level colData later, once obtained)
 Sys.time()
-    # [1] "2022-03-09 09:01:55 EST"
+    # [1] "2022-03-10 07:53:33 EST"
 sce <- read10xCounts(
   samples = sample.info$path,
-  sample.names = paste0(sample.info$V3,"_LS"),
+  sample.names = ss(sample.info$V1, "_", 1),
   type = "sparse",
   col.names = TRUE
 )
 Sys.time()
-    # [1] "2022-03-09 09:08:40 EST"
+    # [1] "2022-03-10 07:56:43 EST"
 
 
 ## Read in the gene information from the annotation GTF file
@@ -77,33 +77,34 @@ sce
     # altExpNames(0):
 
 table(sce$Sample)
-    # ms5478_ms5480_LS ms5479_ms5481_LS ms5483_ms5484_LS ms5485_ms5487_LS 
-    # 2310153          2382021          2555720          2273417 
+    #     1M      2F      3M      4F 
+    #2310153 2555720 2382021 2273417 
 
 sce.ls <- sce
 
 sample.idx <- splitit(sce.ls$Sample)
 e.out.custom <- list()
 
-Sys.time()
+## Just calculate barcodeRanks and make some plots to diagnose first
+# Sys.time()
+# # 
+# for(i in names(sample.idx)){
+#   
+#   # Re-define the `lower=` param by identifying the 'second knee point'
+#   bcRanks.ls[[i]] <- barcodeRanks(counts(sce.ls[ ,sample.idx[[i]]]),
+#                           fit.bounds=c(10,1e3))
+#   cat(paste0("'Second knee point' for ", i," is: ",
+#              metadata(bcRanks.ls[[i]])$knee,"\n"))
 # 
-for(i in names(sample.idx)){
-  
-  # Re-define the `lower=` param by identifying the 'second knee point'
-  newknee <- barcodeRanks(counts(sce.ls[ ,sample.idx[[i]]]),
-                          fit.bounds=c(10,1e3))
-  cat(paste0("'Second knee point' for ", i," is: ",
-             metadata(newknee)$knee,"\n"))
-
-  # Set `lower = newknee + 100` (to capture the 'plateau' mode of low UMI totals)
-  cat(paste0("Simulating empty drops for: ", i,"... \n"))
-  set.seed(109)
-  e.out.custom[[i]] <- emptyDrops(counts(sce.ls[ ,sample.idx[[i]]]), niters=20000,
-                                  lower = metadata(newknee)$knee + 100,
-                                  BPPARAM=BiocParallel::MulticoreParam(2))
-  cat(paste0("\n\t...Simulations complete. \n\t", Sys.time(), "\n\n\n"))
-}
-Sys.time()
+#   # Set `lower = bcRanks.ls[[i]] + 100` (to capture the 'plateau' mode of low UMI totals)
+#   cat(paste0("Simulating empty drops for: ", i,"... \n"))
+#   set.seed(109)
+#   e.out.custom[[i]] <- emptyDrops(counts(sce.ls[ ,sample.idx[[i]]]), niters=20000,
+#                                   lower = metadata(bcRanks.ls[[i]])$knee + 100,
+#                                   BPPARAM=BiocParallel::MulticoreParam(2))
+#   cat(paste0("\n\t...Simulations complete. \n\t", Sys.time(), "\n\n\n"))
+# }
+# Sys.time()
 # 'Second knee point' for ms5478_ms5480_LS is: 430
 # 'Second knee point' for ms5479_ms5481_LS is: 583
 # 'Second knee point' for ms5483_ms5484_LS is: 560
@@ -111,34 +112,58 @@ Sys.time()
 
 
 ## For reference, plot the barcode rank plots
-dir.create(here("snRNAseq_mouse","plots"))
+#dir.create(here("snRNAseq_mouse","plots"))
+bcRanks.ls <- list()
+
+Sys.time()
+    # [1] "2022-03-10 08:09:53 EST"
 for(i in names(sample.idx)){
+  
   # Re-define the `lower=` param by identifying the 'second knee point'
-  newknee <- barcodeRanks(counts(sce.ls[ ,sample.idx[[i]]]),
+  bcRanks.ls[[i]] <- barcodeRanks(counts(sce.ls[ ,sample.idx[[i]]]),
                           fit.bounds=c(10,1e3))
   cat(paste0("'Second knee point' for ", i," is: ",
-             metadata(newknee)$knee,"\n"))
+             metadata(bcRanks.ls[[i]])$knee,"\n"))
   
   # Plot the barcode rank plot with +100 and +300
   png(here("snRNAseq_mouse","plots",
-           paste0("barcodeRankPlot_",i,"_dropletUtils-w-fitbounds_plus100-300UMIs.png")))
-  plot(newknee$rank, newknee$total,
+           paste0("barcodeRankPlot_",i,"_w-fitbounds_k2plus100-300UMIs.png")))
+  plot(bcRanks.ls[[i]]$rank, bcRanks.ls[[i]]$total,
        log="xy", xlab="Barcode Rank", ylab="Total UMIs",
        main=paste0("Barcode rank plot for: ",i,"\n( `fit.bounds=c(10,1e3)` )"),
        cex.axis=0.8, cex.lab=1.2, las=1)
-    o <- order(newknee$rank)
-    lines(newknee$rank[o], newknee$fitted[o], col="red")
+    o <- order(bcRanks.ls[[i]]$rank)
+    lines(bcRanks.ls[[i]]$rank[o], bcRanks.ls[[i]]$fitted[o], col="red")
     # k_2 from above
-    abline(h=metadata(newknee)$knee, col="darkblue", lty=2)
+    abline(h=metadata(bcRanks.ls[[i]])$knee, col="darkblue", lty=2)
     # k_2 + 100:
-    abline(h=metadata(newknee)$knee + 100, col="dodgerblue", lty=2)
+    abline(h=metadata(bcRanks.ls[[i]])$knee + 100, col="dodgerblue", lty=2)
     # k_2 + 300:
-    abline(h=metadata(newknee)$knee + 300, col="darkgreen", lty=2)
+    abline(h=metadata(bcRanks.ls[[i]])$knee + 300, col="darkgreen", lty=2)
     legend("bottomleft", lty=2, col=c("darkblue", "dodgerblue", "darkgreen"),
            legend=c("knee_2", "knee_2+100", "knee_2+300"))
     dev.off()
     
 }
+Sys.time()
+    # 'Second knee point' for 1M is: 430
+    # 'Second knee point' for 2F is: 560
+    # 'Second knee point' for 3M is: 583
+    # 'Second knee point' for 4F is: 399
+
+    # Diagnosis: +300 UMIs to the '2nd knee point' will be better than +100 that sufficed
+    #            for the LC project.  However, it would be better to calculate the 2nd deriv
+    #            minimum to adaptively identify where this '2nd plateau' starts
+
+
+
+
+
+## NOW run emptyDrops ===
+
+
+
+
 
 
 ## emptyDrops() results ===
