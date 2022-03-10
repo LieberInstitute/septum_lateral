@@ -1,2 +1,3 @@
 ## Files/patterns to ignore in the version control
 snRNAseq_mouse/raw_data/FASTQ
+snRNAseq_mouse/processed_data/SCE/
