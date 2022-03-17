@@ -1,6 +1,6 @@
-### LC snRNA-seq analysis
+### LS snRNA-seq analysis
 ### Mito rate QC & doublet assessment
-### Initiated: MNT 20Dec2021
+### Initiated: MNT/LAR/ST 25Mar2022
 
 library(SingleCellExperiment)
 library(DropletUtils)
@@ -54,17 +54,135 @@ save(sce.ls, stats,
      file=here("snRNAseq_mouse","processed_data","SCE", "sce_working_LS.rda"))
 
 
+## 17Mar2022 work ===
+load(here("snRNAseq_mouse","processed_data","SCE", "sce_working_LS.rda"), verbose=T)
+    # sce.ls, stats
+
+
+
+
+### Trick: Add a pseudo-count==1 for a 'MT transcript' ===
+# Note: This was implemented because we realized samples with mito rate distributions that
+#       were 'clean' and tightly distributed about 0 would yield a 3x MAD = 0, thus over-penalizing
+#       nuclei even if they had a single MT transcript (throwing out upwards of 50% of the sample)
+
+# First check computation of mito percent:
+table(stats[[1]]$subsets_Mito_percent == (stats[[1]]$subsets_Mito_sum/stats[[1]]$sum)*100)
+    # All TRUE
+
+test.stats <- stats
+
+for(i in 1:length(test.stats)){
+  test.stats[[i]]$pseudo_subsets_Mito_sum <- test.stats[[i]]$subsets_Mito_sum + 1
+  test.stats[[i]]$pseudo_subsets_Mito_percent <- test.stats[[i]]$pseudo_subsets_Mito_sum / (test.stats[[i]]$sum+1) * 100
+}
+
+## Lapply: MAD approach for mito rate thresholding
+pseudo.high.mito <- lapply(test.stats, function(x) {
+  isOutlier(x$pseudo_subsets_Mito_percent,
+            nmads=3,
+            type="higher")
+  })
+pseudo.high.mito.table <- lapply(pseudo.high.mito, table)
+
+# Percent dropped
+sapply(pseudo.high.mito.table, function(x) round(x[2]/sum(x), 3))
+    #1M.TRUE 2F.TRUE 3M.TRUE 4F.TRUE 
+    #0.096   0.073   0.128   0.107
+
+# Thresholds
+sapply(pseudo.high.mito, function(x){round(attributes(x)[["thresholds"]]["higher"], 4)})
+    #1M.higher 2F.higher 3M.higher 4F.higher 
+    #0.3476    0.2545    0.1644    0.1693
+
+
+## Bind [true] stats to colData
+# (we'll just keep the 'pseudo' result since this was made/meant to work with a range of data)
+table(rownames(do.call("rbind", stats)) == colnames(sce.ls))
+    # all 25527 TRUE
+
+colData(sce.ls) <- cbind(colData(sce.ls),
+                         do.call("rbind", stats),
+                         do.call("c", pseudo.high.mito))
+#colnames(colData(sce.ls))[which(colnames(colData(sce.ls)) == "do.call(\"c\", pseudo.high.mito)")] <- "high.mito"
+colnames(colData(sce.ls))[11] <- "high.mito"
+
+# $sum == $total
+sce.ls$total <- NULL
+
+# Store original for comparison/plotting
+sce.ls.unfiltered <- sce.ls
+sce.ls <- sce.ls[ ,!sce.ls$high.mito]
+
+
+
+
+## Plot some metrics
+mitoCutoffs <- sapply(pseudo.high.mito, function(x){round(attributes(x)[["thresholds"]]["higher"], 3)})
+names(mitoCutoffs) <- gsub(".higher","", names(mitoCutoffs))
+
+pdf(here("snRNAseq_mouse","plots","LS-n3_QCmetrics_high-mitoColored.pdf"), height=4)
+for(i in names(sample.idx)){
+  grid.arrange(
+    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], y="sum", colour_by="high.mito", point_alpha=0.4) +
+      scale_y_log10() + ggtitle(paste0("Total count: ", i)),
+    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], y="detected", colour_by="high.mito", point_alpha=0.4) +
+      scale_y_log10() + ggtitle("Detected features"),
+    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], y="subsets_Mito_percent",
+                colour_by="high.mito", point_alpha=0.4) +
+      ggtitle(paste0("Mito % (cutoff = ", mitoCutoffs[i],")")),
+    ncol=3
+  )
+  # Mito rate vs n detected features
+  print(
+    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], x="detected", y="subsets_Mito_percent",
+                colour_by="high.mito", point_size=2.5, point_alpha=0.5) +
+      ggtitle(paste0("Sample: ", i,
+                     ";     pre-QC nNuclei: ", ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]),";      ",
+                     "nNuclei kept: ", ncol(sce.ls[ ,sce.ls$Sample==i])," (",
+                     round(ncol(sce.ls[ ,sce.ls$Sample==i]) /
+                             ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]) * 100, 2), "%)"
+      ))
+  )
+  # Detected features vs total count
+  print(
+    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], x="sum", y="detected",
+                colour_by="high.mito", point_size=2.5, point_alpha=0.5) +
+      ggtitle(paste0("Sample: ", i,
+                     ";     pre-QC nNuclei: ", ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]),";      ",
+                     "nNuclei kept: ", ncol(sce.ls[ ,sce.ls$Sample==i])," (",
+                     round(ncol(sce.ls[ ,sce.ls$Sample==i]) /
+                             ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]) * 100, 2), "%)"
+      ))
+  )
+}
+dev.off()
+
+
+
+## NEXT TIME =================
+##
+## compute doublet scores and append to colData 
+##
+                          ## ==================
+
+
+# Save
+save(sce.ls, sce.ls.unfiltered, 
+     file=here("snRNAseq_mouse", "processed_data","SCE", "sce_working_LS.rda"))
+
+
 
 ## Reproducibility information ====
 print('Reproducibility information:')
 Sys.time()
-    #[1] "2022-03-15 14:07:23 EDT"
+    #[1] "2022-03-17 14:34:24 EDT"
 proc.time()
     #    user   system  elapsed 
-    # 181.112   20.561 6310.499 
+    # 252.845   23.536 3534.600 
 options(width = 120)
 session_info()
-# ─ Session info ─────────────────────────────────────────────────────────────────
+# ─ Session info ────────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
 # os       CentOS Linux 7 (Core)
@@ -74,10 +192,10 @@ session_info()
 # collate  en_US.UTF-8
 # ctype    en_US.UTF-8
 # tz       US/Eastern
-# date     2022-03-15
+# date     2022-03-17
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
 # 
-# ─ Packages ─────────────────────────────────────────────────────────────────────
+# ─ Packages ────────────────────────────────────────────────────────────────────
 # package              * version  date (UTC) lib source
 # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
 # beachmat               2.10.0   2021-10-26 [2] Bioconductor
@@ -94,16 +212,19 @@ session_info()
 # cli                    3.2.0    2022-02-14 [2] CRAN (R 4.1.2)
 # cluster                2.1.2    2021-04-17 [3] CRAN (R 4.1.2)
 # colorspace             2.0-3    2022-02-21 [2] CRAN (R 4.1.2)
+# cowplot                1.1.1    2020-12-30 [2] CRAN (R 4.1.2)
 # crayon                 1.5.0    2022-02-14 [2] CRAN (R 4.1.2)
 # DBI                    1.1.2    2021-12-20 [2] CRAN (R 4.1.2)
 # DelayedArray           0.20.0   2021-10-26 [2] Bioconductor
 # DelayedMatrixStats     1.16.0   2021-10-26 [2] Bioconductor
+# digest                 0.6.29   2021-12-01 [2] CRAN (R 4.1.2)
 # dplyr                  1.0.8    2022-02-08 [2] CRAN (R 4.1.2)
 # dqrng                  0.3.0    2021-05-01 [2] CRAN (R 4.1.2)
 # DropletUtils         * 1.14.2   2022-01-09 [2] Bioconductor
 # edgeR                  3.36.0   2021-10-26 [2] Bioconductor
 # ellipsis               0.3.2    2021-04-29 [2] CRAN (R 4.1.0)
 # fansi                  1.0.2    2022-01-14 [2] CRAN (R 4.1.2)
+# farver                 2.1.0    2021-02-28 [2] CRAN (R 4.1.0)
 # fs                     1.5.2    2021-12-08 [2] CRAN (R 4.1.2)
 # gargle                 1.2.0    2021-07-02 [2] CRAN (R 4.1.0)
 # generics               0.1.2    2022-01-31 [2] CRAN (R 4.1.2)
@@ -124,6 +245,7 @@ session_info()
 # IRanges              * 2.28.0   2021-10-26 [2] Bioconductor
 # irlba                  2.3.5    2021-12-06 [2] CRAN (R 4.1.2)
 # jaffelab             * 0.99.31  2021-12-13 [1] Github (LieberInstitute/jaffelab@2cbd55a)
+# labeling               0.4.2    2020-10-20 [2] CRAN (R 4.1.0)
 # lattice                0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
 # lifecycle              1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
 # limma                  3.50.1   2022-02-17 [2] Bioconductor
@@ -143,7 +265,7 @@ session_info()
 # R6                     2.5.1    2021-08-19 [2] CRAN (R 4.1.2)
 # rafalib              * 1.0.0    2015-08-09 [1] CRAN (R 4.1.2)
 # RColorBrewer           1.1-2    2014-12-07 [2] CRAN (R 4.1.0)
-# Rcpp                   1.0.8.2  2022-03-11 [2] CRAN (R 4.1.2)
+# Rcpp                   1.0.8.3  2022-03-17 [2] CRAN (R 4.1.2)
 # RCurl                  1.98-1.6 2022-02-08 [2] CRAN (R 4.1.2)
 # restfulr               0.0.13   2017-08-06 [2] CRAN (R 4.1.0)
 # rhdf5                  2.38.1   2022-03-10 [2] Bioconductor
@@ -184,8 +306,5 @@ session_info()
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
 # 
-# ────────────────────────────────────────────────────────────────────────────────
-
-
-
+# ──────────────────────────────────────────────────────────────────
 
