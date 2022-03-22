@@ -160,11 +160,35 @@ dev.off()
 
 
 
-## NEXT TIME =================
-##
-## compute doublet scores and append to colData 
-##
-                          ## ==================
+### Doublet score computation (no filtering here) ============
+  # Use default params, because this is at the single-sample-level
+  # (multi-batch normalization, PCA, etc. will be performed across corresponding samples)
+
+library(scDblFinder)
+
+## To speed up, run on sample-level top-HVGs - just take top 1000 ===
+sample.idx <- splitit(sce.ls$Sample)
+
+sce.ls.sample.list <- lapply(sample.idx, function(x){ logNormCounts(sce.ls[ ,x]) })
+geneVar.samples <- lapply(sce.ls.sample.list, modelGeneVar)
+topHVGs <- lapply(geneVar.samples, function(x) {getTopHVGs(x, n=1000)})
+
+# Compute doublet density scores
+Sys.time()
+    # [1] "2022-03-22 14:08:16 EDT"
+set.seed(109)
+dbl.dens.focused <- lapply(names(sample.idx), function(x) {
+  computeDoubletDensity(sce.ls.sample.list[[x]], subset.row=topHVGs[[x]])})
+Sys.time()
+    #[1] "2022-03-22 14:12:35 EDT"
+names(dbl.dens.focused) <- names(sample.idx)
+
+
+sce.ls$doubletScore <- do.call("c", dbl.dens.focused)
+sapply(sample.idx, function(x){
+  quantile(sce.ls$doubletScore[x], probs=seq(0.05,1,by=0.05))
+  })
+
 
 
 # Save
@@ -176,13 +200,13 @@ save(sce.ls, sce.ls.unfiltered,
 ## Reproducibility information ====
 print('Reproducibility information:')
 Sys.time()
-    #[1] "2022-03-17 14:34:24 EDT"
+    #[1] "2022-03-22 14:22:10 EDT"
 proc.time()
     #    user   system  elapsed 
-    # 252.845   23.536 3534.600 
+    # 901.100   93.653 2881.093 
 options(width = 120)
 session_info()
-# ─ Session info ────────────────────────────────────────────────────────────────
+# ─ Session info ─────────────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
 # os       CentOS Linux 7 (Core)
@@ -192,10 +216,10 @@ session_info()
 # collate  en_US.UTF-8
 # ctype    en_US.UTF-8
 # tz       US/Eastern
-# date     2022-03-17
+# date     2022-03-22
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
 # 
-# ─ Packages ────────────────────────────────────────────────────────────────────
+# ─ Packages ─────────────────────────────────────────────────────────────────────────
 # package              * version  date (UTC) lib source
 # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
 # beachmat               2.10.0   2021-10-26 [2] Bioconductor
@@ -212,19 +236,17 @@ session_info()
 # cli                    3.2.0    2022-02-14 [2] CRAN (R 4.1.2)
 # cluster                2.1.2    2021-04-17 [3] CRAN (R 4.1.2)
 # colorspace             2.0-3    2022-02-21 [2] CRAN (R 4.1.2)
-# cowplot                1.1.1    2020-12-30 [2] CRAN (R 4.1.2)
 # crayon                 1.5.0    2022-02-14 [2] CRAN (R 4.1.2)
+# data.table             1.14.2   2021-09-27 [2] CRAN (R 4.1.2)
 # DBI                    1.1.2    2021-12-20 [2] CRAN (R 4.1.2)
 # DelayedArray           0.20.0   2021-10-26 [2] Bioconductor
 # DelayedMatrixStats     1.16.0   2021-10-26 [2] Bioconductor
-# digest                 0.6.29   2021-12-01 [2] CRAN (R 4.1.2)
 # dplyr                  1.0.8    2022-02-08 [2] CRAN (R 4.1.2)
 # dqrng                  0.3.0    2021-05-01 [2] CRAN (R 4.1.2)
 # DropletUtils         * 1.14.2   2022-01-09 [2] Bioconductor
 # edgeR                  3.36.0   2021-10-26 [2] Bioconductor
 # ellipsis               0.3.2    2021-04-29 [2] CRAN (R 4.1.0)
 # fansi                  1.0.2    2022-01-14 [2] CRAN (R 4.1.2)
-# farver                 2.1.0    2021-02-28 [2] CRAN (R 4.1.0)
 # fs                     1.5.2    2021-12-08 [2] CRAN (R 4.1.2)
 # gargle                 1.2.0    2021-07-02 [2] CRAN (R 4.1.0)
 # generics               0.1.2    2022-01-31 [2] CRAN (R 4.1.2)
@@ -245,12 +267,13 @@ session_info()
 # IRanges              * 2.28.0   2021-10-26 [2] Bioconductor
 # irlba                  2.3.5    2021-12-06 [2] CRAN (R 4.1.2)
 # jaffelab             * 0.99.31  2021-12-13 [1] Github (LieberInstitute/jaffelab@2cbd55a)
-# labeling               0.4.2    2020-10-20 [2] CRAN (R 4.1.0)
+# jsonlite               1.8.0    2022-02-22 [2] CRAN (R 4.1.2)
 # lattice                0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
 # lifecycle              1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
 # limma                  3.50.1   2022-02-17 [2] Bioconductor
 # locfit                 1.5-9.5  2022-03-03 [2] CRAN (R 4.1.2)
 # magrittr               2.0.2    2022-01-26 [2] CRAN (R 4.1.2)
+# MASS                   7.3-55   2022-01-13 [3] CRAN (R 4.1.2)
 # Matrix                 1.4-0    2021-12-08 [3] CRAN (R 4.1.2)
 # MatrixGenerics       * 1.6.0    2021-10-26 [2] Bioconductor
 # matrixStats          * 0.61.0   2021-09-17 [2] CRAN (R 4.1.2)
@@ -281,6 +304,7 @@ session_info()
 # ScaledMatrix           1.2.0    2021-10-26 [2] Bioconductor
 # scales                 1.1.1    2020-05-11 [2] CRAN (R 4.1.0)
 # scater               * 1.22.0   2021-10-26 [2] Bioconductor
+# scDblFinder          * 1.8.0    2021-10-26 [1] Bioconductor
 # scran                * 1.22.1   2021-11-14 [2] Bioconductor
 # scuttle              * 1.4.0    2021-10-26 [2] Bioconductor
 # segmented              1.3-4    2021-04-22 [1] CRAN (R 4.1.2)
@@ -297,6 +321,7 @@ session_info()
 # viridis                0.6.2    2021-10-13 [2] CRAN (R 4.1.2)
 # viridisLite            0.4.0    2021-04-13 [2] CRAN (R 4.1.0)
 # withr                  2.5.0    2022-03-03 [2] CRAN (R 4.1.2)
+# xgboost                1.5.0.2  2021-11-21 [1] CRAN (R 4.1.2)
 # XML                    3.99-0.9 2022-02-24 [2] CRAN (R 4.1.2)
 # XVector                0.34.0   2021-10-26 [2] Bioconductor
 # yaml                   2.3.5    2022-02-21 [2] CRAN (R 4.1.2)
@@ -306,5 +331,5 @@ session_info()
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
 # 
-# ──────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────────────────────────────
 
