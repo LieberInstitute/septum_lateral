@@ -190,14 +190,192 @@ save(sce.ls,
 ### Clustering ====================
 # Perform graph-based clustering, as in Tran-Maynard, et al. Neuron 2021
 
+reducedDim(sce.ls, "GLMPCA_50") <- reducedDim(sce.ls, "GLMPCA_approx")[ ,1:50]
 
-snn.gr.glmpcamnn <- buildSNNGraph(sce.ls, k=20, use.dimred="glmpca_mnn_50")
-clusters.glmpcamnn <- igraph::cluster_walktrap(snn.gr.glmpcamnn)
-table(clusters.glmpcamnn$membership)
-        #
+snn.gr.glmpca <- buildSNNGraph(sce.ls, k=20, use.dimred="GLMPCA_50")
+clusters.glmpca <- igraph::cluster_walktrap(snn.gr.glmpca)
+table(clusters.glmpca$membership)
+        #   1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
+        # 797  760  191  451   63 4153 1478 4327  166  464  670  306 1529  112 4364  118 
+        #  17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32 
+        # 106  105   65  232   67  171  363  146  202  728   40  180   34   86   73  150 
+        #  33   34   35 
+        #  53   34   76
 
+# Store this info
+sce.ls$clusters.glmpca <- factor(clusters.glmpca$membership)
 
+# Also save the graph & community info
+save(snn.gr.glmpca, clusters.glmpca,
+     file=here("snRNAseq_mouse", "processed_data","SCE", "graph_clusters_glmpca_LS-n3.rda"))
+
+table(sce.ls$clusters.glmpca, sce.ls$Sample)
+    # pretty even distribution across samples
+
+## doubletScore distributions / cluster?
+cellClust.idx <- splitit(sce.ls$clusters.glmpca)
+sapply(cellClust.idx, function(x){round(quantile(sce.ls$doubletScore[x]), 2)})
+    #          1     2    3     4    5     6    7     8    9   10    11   12    13
+    # 0%    0.01  0.00 0.01  0.00 0.01  0.00 0.00  0.00 0.00 0.00  0.02 0.00  0.00
+    # 25%   0.13  0.03 0.23  0.04 0.08  0.07 0.02  0.15 0.06 0.01  0.15 0.02  0.05
+    # 50%   0.25  0.07 0.43  0.07 0.12  0.20 0.07  0.34 0.09 0.04  0.39 0.06  0.15
+    # 75%   0.62  0.78 1.08  0.26 0.41  0.52 0.18  1.16 0.17 0.91  1.31 0.52  0.41
+    # 100% 10.44 11.46 5.98 12.53 8.94 14.84 7.20 11.49 3.62 9.30 10.41 6.60 14.29
+    
+    #        14    15   16   17   18   19   20   21    22   23   24   25   26   27
+    # 0%   0.00  0.00 0.00 0.01 0.04 0.02 0.03 0.04  0.01 0.00 0.00 0.02 0.04 0.03
+    # 25%  0.04  0.16 0.04 0.04 0.17 0.36 0.14 0.38  0.06 0.04 0.04 0.13 0.17 0.07
+    # 50%  0.05  0.29 0.05 0.08 0.24 0.49 0.46 1.28  0.22 0.11 0.07 0.23 0.30 0.10
+    # 75%  0.11  0.90 0.16 0.19 0.43 0.53 1.30 1.39  1.99 0.84 0.22 0.52 1.03 0.19
+    # 100% 8.53 10.09 5.98 8.16 6.46 7.10 6.82 9.93 10.39 9.50 5.37 7.62 9.25 3.39
+    
+    #        28   29   30   31  *32   33    34   35
+    # 0%   0.00 0.02 0.09 0.04 0.06 0.05  0.00 0.00
+    # 25%  0.01 0.05 0.30 0.17 3.78 0.24  0.06 0.01
+    # 50%  0.03 0.06 0.52 0.33 4.83 0.66  0.17 0.04   Cluster 32 (150 nuclei) to keep
+    # 75%  0.06 0.10 0.91 0.69 6.72 0.93  0.30 0.05   an eye on...
+    # 100% 7.93 9.43 8.40 5.91 9.39 8.48 10.09 6.53
 
 # Compute logcounts to visualize expression in the traditional way
-sce.test <- multiBatchNorm(sce.test, batch=sce.test$Sample)
+sce.ls <- multiBatchNorm(sce.ls, batch=sce.ls$Sample)
 
+# # For sake of filtering, compute some median expression info across graph-based clusters
+# medianNon0.ls <- lapply(cellClust.idx, function(x){
+#     apply(as.matrix(assay(sce.ls, "logcounts")), 1, function(y){
+#         median(y[x]) > 0
+#     })
+# })
+# 
+# head(medianNon0.ls[[1]])
+
+# Save
+save(sce.ls,
+     file=here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"))
+
+
+
+
+## Reproducibility information ====
+print('Reproducibility information:')
+Sys.time()
+    #[1] "2022-03-29 16:34:05 EDT"
+proc.time()
+    #     user    system   elapsed 
+    # 8133.326   427.825 10870.560 
+options(width = 120)
+session_info()
+    #─ Session info ────────────────────────────────────────────────────────────────
+    # setting  value
+    # version  R version 4.1.2 Patched (2021-11-04 r81138)
+    # os       CentOS Linux 7 (Core)
+    # system   x86_64, linux-gnu
+    # ui       X11
+    # language (EN)
+    # collate  en_US.UTF-8
+    # ctype    en_US.UTF-8
+    # tz       US/Eastern
+    # date     2022-03-29
+    # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
+    # 
+    # ─ Packages ────────────────────────────────────────────────────────────────────
+    # package              * version  date (UTC) lib source
+    # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
+    # batchelor            * 1.10.0   2021-10-26 [1] Bioconductor
+    # beachmat               2.10.0   2021-10-26 [2] Bioconductor
+    # beeswarm               0.4.0    2021-06-01 [2] CRAN (R 4.1.2)
+    # Biobase              * 2.54.0   2021-10-26 [2] Bioconductor
+    # BiocGenerics         * 0.40.0   2021-10-26 [2] Bioconductor
+    # BiocNeighbors          1.12.0   2021-10-26 [2] Bioconductor
+    # BiocParallel         * 1.28.3   2021-12-09 [2] Bioconductor
+    # BiocSingular           1.10.0   2021-10-26 [2] Bioconductor
+    # bitops                 1.0-7    2021-04-24 [2] CRAN (R 4.1.0)
+    # bluster              * 1.4.0    2021-10-26 [2] Bioconductor
+    # cli                    3.2.0    2022-02-14 [2] CRAN (R 4.1.2)
+    # cluster                2.1.3    2022-03-28 [3] CRAN (R 4.1.2)
+    # colorspace             2.0-3    2022-02-21 [2] CRAN (R 4.1.2)
+    # crayon                 1.5.1    2022-03-26 [2] CRAN (R 4.1.2)
+    # DBI                    1.1.2    2021-12-20 [2] CRAN (R 4.1.2)
+    # DelayedArray           0.20.0   2021-10-26 [2] Bioconductor
+    # DelayedMatrixStats     1.16.0   2021-10-26 [2] Bioconductor
+    # dplyr                  1.0.8    2022-02-08 [2] CRAN (R 4.1.2)
+    # dqrng                  0.3.0    2021-05-01 [2] CRAN (R 4.1.2)
+    # DropletUtils         * 1.14.2   2022-01-09 [2] Bioconductor
+    # edgeR                  3.36.0   2021-10-26 [2] Bioconductor
+    # ellipsis               0.3.2    2021-04-29 [2] CRAN (R 4.1.0)
+    # fansi                  1.0.3    2022-03-24 [2] CRAN (R 4.1.2)
+    # fs                     1.5.2    2021-12-08 [2] CRAN (R 4.1.2)
+    # gargle                 1.2.0    2021-07-02 [2] CRAN (R 4.1.0)
+    # generics               0.1.2    2022-01-31 [2] CRAN (R 4.1.2)
+    # GenomeInfoDb         * 1.30.1   2022-01-30 [2] Bioconductor
+    # GenomeInfoDbData       1.2.7    2021-11-01 [2] Bioconductor
+    # GenomicRanges        * 1.46.1   2021-11-18 [2] Bioconductor
+    # ggbeeswarm             0.6.0    2017-08-07 [2] CRAN (R 4.1.2)
+    # ggplot2              * 3.3.5    2021-06-25 [2] CRAN (R 4.1.0)
+    # ggrepel                0.9.1    2021-01-15 [2] CRAN (R 4.1.0)
+    # glue                   1.6.2    2022-02-24 [2] CRAN (R 4.1.2)
+    # googledrive            2.0.0    2021-07-08 [2] CRAN (R 4.1.0)
+    # gridExtra            * 2.3      2017-09-09 [2] CRAN (R 4.1.0)
+    # gtable                 0.3.0    2019-03-25 [2] CRAN (R 4.1.0)
+    # HDF5Array              1.22.1   2021-11-14 [2] Bioconductor
+    # here                 * 1.0.1    2020-12-13 [2] CRAN (R 4.1.2)
+    # igraph                 1.2.11   2022-01-04 [2] CRAN (R 4.1.2)
+    # IRanges              * 2.28.0   2021-10-26 [2] Bioconductor
+    # irlba                  2.3.5    2021-12-06 [2] CRAN (R 4.1.2)
+    # jaffelab             * 0.99.31  2021-12-13 [1] Github (LieberInstitute/jaffelab@2cbd55a)
+    # lattice                0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
+    # lifecycle              1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
+    # limma                  3.50.1   2022-02-17 [2] Bioconductor
+    # locfit                 1.5-9.5  2022-03-03 [2] CRAN (R 4.1.2)
+    # magrittr               2.0.2    2022-01-26 [2] CRAN (R 4.1.2)
+    # Matrix                 1.4-1    2022-03-23 [3] CRAN (R 4.1.2)
+    # MatrixGenerics       * 1.6.0    2021-10-26 [2] Bioconductor
+    # matrixStats          * 0.61.0   2021-09-17 [2] CRAN (R 4.1.2)
+    # metapod                1.2.0    2021-10-26 [2] Bioconductor
+    # munsell                0.5.0    2018-06-12 [2] CRAN (R 4.1.0)
+    # pillar                 1.7.0    2022-02-01 [2] CRAN (R 4.1.2)
+    # pkgconfig              2.0.3    2019-09-22 [2] CRAN (R 4.1.0)
+    # purrr                  0.3.4    2020-04-17 [2] CRAN (R 4.1.0)
+    # R.methodsS3            1.8.1    2020-08-26 [2] CRAN (R 4.1.0)
+    # R.oo                   1.24.0   2020-08-26 [2] CRAN (R 4.1.0)
+    # R.utils                2.11.0   2021-09-26 [2] CRAN (R 4.1.2)
+    # R6                     2.5.1    2021-08-19 [2] CRAN (R 4.1.2)
+    # rafalib              * 1.0.0    2015-08-09 [1] CRAN (R 4.1.2)
+    # RColorBrewer           1.1-2    2014-12-07 [2] CRAN (R 4.1.0)
+    # Rcpp                   1.0.8.3  2022-03-17 [2] CRAN (R 4.1.2)
+    # RCurl                  1.98-1.6 2022-02-08 [2] CRAN (R 4.1.2)
+    # ResidualMatrix         1.4.0    2021-10-26 [1] Bioconductor
+    # rhdf5                  2.38.1   2022-03-10 [2] Bioconductor
+    # rhdf5filters           1.6.0    2021-10-26 [2] Bioconductor
+    # Rhdf5lib               1.16.0   2021-10-26 [2] Bioconductor
+    # rlang                  1.0.2    2022-03-04 [2] CRAN (R 4.1.2)
+    # rprojroot              2.0.2    2020-11-15 [2] CRAN (R 4.1.0)
+    # rsvd                   1.0.5    2021-04-16 [2] CRAN (R 4.1.2)
+    # S4Vectors            * 0.32.4   2022-03-24 [2] Bioconductor
+    # ScaledMatrix           1.2.0    2021-10-26 [2] Bioconductor
+    # scales                 1.1.1    2020-05-11 [2] CRAN (R 4.1.0)
+    # scater               * 1.22.0   2021-10-26 [2] Bioconductor
+    # scran                * 1.22.1   2021-11-14 [2] Bioconductor
+    # scry                 * 1.6.0    2021-10-26 [2] Bioconductor
+    # scuttle              * 1.4.0    2021-10-26 [2] Bioconductor
+    # segmented              1.3-4    2021-04-22 [1] CRAN (R 4.1.2)
+    # sessioninfo          * 1.2.2    2021-12-06 [2] CRAN (R 4.1.2)
+    # SingleCellExperiment * 1.16.0   2021-10-26 [2] Bioconductor
+    # sparseMatrixStats      1.6.0    2021-10-26 [2] Bioconductor
+    # statmod                1.4.36   2021-05-10 [2] CRAN (R 4.1.0)
+    # SummarizedExperiment * 1.24.0   2021-10-26 [2] Bioconductor
+    # tibble                 3.1.6    2021-11-07 [2] CRAN (R 4.1.2)
+    # tidyselect             1.1.2    2022-02-21 [2] CRAN (R 4.1.2)
+    # utf8                   1.2.2    2021-07-24 [2] CRAN (R 4.1.0)
+    # vctrs                  0.3.8    2021-04-29 [2] CRAN (R 4.1.0)
+    # vipor                  0.4.5    2017-03-22 [2] CRAN (R 4.1.2)
+    # viridis                0.6.2    2021-10-13 [2] CRAN (R 4.1.2)
+    # viridisLite            0.4.0    2021-04-13 [2] CRAN (R 4.1.0)
+    # withr                  2.5.0    2022-03-03 [2] CRAN (R 4.1.2)
+    # XVector                0.34.0   2021-10-26 [2] Bioconductor
+    # zlibbioc               1.40.0   2021-10-26 [2] Bioconductor
+    # 
+    # [1] /users/ntranngu/R/4.1.x
+    # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
+    # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
+    # 
+    # ───────────────────────────────────────────────────────────────────────────────
