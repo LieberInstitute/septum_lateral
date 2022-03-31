@@ -253,18 +253,77 @@ save(sce.ls,
      file=here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"))
 
 
+## Broad markers of interest:
+markers.mathys.tran = list(
+    'neuron' = c('SYT1', 'SNAP25', 'GRIN1'),
+    'excit_neuron' = c('CAMK2A', 'NRGN','SLC17A7', 'SLC17A6', 'SLC17A8'),
+    'inhib_neuron' = c('GAD1', 'GAD2', 'SLC32A1'),
+    # Norepinephrine & serotonergic markers
+    'neuron.NE' = c("TH", "DBH", "SLC6A2", "SLC18A2", "GCH1", "DDC"), #SLC6A3 - saw no DAT
+    'neuron.5HT' = c("SLC6A4", "TPH1", "TPH2", "DDC"),
+    # SERT, serotonin T (aka 5-HTT); 
+    'monoamine.metab' = c("COMT", "MAOA", "MAOB"),
+    # MSN markers
+    'MSNs.pan' = c("PPP1R1B","BCL11B"),# "CTIP2")
+    'MSNs.D1' = c("DRD1", "PDYN", "TAC1"),
+    'MSNs.D2' = c("DRD2", "PENK"),
+    ## Non-neuronal:
+    'oligodendrocyte' = c('MBP', 'MOBP', 'PLP1'),
+    'oligo_precursor' = c('PDGFRA', 'VCAN', 'CSPG4'),
+    'microglia' = c('CD74', 'CSF1R', 'C3'),
+    'astrocyte' = c('GFAP', 'TNC', 'AQP4', 'SLC1A2'),
+    'endothelial' = c('CLDN5', 'FLT1', 'VTN'),
+    # Post-hoc from Tran-Maynard, et al. Neuron 2021
+    'differn_committed_OPC' = c("SOX4", "BCAN", "GPR17", "TNS3"),
+    'Tcell' = c('SKAP1', 'ITK', 'CD247'),
+    'Mural' = c('COL1A2', 'TBX18', 'RBPMS'),
+    'Macro' = c('CD163', 'SIGLEC1', 'F13A1')
+)
+
+# Will have to 'make these mouse'
+broadMarkers <- markers.mathys.tran
+for(i in 1:length(broadMarkers)){
+    broadMarkers[[i]] <- paste0(substr(broadMarkers[[i]], 1,1),
+                                   tolower(substr(broadMarkers[[i]], 2, nchar(broadMarkers[[i]]))))
+}
+
+table(unname(unlist(broadMarkers)) %in% rowData(sce.ls)$gene_name) #all good
+
+rownames(sce.ls) <- rowData(sce.ls)$gene_name
+
+pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters.pdf")),
+    height=6, width=14)
+for(i in 1:length(broadMarkers)){
+    print(
+        plotExpressionCustom(sce = sce.ls,
+                             exprs_values = "logcounts",
+                             features = broadMarkers[[i]], 
+                             features_name = names(broadMarkers)[[i]], 
+                             anno_name = "clusters.glmpca",
+                             ncol=2, point_alpha=0.4, point_size=0.9,
+                             scales="free_y") +  
+            ggtitle(label=paste0("mouse LS (n4) clusters: ",
+                                 names(broadMarkers)[[i]], " markers")) +
+            theme(plot.title = element_text(size = 12),
+                  axis.text.x = element_text(size=7))
+    )
+}
+dev.off()
+
+
+
 
 
 ## Reproducibility information ====
 print('Reproducibility information:')
 Sys.time()
-    #[1] "2022-03-29 16:34:05 EDT"
+    #[1] "2022-03-31 14:28:11 EDT"
 proc.time()
     #     user    system   elapsed 
-    # 8133.326   427.825 10870.560 
+    #  446.909    16.777 15914.965 
 options(width = 120)
 session_info()
-    #─ Session info ────────────────────────────────────────────────────────────────
+    #─ Session info ──────────────────────────────────────────────────────────────
     # setting  value
     # version  R version 4.1.2 Patched (2021-11-04 r81138)
     # os       CentOS Linux 7 (Core)
@@ -274,10 +333,10 @@ session_info()
     # collate  en_US.UTF-8
     # ctype    en_US.UTF-8
     # tz       US/Eastern
-    # date     2022-03-29
+    # date     2022-03-31
     # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
     # 
-    # ─ Packages ────────────────────────────────────────────────────────────────────
+    # ─ Packages ──────────────────────────────────────────────────────────────────
     # package              * version  date (UTC) lib source
     # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
     # batchelor            * 1.10.0   2021-10-26 [1] Bioconductor
@@ -293,16 +352,19 @@ session_info()
     # cli                    3.2.0    2022-02-14 [2] CRAN (R 4.1.2)
     # cluster                2.1.3    2022-03-28 [3] CRAN (R 4.1.2)
     # colorspace             2.0-3    2022-02-21 [2] CRAN (R 4.1.2)
+    # cowplot                1.1.1    2020-12-30 [2] CRAN (R 4.1.2)
     # crayon                 1.5.1    2022-03-26 [2] CRAN (R 4.1.2)
     # DBI                    1.1.2    2021-12-20 [2] CRAN (R 4.1.2)
     # DelayedArray           0.20.0   2021-10-26 [2] Bioconductor
     # DelayedMatrixStats     1.16.0   2021-10-26 [2] Bioconductor
+    # digest                 0.6.29   2021-12-01 [2] CRAN (R 4.1.2)
     # dplyr                  1.0.8    2022-02-08 [2] CRAN (R 4.1.2)
     # dqrng                  0.3.0    2021-05-01 [2] CRAN (R 4.1.2)
     # DropletUtils         * 1.14.2   2022-01-09 [2] Bioconductor
     # edgeR                  3.36.0   2021-10-26 [2] Bioconductor
     # ellipsis               0.3.2    2021-04-29 [2] CRAN (R 4.1.0)
     # fansi                  1.0.3    2022-03-24 [2] CRAN (R 4.1.2)
+    # farver                 2.1.0    2021-02-28 [2] CRAN (R 4.1.0)
     # fs                     1.5.2    2021-12-08 [2] CRAN (R 4.1.2)
     # gargle                 1.2.0    2021-07-02 [2] CRAN (R 4.1.0)
     # generics               0.1.2    2022-01-31 [2] CRAN (R 4.1.2)
@@ -322,11 +384,12 @@ session_info()
     # IRanges              * 2.28.0   2021-10-26 [2] Bioconductor
     # irlba                  2.3.5    2021-12-06 [2] CRAN (R 4.1.2)
     # jaffelab             * 0.99.31  2021-12-13 [1] Github (LieberInstitute/jaffelab@2cbd55a)
+    # labeling               0.4.2    2020-10-20 [2] CRAN (R 4.1.0)
     # lattice                0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
     # lifecycle              1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
     # limma                  3.50.1   2022-02-17 [2] Bioconductor
     # locfit                 1.5-9.5  2022-03-03 [2] CRAN (R 4.1.2)
-    # magrittr               2.0.2    2022-01-26 [2] CRAN (R 4.1.2)
+    # magrittr               2.0.3    2022-03-30 [2] CRAN (R 4.1.2)
     # Matrix                 1.4-1    2022-03-23 [3] CRAN (R 4.1.2)
     # MatrixGenerics       * 1.6.0    2021-10-26 [2] Bioconductor
     # matrixStats          * 0.61.0   2021-09-17 [2] CRAN (R 4.1.2)
@@ -366,7 +429,7 @@ session_info()
     # tibble                 3.1.6    2021-11-07 [2] CRAN (R 4.1.2)
     # tidyselect             1.1.2    2022-02-21 [2] CRAN (R 4.1.2)
     # utf8                   1.2.2    2021-07-24 [2] CRAN (R 4.1.0)
-    # vctrs                  0.3.8    2021-04-29 [2] CRAN (R 4.1.0)
+    # vctrs                  0.4.0    2022-03-30 [2] CRAN (R 4.1.2)
     # vipor                  0.4.5    2017-03-22 [2] CRAN (R 4.1.2)
     # viridis                0.6.2    2021-10-13 [2] CRAN (R 4.1.2)
     # viridisLite            0.4.0    2021-04-13 [2] CRAN (R 4.1.0)
@@ -378,4 +441,5 @@ session_info()
     # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
     # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
     # 
-    # ───────────────────────────────────────────────────────────────────────────────
+    # ─────────────────────────────────────────────────────────────────────────────
+
