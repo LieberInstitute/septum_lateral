@@ -127,7 +127,7 @@ Sys.time()
         # Sys.time()
         #         #
         # glmpca.mnn <- reducedMNN(reducedDim(sce.ls, "GLMPCA_approx"),
-        #                          batch=as.factor(sce.lc$Sample),
+        #                          batch=as.factor(sce.ls$Sample),
         #                          merge.order=c("Br8079_LC", "Br2701_LC", "Br6522_LC")
         # )
         # Sys.time()
@@ -310,6 +310,57 @@ for(i in 1:length(broadMarkers)){
 }
 dev.off()
 
+
+
+# for temp exploration:
+# pdf(here("snRNAseq_mouse","plots",paste0("temp_markerExplore.pdf")),height=6, width=14)
+#     print(
+#         plotExpressionCustom(sce = sce.ls,
+#                              exprs_values = "logcounts",
+#                              features = c("Gfap", "Aldh1l1", "Aldoc", "S100b"),
+#                              features_name = "", 
+#                              anno_name = "clusters.glmpca",
+#                              ncol=2, point_alpha=0.4, point_size=0.9,
+#                              scales="free_y", swap_rownames="gene_name") +
+#             theme(plot.title = element_text(size = 12),
+#                   axis.text.x = element_text(size=7))
+#     )
+# dev.off()
+
+
+
+## Annotate clusters ===
+annotationTab.ls <- data.frame(cluster=c(1:35))
+annotationTab.ls$cellType <- NA
+annotationTab.ls$cellType[c(4,11,20,21,34)] <- paste0("Excit_", c("A","B","C","D", "E"))
+annotationTab.ls$cellType[c(1,2,3,8, 12,15,23,25, 26,30)] <-
+    paste0("Inhib_", c("A","B","C","D", "E","F","G","H", "I","J"))
+annotationTab.ls$cellType[c(31)] <- paste0("Neuron.mixed_", c("A"))
+annotationTab.ls$cellType[c(19)] <- "Neuron.Ppp1r1b"
+
+annotationTab.ls$cellType[c(6,22)] <- paste0("Astro_", c("A","B"))
+annotationTab.ls$cellType[c(13)] <- "Astro.OPC_COP"
+annotationTab.ls$cellType[c(17,24)] <- paste0("Aqp4.Rbpms_", c("A","B"))
+annotationTab.ls$cellType[c(16,27)] <- paste0("Endo_", c("A","B"))
+annotationTab.ls$cellType[c(14,29)] <- paste0("Mural_", c("A","B"))
+annotationTab.ls$cellType[c(9)] <- "Micro"
+annotationTab.ls$cellType[c(7,18)] <- paste0("Oligo_", c("A","B"))
+annotationTab.ls$cellType[10] <- c("OPC")
+annotationTab.ls$cellType[33] <- c("OPC_COP")
+
+annotationTab.ls$cellType[28] <- c("drop.lowNTx")
+annotationTab.ls$cellType[32] <- c("drop.doublet")
+annotationTab.ls$cellType[c(5,35)] <- paste0("ambig.glial_", c("A","B"))
+
+
+
+
+sce.ls$cellType <- annotationTab.ls$cellType[match(sce.ls$clusters.glmpcamnn,
+                                                   annotationTab.ls$cluster)]
+sce.ls$cellType <- factor(sce.ls$cellType)
+
+options(width=100)
+table(sce.ls$cellType)
 
 
 
