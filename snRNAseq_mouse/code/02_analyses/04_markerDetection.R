@@ -1,6 +1,6 @@
 ### mouse LS snRNA-seq analysis
 ### Feature selection with deviance & clustering
-###     qrsh -l bluejay,mf=60G,h_vmem=64G,h_fsize=40G
+###     qsub -l bluejay,mf=76G,h_vmem=80G,h_fsize=40G
 ### Initiated LAR,ST,MNT 07Apr2022
 
 library(SingleCellExperiment)
@@ -252,8 +252,9 @@ for(i in smaller.set){
                          features = genes.top40.t[[i]], 
                          features_name = i,
                          anno_name = "cellType",
-                         ncol=5, point_alpha=0.4) +
-      scale_color_manual(values = cell_colors.ls) +  
+                         ncol=5, point_alpha=0.4,
+                         scales="free_y", swap_rownames="gene_name") +
+      scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +  
       ggtitle(label=paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
       theme(plot.title = element_text(size = 20))
   )
@@ -269,8 +270,9 @@ for(i in left.set){
                          features = genes.top40.t[[i]], 
                          features_name = i,
                          anno_name = "cellType",
-                         ncol=5, point_alpha=0.4) +
-      scale_color_manual(values = cell_colors.ls) +  
+                         ncol=5, point_alpha=0.4,
+                         scales="free_y", swap_rownames="gene_name") +
+      scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +  
       ggtitle(label=paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
       theme(plot.title = element_text(size = 20))
   )
@@ -403,8 +405,9 @@ for(i in names(genes.top40.t)){
                          features = genes.top40.t[[i]], 
                          features_name = i,
                          anno_name = "cellType",
-                         ncol=5, point_alpha=0.4) +
-      scale_color_manual(values = cell_colors.ls) +  
+                         ncol=5, point_alpha=0.4,
+                         scales="free_y", swap_rownames="gene_name") +
+      scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +  
       ggtitle(label=paste0("LS ", i, " top markers: 'cluster-vs-all-others' t-tests (FDR<0.05)")) +
       theme(plot.title = element_text(size = 20))
   )
@@ -431,4 +434,14 @@ for(i in names(genes.top40.t)){
 #           row.names=FALSE)
 
 
+
+## Reproducibility information ====
+print('Reproducibility information:')
+Sys.time()
+# 
+proc.time()
+#     user    system   elapsed 
+#
+options(width = 120)
+session_info()
 
