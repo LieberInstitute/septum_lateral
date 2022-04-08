@@ -222,62 +222,62 @@ sce.ls <- logNormCounts(sce.ls)
               "markers-stats_LS-n4_findMarkers_35cellTypes.rda"), verbose=T)
 
 
-# Print these to pngs
-markerList.t.pw <- lapply(markers.ls.t.pw, function(x){
-  rownames(x)[x$FDR < 0.05 & x$non0median == TRUE]
-  }
-)
-
-# Change to gene symbols
-markerList.t.pw <- lapply(markerList.t.pw, function(x){
-  rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
-})
-
-genes.top40.t <- lapply(markerList.t.pw, function(x){head(x, n=40)})
-
-smaller.set <- names(genes.top40.t)[lengths(genes.top40.t) <= 20]
-left.set <- setdiff(names(genes.top40.t), smaller.set)
-
-# Now remove those with no significant markers
-smaller.set <- setdiff(smaller.set,
-                       names(genes.top40.t)[lengths(genes.top40.t) == 0])
-
-# Smaller graphical window
-#dir.create(here("snRNAseq_mouse","plots","markers"))
-for(i in smaller.set){
-  png(here("snRNAseq_mouse","plots","markers",
-           paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")), height=950, width=1200)
-  print(
-    plotExpressionCustom(sce = sce.hold,
-                         features = genes.top40.t[[i]], 
-                         features_name = i,
-                         anno_name = "cellType",
-                         ncol=5, point_alpha=0.4,
-                         scales="free_y", swap_rownames="gene_name") +
-      scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +  
-      ggtitle(label=paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
-}
-
-# 20-40 markers
-for(i in left.set){
-  png(here("snRNAseq_mouse","plots","markers",
-           paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")), height=1900, width=1200)
-  print(
-    plotExpressionCustom(sce = sce.hold,
-                         features = genes.top40.t[[i]], 
-                         features_name = i,
-                         anno_name = "cellType",
-                         ncol=5, point_alpha=0.4,
-                         scales="free_y", swap_rownames="gene_name") +
-      scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +  
-      ggtitle(label=paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
-}
+# # Print these to pngs
+# markerList.t.pw <- lapply(markers.ls.t.pw, function(x){
+#   rownames(x)[x$FDR < 0.05 & x$non0median == TRUE]
+#   }
+# )
+# 
+# # Change to gene symbols
+# markerList.t.pw <- lapply(markerList.t.pw, function(x){
+#   rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
+# })
+# 
+# genes.top40.t <- lapply(markerList.t.pw, function(x){head(x, n=40)})
+# 
+# smaller.set <- names(genes.top40.t)[lengths(genes.top40.t) <= 20]
+# left.set <- setdiff(names(genes.top40.t), smaller.set)
+# 
+# # Now remove those with no significant markers
+# smaller.set <- setdiff(smaller.set,
+#                        names(genes.top40.t)[lengths(genes.top40.t) == 0])
+# 
+# # Smaller graphical window
+# #dir.create(here("snRNAseq_mouse","plots","markers"))
+# for(i in smaller.set){
+#   png(here("snRNAseq_mouse","plots","markers",
+#            paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")), height=950, width=1200)
+#   print(
+#     plotExpressionCustom(sce = sce.hold,
+#                          features = genes.top40.t[[i]], 
+#                          features_name = i,
+#                          anno_name = "cellType",
+#                          ncol=5, point_alpha=0.4,
+#                          scales="free_y", swap_rownames="gene_name") +
+#       scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +  
+#       ggtitle(label=paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
+#       theme(plot.title = element_text(size = 20))
+#   )
+#   dev.off()
+# }
+# 
+# # 20-40 markers
+# for(i in left.set){
+#   png(here("snRNAseq_mouse","plots","markers",
+#            paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")), height=1900, width=1200)
+#   print(
+#     plotExpressionCustom(sce = sce.hold,
+#                          features = genes.top40.t[[i]], 
+#                          features_name = i,
+#                          anno_name = "cellType",
+#                          ncol=5, point_alpha=0.4,
+#                          scales="free_y", swap_rownames="gene_name") +
+#       scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +  
+#       ggtitle(label=paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
+#       theme(plot.title = element_text(size = 20))
+#   )
+#   dev.off()
+# }
 
 
 
@@ -398,7 +398,7 @@ markerList.t.1vAll <- lapply(markerList.t.1vAll, function(x){
 genes.top40.t <- lapply(markerList.t.1vAll, function(x){head(x, n=40)})
 
 for(i in names(genes.top40.t)){
-  png(here("snRNA-seq","plots","markers",
+  png(here("snRNAseq_mouse","plots","markers",
            paste0("LS_t_1vALL_top40markers-",i,"_logExprs.png")), height=1900, width=1200)
   print(
     plotExpressionCustom(sce = sce.hold,
