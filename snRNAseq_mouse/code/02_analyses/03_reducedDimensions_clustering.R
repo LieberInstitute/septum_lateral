@@ -435,6 +435,38 @@ sapply(cellClust.idx, function(x){round(quantile(sce.ls$doubletScore[x]), 2)})
 
 
 
+## Post-marker exploration ('04_markerDetection.R') ===========
+    # 'Neuron.mixed_A'only has 2 uniquely/convincingly expressed pw markers
+load(here("snRNAseq_mouse", "processed_data","SCE", "graph_clusters_glmpca_LS-n3.rda"), verbose=T)
+
+# Can community detection result be used to split these into two?
+# Neuron.mixed_A was graph cluster 31 (73 nuclei)
+for(i in 36:80){
+    print(
+        table(droplevels(factor(igraph::cut_at(clusters.glmpca, n=i))[clusters.glmpca$membership==31]))
+    )
+}   # wow still leaving as one cluster
+
+
+## k-means?
+sce.mixed <- sce.ls[ ,sce.ls$cellType == "Neuron.mixed_A"]
+sce.mixed
+
+set.seed(109)
+clust.kmeans <- clusterCells(sce.mixed, use.dimred="GLMPCA_50", 
+                             BLUSPARAM=KmeansParam(centers=2))
+table(clust.kmeans)
+    #clust.kmeans
+    # 1  2 
+    # 9 64          - yeah this doesn't look as even as it should...
+
+sce.mixed$kmeans.2 <- clust.kmeans
+
+plotReducedDim(sce.mixed, dimred="UMAP", colour_by="kmeans.2",
+               text_by="kmeans.2", text_size=5,
+               point_alpha=0.3, point_size=2.5) +
+    ggtitle("Neuron.mixed_A split with k-means, k=2")
+    # Doesn't look great - scrap; just keep this annotation (well, drop the '_A')
 
 
 
