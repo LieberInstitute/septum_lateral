@@ -327,20 +327,34 @@ dev.off()
 
 
 
-#for temp exploration:
-# pdf(here("snRNAseq_mouse","plots",paste0("temp_markerExplore.pdf")),height=6, width=14)
-# plotExpressionCustom(sce = sce.ls,
-#                      exprs_values = "logcounts",
-#                      # Ependymal cell markers
-#                      features = c("Rarres2", "Ccdc153","Tmem212","S100b","Acta2","Foxj1"), 
-#                      features_name = "custom-selected", 
-#                      anno_name = "cellType",
-#                      ncol=2, point_alpha=0.4, point_size=0.9,
-#                      scales="free_y", swap_rownames="gene_name") +  
-#     ggtitle(label=paste0("Lionel's custom markers of interest")) +
-#     theme(plot.title = element_text(size = 12),
-#           axis.text.x = element_text(size=7))
-# dev.off()
+# Add'ly temp/for Lionel:
+pdf(here("snRNAseq_mouse","plots",paste0("temp_interactiveMarkerExplore.pdf")),height=6, width=14)
+plotExpressionCustom(sce = sce.ls,
+                     exprs_values = "logcounts",
+                     # Ependymal cell markers
+                     features = c("Rarres2", "Ccdc153","Tmem212","S100b","Acta2","Foxj1"),
+                     features_name = "custom-selected",
+                     anno_name = "cellType",
+                     ncol=3, point_alpha=0.4, point_size=0.9,
+                     scales="free_y", swap_rownames="gene_name") +
+    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+    ggtitle(label=paste0("Literature-based selection of ependymal markers")) +
+    theme(plot.title = element_text(size = 12),
+          axis.text.x = element_text(size=7))
+# 
+plotExpressionCustom(sce = sce.ls,
+                     exprs_values = "logcounts",
+                     # Ependymal cell markers
+                     features = c("Drd3", "Htr4"),
+                     features_name = "custom-selected",
+                     anno_name = "cellType",
+                     ncol=3, point_alpha=0.4, point_size=0.9,
+                     scales="free_y", swap_rownames="gene_name") +
+    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+    ggtitle(label=paste0("Lionel's custom markers of interest")) +
+    theme(plot.title = element_text(size = 12),
+          axis.text.x = element_text(size=7))
+dev.off()
 
 
 
@@ -350,22 +364,20 @@ annotationTab.ls$cellType <- NA
 annotationTab.ls$cellType[c(4,11,20,21,34,25, 26)] <- paste0("Excit_", c("A","B","C","D", "E","F","G"))
 annotationTab.ls$cellType[c(1,2,3,8, 12,15,23,30)] <-
     paste0("Inhib_", c("A","B","C","D", "E","F","G","H"))
-annotationTab.ls$cellType[c(31)] <- paste0("Neuron.mixed_", c("A"))
-annotationTab.ls$cellType[c(19)] <- "Neuron.Ppp1r1b"
+annotationTab.ls$cellType[c(31)] <- "Neuron.mixed_A"
 
-annotationTab.ls$cellType[c(6,22)] <- paste0("Astro_", c("A","B"))
-annotationTab.ls$cellType[c(13)] <- "Astro.OPC_COP"
-annotationTab.ls$cellType[c(17,24)] <- paste0("Aqp4.Rbpms_", c("A","B"))
+annotationTab.ls$cellType[c(6, 13)] <- paste0("Astro_", c("A","B"))
+annotationTab.ls$cellType[c(17,24, 5,22)] <- paste0("Aqp4.Rbpms_", c("A","B","C","D"))
 annotationTab.ls$cellType[c(16,27)] <- paste0("Endo_", c("A","B"))
-annotationTab.ls$cellType[c(14,29)] <- paste0("Mural_", c("A","B"))
+annotationTab.ls$cellType[c(14,29, 35)] <- paste0("Mural_", c("A","B", "C"))
 annotationTab.ls$cellType[c(9)] <- "Micro"
 annotationTab.ls$cellType[c(7,18)] <- paste0("Oligo_", c("A","B"))
 annotationTab.ls$cellType[10] <- c("OPC")
 annotationTab.ls$cellType[33] <- c("OPC_COP")
+annotationTab.ls$cellType[c(19)] <- "Ependymal"
 
 annotationTab.ls$cellType[28] <- c("drop.lowNTx")
 annotationTab.ls$cellType[32] <- c("drop.doublet")
-annotationTab.ls$cellType[c(5,35)] <- paste0("ambig.glial_", c("A","B"))
 
 
 sce.ls$cellType <- annotationTab.ls$cellType[match(sce.ls$clusters.glmpca,
@@ -373,26 +385,29 @@ sce.ls$cellType <- annotationTab.ls$cellType[match(sce.ls$clusters.glmpca,
 sce.ls$cellType <- factor(sce.ls$cellType)
 
 table(sce.ls$cellType)
-# ambig.glial_A  ambig.glial_B   Aqp4.Rbpms_A   Aqp4.Rbpms_B        Astro_A 
-#            63             76            106            146           4153 
-#       Astro_B  Astro.OPC_COP   drop.doublet    drop.lowNTx         Endo_A 
-#           171           1529            150            180            118 
-#        Endo_B        Excit_A        Excit_B        Excit_C        Excit_D 
-#            40            451            670            232             67 
-#       Excit_E        Excit_F        Excit_G        Inhib_A        Inhib_B 
-#            34            202            728            797            760 
-#       Inhib_C        Inhib_D        Inhib_E        Inhib_F        Inhib_G 
-#           191           4327            306           4364            363 
-#       Inhib_H          Micro        Mural_A        Mural_B Neuron.mixed_A 
-#            86            166            112             34             73 
-#Neuron.Ppp1r1b        Oligo_A        Oligo_B            OPC        OPC_COP 
-#            65           1478            105            464             53 
+    #  Aqp4.Rbpms_A   Aqp4.Rbpms_B   Aqp4.Rbpms_C   Aqp4.Rbpms_D        Astro_A        Astro_B 
+    #           106            146             63            171           4153           1529 
+    #  drop.doublet    drop.lowNTx         Endo_A         Endo_B      Ependymal        Excit_A 
+    #           150            180            118             40             65            451 
+    #       Excit_B        Excit_C        Excit_D        Excit_E        Excit_F        Excit_G 
+    #           670            232             67             34            202            728 
+    #       Inhib_A        Inhib_B        Inhib_C        Inhib_D        Inhib_E        Inhib_F 
+    #           797            760            191           4327            306           4364 
+    #       Inhib_G        Inhib_H          Micro        Mural_A        Mural_B        Mural_C 
+    #           363             86            166            112             34             76 
+    #Neuron.mixed_A        Oligo_A        Oligo_B            OPC        OPC_COP 
+    #            73           1478            105            464             53 
 
 
 ## Save
-save(sce.ls,
+save(sce.ls, annotationTab.ls,
      file=here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"))
 
+
+# 21-22Apr: And now since we're happy with the decided drop. clusters, drop those
+#           and re-print the reducedDims & marker expression plots
+sce.ls <- sce.ls[ ,-grep("drop.", sce.ls$cellType)]
+sce.ls$cellType <- droplevels(sce.ls$cellType)
 
 
 ## re-print reducedDims with these new annotations ===
