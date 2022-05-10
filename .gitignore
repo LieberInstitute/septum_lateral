@@ -2,3 +2,6 @@
 snRNAseq_mouse/raw_data/FASTQ
 snRNAseq_mouse/processed_data/SCE/
 *.sh.*
+
+# DE results from TrkB experiment
+snRNAseq_mouse/processed_data/tables/TrkBKO_DEgenes_FDR05.csv
