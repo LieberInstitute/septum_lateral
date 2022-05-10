@@ -484,6 +484,25 @@ plotReducedDim(sce.mixed, dimred="UMAP", colour_by="kmeans.2",
     # Doesn't look great - scrap; just keep this annotation (well, drop the '_A')
 
 
+# Expression of Slc17a7 and/or Gad2 at the nuclei-level?
+plotReducedDim(sce.mixed, dimred="UMAP",
+               colour_by="Slc17a7",
+               #colour_by="Gad1",
+               swap_rownames="gene_name",
+               point_alpha=0.3, point_size=3.5) +
+  ggtitle("Neuron.mixed_A split with k-means, k=2")
+
+# Print heatmap
+pdf(here("snRNAseq_mouse","plots",paste0("temp_interactiveNeuron.mixed_expression.pdf")))
+plotHeatmap(sce.mixed, features=c("Slc17a7", "Slc17a6","Gad1","Gad2", "Slc32a1"),
+            exprs_values="logcounts",
+            swap_rownames="gene_name")
+dev.off()
+
+
+
+
+
 
 ## Reproducibility information ====
 print('Reproducibility information:')
