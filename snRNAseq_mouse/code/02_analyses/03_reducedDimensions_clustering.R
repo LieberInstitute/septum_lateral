@@ -293,6 +293,7 @@ markers.mathys.tran = list(
     'Macro' = c('CD163', 'SIGLEC1', 'F13A1')
 )
 
+
 # Will have to 'make these mouse'
 broadMarkers <- markers.mathys.tran
 for(i in 1:length(broadMarkers)){
@@ -303,21 +304,40 @@ for(i in 1:length(broadMarkers)){
 table(unname(unlist(broadMarkers)) %in% rowData(sce.ls)$gene_name) #all good
 
 
+## Expected region/sub-region markers:
+markers.curated <- list("Accumbens" = c("Ppp1r1b", "Adora2a"),
+                       "Pan.LS" = c("Ptpn3", "Grk5", "Ddn", "Met", "Lats2", "Gabra5",
+                                    "Dgkg", "Dgkh", "Ndnf", "Glp1r", "Gpr88", "Gpr12"),
+                       "MS.specific" = c("Nacc2", "Sgpp2", "Kcnab3", "Ngfr", "Lgi2", "Nrip3",
+                                         "Lrrc55", "Trpc5", "Tshz3", "Scn1a"),
+                       "Septal.Hip" = c("Grid2ip", "Slc17a7", "Matn2", "Bok", "Egr4"),
+                       "Ventricle.ependymal" = c("Lrrc74b")
+                       )
+
+
+
+
+
+
+
+
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters.pdf")),
-pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_annotated.pdf")),
+#pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_annotated.pdf")),
+pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_annotated.pdf")),
     height=6, width=14)
-for(i in 1:length(broadMarkers)){
+for(i in 1:length(markers.curated)){
     print(
         plotExpressionCustom(sce = sce.ls,
                              exprs_values = "logcounts",
-                             features = broadMarkers[[i]], 
-                             features_name = names(broadMarkers)[[i]], 
+                             features = markers.curated[[i]], 
+                             features_name = names(markers.curated)[[i]], 
                              #anno_name = "clusters.glmpca",
                              anno_name = "cellType",
-                             ncol=2, point_alpha=0.4, point_size=0.9,
+                             ncol=4,
+                             point_alpha=0.4, point_size=0.9,
                              scales="free_y", swap_rownames="gene_name") +  
             ggtitle(label=paste0("mouse LS (n4) clusters: ",
-                                 names(broadMarkers)[[i]], " markers")) +
+                                 names(markers.curated)[[i]], " markers")) +
             theme(plot.title = element_text(size = 12),
                   axis.text.x = element_text(size=7)) +
             scale_color_manual(values = c(cbPalette, tableau20, tableau10medium))
