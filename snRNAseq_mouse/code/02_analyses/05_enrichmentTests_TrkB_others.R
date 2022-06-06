@@ -81,13 +81,18 @@ load(here("snRNAseq_mouse", "processed_data","SCE",
           "markers-stats_LS-n4_findMarkers_35cellTypes.rda"), verbose=T)
 
 length(intersect(DE.TrkB.KO$Symbol, rowData(sce.ls)$gene_name))
+    # [1] 3524
 length(setdiff(DE.TrkB.KO$Symbol, rowData(sce.ls)$gene_name))
-    #[1] 220
-length(intersect(DE.TrkB.KO$ensemblID, rowData(sce.ls)$gene_id))
-length(setdiff(DE.TrkB.KO$ensemblID, rowData(sce.ls)$gene_id))
-    #[1] 214
+    # [1] 220
 
-setdiff(DE.TrkB.KO$Symbol, rowData(sce.ls)$gene_name)
+# By Ensembl ID
+length(intersect(DE.TrkB.KO$ensemblID, rowData(sce.ls)$gene_id))
+    # [1] 3536
+length(setdiff(DE.TrkB.KO$ensemblID, rowData(sce.ls)$gene_id))
+    # [1] 214
+
+sort(setdiff(DE.TrkB.KO$Symbol, rowData(sce.ls)$gene_name))
+    # A lot of GmXXXXXX and XXXXXXXRik genes
 
 pdf(here("snRNAseq_mouse","plots","volcanoPlot_intersectingDEgenes-vs-SCE.pdf"))
 plot(x=DE.TrkB.KO$logFC, y=(-log10(DE.TrkB.KO$P.Value)),
@@ -219,6 +224,152 @@ for(i in names(markerList.t.pw)){
 
 
 ## Enrichment tests (with the '1vAll' numbers) ===
+sapply(markers.ls.t.1vAll, names)
+
+# Take just the enriched set
+markerList.t.1vAll <- lapply(markers.ls.t.1vAll, function(x){
+  rownames(x[[2]])[ x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median==TRUE ]
+}
+)
+
+# Change to gene symbols
+markerList.t.1vAll <- lapply(markerList.t.1vAll, function(x){
+  rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
+})
+
+## From Andrew's code (at /dcl01/lieber/ajaffe/Keri/TrkBKO)
+    # Load the RSE for the DE analyses 
+    load("/dcl01/lieber/ajaffe/Keri/TrkBKO/preprocessed_data/rse_gene_TrkB_KO_LS_n8.Rdata",
+         verbose=T)
+        # rse_gene, getRPKM
+    
+    ## get phenotype data
+    pd = read.csv("/dcl01/ajaffe/data/Nina/Keri/SunHong_102318/sampleList.txt",as.is=TRUE)
+    rownames(pd) = paste0("Sample.", pd$SampleID)
+    colData(rse_gene) = DataFrame(cbind(pd[colnames(rse_gene),], data.frame(colData(rse_gene))))
+    
+    geneExprs = log2(getRPKM(rse_gene,"Length")+1)
+    
+    ## check Bdnf 
+    bdnf = geneExprs[rownames(rse_gene)[which(rowData(rse_gene)$Symbol == "Bdnf")],]
+    boxplot(bdnf ~ rse_gene$Condition,las=3, ylab = "Bdnf: log2(RPKM+1)")
+
+    
+    
+    
+## Want to know %(+) per cell type for Slc17a7, Slca7a6, Gad1 & Gad2 %'s =====
+# Adapted from https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/master/shiny_apps/00_clean_functions.R
+sce.hold <- sce.ls
+
+cellType.idx <- splitit(sce.ls$cellType)
+rowdat.sce <- rowData(sce.ls)
+for(i in names(cellType.idx)){
+  message(Sys.time(), " computing propNucleiExprs for ", i)
+  rowdat.sce[, paste0("propExprsIn.", i)] <- apply(
+    assay(sce.ls, "counts")[, cellType.idx[[i]]],
+    1,
+    function(x){
+      mean(x != 0)
+    }
+  )
+}
+rowData(sce.ls) <- rowdat.sce
+# For ease of querying
+rownames(sce.ls) <- uniquifyFeatureNames(rowData(sce.ls)$gene_id, rowData(sce.ls)$gene_name)
+
+rowData(sce.ls)[c("Slc17a7", "Slc17a6", "Gad1", "Gad2"), ]
+    
+# Save this for reference
+rowdat.sce <- rowData(sce.ls)
+
+write.table(rowdat.sce, file=here("snRNAseq_mouse","processed_data","tables",
+                                  "rowData_with_propExprsd_byCellType.tsv"),
+            sep="\t", quote = FALSE)
+
+
+
+## Combinatorial expression
+geneExprs <- assay(sce.ls, "counts")
+
+lapply(cellType.idx, function(x){
+  signif(prop.table(table(geneExprs["Slc17a7",x] > 0 &
+          geneExprs["Slc17a6",x] > 0)
+  ),2)
+})
+
+lapply(cellType.idx, function(x){
+  signif(prop.table(table(geneExprs["Slc17a7",x] > 0 &
+                            geneExprs["Gad1",x] > 0)
+  ),2)
+})
+
+
+lapply(cellType.idx, function(x){
+  signif(prop.table(table(geneExprs["Slc17a6",x] > 0 &
+                            geneExprs["Gad1",x] > 0)
+  ),2)
+})
+
+
+lapply(cellType.idx, function(x){
+  signif(prop.table(table(geneExprs["Slc17a7",x] > 0 &
+                            geneExprs["Gad2",x] > 0)
+  ),2)
+})
+
+lapply(cellType.idx, function(x){
+  signif(prop.table(table(geneExprs["Slc17a6",x] > 0 &
+                            geneExprs["Gad2",x] > 0)
+  ),2)
+})
+
+lapply(cellType.idx, function(x){
+  signif(prop.table(table(geneExprs["Gad1",x] > 0 &
+                            geneExprs["Gad2",x] > 0)
+  ),2)
+})
+
+
+
+
+
+
+
+sce.ls$MSN.D1 <- NA
+sce.ls$MSN.D1[grep("MSN.D1", sce.ls$cellType)] <- TRUE
+
+sce.ls$MSN.D1.0 <- NA
+sce.ls$MSN.D1.0 <- sce.ls$MSN.D1 & geneExprs["DRD1", ]==0
+
+# Now plot & color by this - is DRD2 expressed?
+plotExpression(sce.ls, exprs_values = "logcounts", features=c("DRD1", "DRD2"),
+               x="cellType", colour_by="MSN.D1.0", point_alpha=0.5, point_size=1.2, ncol=5,
+               add_legend=T) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(size = 25))
+
+
+sce.ls$MSN.D2 <- NA
+sce.ls$MSN.D2[grep("MSN.D2", sce.ls$cellType)] <- TRUE
+
+sce.ls$MSN.D2.0 <- NA
+sce.ls$MSN.D2.0 <- sce.ls$MSN.D2 & geneExprs["DRD2", ]==0
+
+# Now plot & color by this - is DRD1 expressed?
+plotExpression(sce.ls, exprs_values = "logcounts", features=c("DRD1", "DRD2"),
+               x="cellType", colour_by="MSN.D2.0", point_alpha=0.5, point_size=1.2, ncol=5,
+               add_legend=T) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(size = 25))
+
+
+
+
+# non-0 expression of BOTH? ===
+table(geneExprs["DRD1", union(which(sce.ls$MSN.D1), which(sce.ls$MSN.D2))] > 0 &
+        geneExprs["DRD2", union(which(sce.ls$MSN.D1), which(sce.ls$MSN.D2))] > 0)
+
+
+
+
 
 
 
