@@ -448,7 +448,9 @@ plotReducedDim(sce.ls, dimred="UMAP", colour_by="doubletScore",
 plotReducedDim(sce.ls, dimred="UMAP", colour_by="cellType",
                text_by="cellType", text_size=3,
                point_alpha=0.3, point_size=1.5) +
-    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium),
+                       labels=paste0(levels(sce.ls$cellType)," (",
+                                     table(sce.ls$cellType),")")) +
     guides(color=guide_legend(ncol=1)) +
     ggtitle("UMAP of LS (n=4), colored by annotated graph-based clusters")
 
@@ -456,7 +458,9 @@ plotReducedDim(sce.ls, dimred="UMAP", colour_by="cellType",
 plotReducedDim(sce.ls, dimred="TSNE", colour_by="cellType",
                text_by="cellType", text_size=3,
                point_alpha=0.3, point_size=1.5) +
-    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium),
+                       labels=paste0(levels(sce.ls$cellType)," (",
+                                     table(sce.ls$cellType),")")) +
     guides(color=guide_legend(ncol=1)) +
     ggtitle("TSNE of LS (n=4), colored by annotated graph-based clusters")
 dev.off()
@@ -521,6 +525,27 @@ dev.off()
 
 
 
+### Inhib_D: huge (>4300 nuclei) cluster with little PW markers =======
+  # Sub-clustering likely necessary
+library(pheatmap)
+
+# Compute cluster modularity ratio (a measure of cluster separation)
+mod.ratio.merged.HC <- pairwiseModularity(graph = snn.gr.glmpca,
+                                          clusters = sce.ls$cellType,
+                                          as.ratio=TRUE)
+
+# Heatmap
+pdf(here("snRNAseq_mouse","plots","clusterModRatio_35clusters_LS-n4.pdf"))
+pheatmap(log2(mod.ratio.merged.HC+1), cluster_rows=FALSE, cluster_cols=FALSE,
+         color=colorRampPalette(c("white", "blue"))(100),
+         main="Modularity ratio for 35 graph-based clusters in LS (n=4)",
+         fontsize_row=7.5, fontsize_col=7.5, angle_col=90,
+         display_numbers=T, number_format="%.1f", fontsize_number=5.5,
+         na_col="darkgrey")
+grid::grid.text(label="log2(ratio)",x=0.97,y=0.64, gp=grid::gpar(fontsize=7))
+dev.off()
+    # Inhib_D for sure should be re-clustered; maybe Inhib_F for the low
+    # within-cluster modularity ratio, and that it is an equally large cluster
 
 
 
