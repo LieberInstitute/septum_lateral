@@ -549,6 +549,51 @@ dev.off()
 
 
 
+## Subclustering Inhib_D ===
+
+# Try scran's `clusterCells` with defaults (NNGraphParam input)
+subclust.Inhib_D <- clusterCells(sce.ls[ ,sce.ls$cellType=="Inhib_D"], use.dimred="GLMPCA_50")
+    # 23 populations with default k=10 neighbors & walktrap method
+
+subclust.Inhib_D <- clusterCells(sce.ls[ ,sce.ls$cellType=="Inhib_D"],
+                                 use.dimred="GLMPCA_50",
+                                 BLUSPARAM=NNGraphParam(k=20))
+    # 13 populations
+
+sce.inhibD <- sce.ls[ ,sce.ls$cellType=="Inhib_D"]
+sce.inhibD$cellType <- droplevels(sce.inhibD$cellType)
+sce.inhibD$cellType.sub <- clusterCells(sce.inhibD, use.dimred="GLMPCA_50",
+                                        BLUSPARAM=NNGraphParam(k=20))
+
+pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_Inhib_D-subClusters.pdf")),
+    height=6, width=14)
+for(i in 1:length(broadMarkers)){
+  print(
+    plotExpressionCustom(sce = sce.inhibD,
+                         exprs_values = "logcounts",
+                         features = broadMarkers[[i]], 
+                         features_name = names(broadMarkers)[[i]], 
+                         #anno_name = "clusters.glmpca",
+                         anno_name = "cellType.sub",
+                         ncol=4,
+                         point_alpha=0.4, point_size=0.9,
+                         scales="free_y", swap_rownames="gene_name") +  
+      ggtitle(label=paste0("mouse LS (n4) subclusters of 'Inhib_D': ",
+                           names(broadMarkers)[[i]], " markers")) +
+      theme(plot.title = element_text(size = 12),
+            axis.text.x = element_text(size=7))
+  )
+}
+dev.off()
+
+    ## These look pretty good - will store these and merge non-neuronal populations
+
+
+
+
+
+
+
 ## Reproducibility information ====
 print('Reproducibility information:')
 Sys.time()
