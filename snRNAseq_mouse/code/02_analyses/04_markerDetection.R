@@ -130,9 +130,57 @@ sapply(cellClust.idx, function(x){quantile(sce.ls$sum[x])})
     # 100%          47248          38139 32078.0   52916 41110.00   36554
 
 
+## Inhib_D & Inhib_F seem to have a substantial proportion of nuclei with ~high doublet score
+ #    -> Could we get a better-resolved set of markers after thresholding on a defined score?
+ #    -> Use 5.0 (rounding up from the median score of the drop.doublet population)
+
+# Proportions lost
+sort(sapply(cellClust.idx, function(x){round(table(sce.ls$doubletScore[x] >= 5)["TRUE"]/length(x),2)}))
+    #       Oligo_A.TRUE   Aqp4.Rbpms_B.TRUE        Astro_A.TRUE         Endo_A.TRUE        Excit_C.TRUE 
+    #               0.00                0.01                0.01                0.01                0.01 
+    #       Excit_F.TRUE        Inhib_E.TRUE        Inhib_G.TRUE        Inhib_H.TRUE        Mural_C.TRUE 
+    #               0.01                0.01                0.01                0.01                0.01 
+    # A qp4.Rbpms_A.TRUE        Astro_B.TRUE    drop.lowNTx.TRUE        Excit_B.TRUE        Excit_G.TRUE 
+    #               0.02                0.02                0.02                0.02                0.02 
+    #       Inhib_B.TRUE        Inhib_C.TRUE            OPC.TRUE   Aqp4.Rbpms_C.TRUE      Ependymal.TRUE 
+    #               0.02                0.02                0.02                0.03                0.03 
+    #       Excit_A.TRUE        Excit_E.TRUE        Inhib_A.TRUE        Mural_A.TRUE        Mural_B.TRUE 
+    #               0.03                0.03                0.03                0.03                0.03 
+    #Neuron.mixed_A.TRUE        Oligo_B.TRUE        OPC_COP.TRUE        Inhib_D.TRUE   Aqp4.Rbpms_D.TRUE 
+    #               0.03                0.03                0.04                0.05                0.06 
+    #       Inhib_F.TRUE        Excit_D.TRUE   drop.doublet.TRUE 
+    #               0.06                0.12                0.49 
+
+sce.ls <- sce.ls[ ,!(sce.ls$doubletScore >= 5)]
+    # Drops 783 nuclei
+
+    ## Resulting marker set (with median expression > 0):
+    # Aqp4.Rbpms_A.TRUE     Aqp4.Rbpms_B.NA   Aqp4.Rbpms_C.TRUE     Aqp4.Rbpms_D.NA 
+    # 7                  NA                 143                  NA 
+    # Astro_A.TRUE        Astro_B.TRUE     drop.doublet.NA    drop.lowNTx.TRUE 
+    # 25                  46                  NA                  34 
+    # Endo_A.NA         Endo_B.TRUE      Ependymal.TRUE        Excit_A.TRUE 
+    # NA                 503                 191                  18 
+    # Excit_B.TRUE        Excit_C.TRUE        Excit_D.TRUE        Excit_E.TRUE 
+    # 35                  43                  76                  31 
+    # Excit_F.TRUE        Excit_G.TRUE        Inhib_A.TRUE        Inhib_B.TRUE 
+    # 36                   2                   6                  35 
+    # Inhib_C.TRUE        Inhib_D.TRUE        Inhib_E.TRUE        Inhib_F.TRUE 
+    # 31                   1                  47                  31 
+    # Inhib_G.TRUE        Inhib_H.TRUE          Micro.TRUE        Mural_A.TRUE 
+    # 42                  40                 147                  23 
+    # Mural_B.TRUE        Mural_C.TRUE Neuron.mixed_A.TRUE        Oligo_A.TRUE 
+    # 134                  23                   3                   7 
+    # Oligo_B.TRUE            OPC.TRUE        OPC_COP.TRUE 
+    # 115                  45                 115 
+
+        # These are pretty much the same as before.
+        #   --> Proceed to sub-clustering Inhib_D; maybe _F too.
+
+
 # First drop any flagged clusters for dropping    - not doing this time (until we have final annotations)
-sce.ls <- sce.ls[ ,-grep("drop.",sce.ls$cellType)]
-sce.ls$cellType <- droplevels(sce.ls$cellType)
+# sce.ls <- sce.ls[ ,-grep("drop.",sce.ls$cellType)]
+# sce.ls$cellType <- droplevels(sce.ls$cellType)
 
 # Remove 0 genes across all nuclei
 sce.ls <- sce.ls[!rowSums(assay(sce.ls, "counts"))==0, ]  #
@@ -465,6 +513,8 @@ top40genes <- top40genes[ ,sort(colnames(top40genes))]
 write.csv(top40genes, file=here("snRNAseq_mouse", "processed_data","tables",
                                 "top40genesLists_LS-n4_35cellTypes.csv"),
           row.names=FALSE)
+
+
 
 
 
