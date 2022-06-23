@@ -474,57 +474,6 @@ sapply(cellClust.idx, function(x){round(quantile(sce.ls$doubletScore[x]), 2)})
 
 
 
-## Post-marker exploration ('04_markerDetection.R') ===========
-    # 'Neuron.mixed_A'only has 2 uniquely/convincingly expressed pw markers
-load(here("snRNAseq_mouse", "processed_data","SCE", "graph_clusters_glmpca_LS-n3.rda"), verbose=T)
-
-# Can community detection result be used to split these into two?
-# Neuron.mixed_A was graph cluster 31 (73 nuclei)
-for(i in 36:80){
-    print(
-        table(droplevels(factor(igraph::cut_at(clusters.glmpca, n=i))[clusters.glmpca$membership==31]))
-    )
-}   # wow still leaving as one cluster
-
-
-## k-means?
-sce.mixed <- sce.ls[ ,sce.ls$cellType == "Neuron.mixed_A"]
-sce.mixed
-
-set.seed(109)
-clust.kmeans <- clusterCells(sce.mixed, use.dimred="GLMPCA_50", 
-                             BLUSPARAM=KmeansParam(centers=2))
-table(clust.kmeans)
-    #clust.kmeans
-    # 1  2 
-    # 9 64          - yeah this doesn't look as even as it should...
-
-sce.mixed$kmeans.2 <- clust.kmeans
-
-plotReducedDim(sce.mixed, dimred="UMAP", colour_by="kmeans.2",
-               text_by="kmeans.2", text_size=5,
-               point_alpha=0.3, point_size=2.5) +
-    ggtitle("Neuron.mixed_A split with k-means, k=2")
-    # Doesn't look great - scrap; just keep this annotation (well, drop the '_A')
-
-
-# Expression of Slc17a7 and/or Gad2 at the nuclei-level?
-plotReducedDim(sce.mixed, dimred="UMAP",
-               colour_by="Slc17a7",
-               #colour_by="Gad1",
-               swap_rownames="gene_name",
-               point_alpha=0.3, point_size=3.5) +
-  ggtitle("Neuron.mixed_A split with k-means, k=2")
-
-# Print heatmap
-pdf(here("snRNAseq_mouse","plots",paste0("temp_interactiveNeuron.mixed_expression.pdf")))
-plotHeatmap(sce.mixed, features=c("Slc17a7", "Slc17a6","Gad1","Gad2", "Slc32a1"),
-            exprs_values="logcounts",
-            swap_rownames="gene_name")
-dev.off()
-
-
-
 ### Inhib_D: huge (>4300 nuclei) cluster with little PW markers =======
   # Sub-clustering likely necessary
 library(pheatmap)
@@ -587,6 +536,85 @@ for(i in 1:length(broadMarkers)){
 dev.off()
 
     ## These look pretty good - will store these and merge non-neuronal populations
+
+sce.ls$cellType.final <- as.character(sce.ls$cellType)
+sce.ls$cellType.final[grep("Aqp4.Rbpms", sce.ls$cellType.final)] <- "Aqp4.Rbpms"
+sce.ls$cellType.final[grep("Mural", sce.ls$cellType.final)] <- "Mural"
+sce.ls$cellType.final[grep("Oligo", sce.ls$cellType.final)] <- "Oligo"
+sce.ls$cellType.final[grep("Astro", sce.ls$cellType.final)] <- "Astro"
+sce.ls$cellType.final[grep("Endo", sce.ls$cellType.final)] <- "Endo"
+
+# # TODO - need to fix
+# sce.ls$cellType.final[sce.ls$cellType.final == "Inhib_D"] <-
+#   as.character(sce.inhibD$cellType.sub)[match(colnames(sce.ls), colnames(sce.inhibD))]
+
+
+## What if just didn't subset the SCE?
+sce.ls$cellType.final[sce.ls$cellType.final=="Inhib_D"] <-
+  as.character(clusterCells(sce.ls[ ,sce.ls$cellType.final=="Inhib_D"],
+                            use.dimred="GLMPCA_50",
+                            BLUSPARAM=NNGraphParam(k=20)))
+
+# Then check this
+sce.inhibD <- sce.ls[ ,sce.ls$cellType=="Inhib_D"]
+
+plotExpressionCustom(sce = sce.inhibD,
+                     exprs_values = "logcounts",
+                     features = broadMarkers[["excit_neuron"]], 
+                     features_name = "", 
+                     anno_name = "cellType.final",
+                     ncol=4,
+                     point_alpha=0.4, point_size=0.9,
+                     scales="free_y", swap_rownames="gene_name")
+    # this looks right
+    #   -> go ahead and re-assign these to new annotations (mostly inhib)
+
+    # First - Inhib_D.1 looks very much like oligos....
+    plotReducedDim(sce.inhibD, "UMAP", colour_by="cellType.final", point_size=2.5)
+        # it's quite dispersed
+    cell.sub.idx <- splitit(sce.inhibD$cellType.final)
+    sapply(cell.sub.idx, function(x){quantile(sce.inhibD$sum[x])})
+        # total UMI distribution is normal for oligos
+    sapply(cell.sub.idx, function(x){round(quantile(sce.inhibD$doubletScore[x]),3)})
+    #           1    10    11    12    13      2      3     4      5     6     7     8     9
+    # 0%    0.000 0.134 0.022 0.036 0.073  0.007  0.000 0.000  0.000 0.015 0.015 0.061 0.121
+    # 25%   0.621 0.279 0.170 0.190 0.157  0.169  0.126 0.122  0.134 0.261 0.112 0.316 0.614
+    # 50%   2.008 0.400 0.254 0.339 0.234  0.365  0.267 0.231  0.281 0.394 0.182 0.425 0.779
+    # 75%   2.937 0.790 0.425 0.835 0.340  0.928  0.741 0.872  0.673 0.937 0.300 0.740 1.206
+    # 100% 11.377 8.651 7.822 6.075 3.018 11.487 11.420 5.916 11.432 9.406 7.009 2.497 7.562
+        # A higher median score than typical; but also not _as_ high as we often see
+        #     for more convincing doublets... maybe just flag for now
+
+
+# Re-assignment of Inhib_D subclusters:
+    # - Keep '2' as Inhib_D, re-assign the rest
+sce.ls$cellType.final[sce.ls$cellType.final=="1"] <- "drop.likelyDoublet"
+sce.ls$cellType.final[sce.ls$cellType.final=="2"] <- "Inhib_D"
+# and the rest:
+sce.ls$cellType.final[sce.ls$cellType.final=="3"] <- "Inhib_I"
+sce.ls$cellType.final[sce.ls$cellType.final=="4"] <- "Inhib_J"
+sce.ls$cellType.final[sce.ls$cellType.final=="5"] <- "Inhib_K"
+sce.ls$cellType.final[sce.ls$cellType.final=="6"] <- "Inhib_L"
+sce.ls$cellType.final[sce.ls$cellType.final=="7"] <- "Inhib_M"
+sce.ls$cellType.final[sce.ls$cellType.final=="8"] <- "Inhib_N"
+sce.ls$cellType.final[sce.ls$cellType.final=="9"] <- "Excit_H"  # the hidden excit
+sce.ls$cellType.final[sce.ls$cellType.final=="10"] <- "Inhib_O"
+sce.ls$cellType.final[sce.ls$cellType.final=="11"] <- "Inhib_P"
+sce.ls$cellType.final[sce.ls$cellType.final=="12"] <- "Inhib_Q"
+sce.ls$cellType.final[sce.ls$cellType.final=="13"] <- "Inhib_R"
+
+# And finally some merges based on deep dives with markers
+    ## TODO
+
+# Re-factor
+sce.ls$cellType.final <- factor(sce.ls$cellType.final)
+
+# Check
+plotReducedDim(sce.ls, "UMAP", colour_by="cellType.final", point_size=2,
+               text_by="cellType.final") #+
+  # scale_color_manual(values = c(cbPalette, tableau20, tableau10medium),
+  #                    labels=paste0(levels(sce.ls$cellType.final)," (",
+  #                                  table(sce.ls$cellType.final),")"))
 
 
 
