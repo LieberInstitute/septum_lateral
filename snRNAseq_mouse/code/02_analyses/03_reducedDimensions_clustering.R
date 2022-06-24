@@ -269,7 +269,7 @@ save(sce.ls,
 ## Broad markers of interest:
 markers.mathys.tran = list(
     'neuron' = c('SYT1', 'SNAP25', 'GRIN1'),
-    'excit_neuron' = c('CAMK2A', 'NRGN','SLC17A7', 'SLC17A6', 'SLC17A8'),
+    'excit_neuron' = c('SLC17A7', 'SLC17A6', 'SLC17A8'),
     'inhib_neuron' = c('GAD1', 'GAD2', 'SLC32A1'),
     # Norepinephrine & serotonergic markers
     'neuron.NE' = c("TH", "DBH", "SLC6A2", "SLC18A2", "GCH1", "DDC"), #SLC6A3 - saw no DAT
@@ -323,24 +323,25 @@ markers.curated <- list("Accumbens" = c("Ppp1r1b", "Adora2a"),
 
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_annotated.pdf")),
-pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_annotated.pdf")),
+pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
+#pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_annotated.pdf")),
     height=6, width=14)
-for(i in 1:length(markers.curated)){
+for(i in 1:length(broadMarkers)){
     print(
         plotExpressionCustom(sce = sce.ls,
                              exprs_values = "logcounts",
-                             features = markers.curated[[i]], 
-                             features_name = names(markers.curated)[[i]], 
+                             features = broadMarkers[[i]], 
+                             features_name = names(broadMarkers)[[i]], 
                              #anno_name = "clusters.glmpca",
-                             anno_name = "cellType",
+                             anno_name = "cellType.final",
                              ncol=4,
                              point_alpha=0.4, point_size=0.9,
                              scales="free_y", swap_rownames="gene_name") +  
             ggtitle(label=paste0("mouse LS (n4) clusters: ",
-                                 names(markers.curated)[[i]], " markers")) +
+                                 names(broadMarkers)[[i]], " markers")) +
             theme(plot.title = element_text(size = 12),
                   axis.text.x = element_text(size=7)) +
-            scale_color_manual(values = c(cbPalette, tableau20, tableau10medium))
+            scale_color_manual(values = cell_colors.ls)
     )
 }
 dev.off()
@@ -424,10 +425,17 @@ save(sce.ls, annotationTab.ls,
      file=here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"))
 
 
-# 21-22Apr: And now since we're happy with the decided drop. clusters, drop those
-#           and re-print the reducedDims & marker expression plots
-sce.ls <- sce.ls[ ,-grep("drop.", sce.ls$cellType)]
-sce.ls$cellType <- droplevels(sce.ls$cellType)
+# 21-22Apr (now 24Jun): And now since we're happy with the decided drop. clusters, drop those
+#                       and re-print the reducedDims & marker expression plots
+sce.ls <- sce.ls[ ,-grep("drop.", sce.ls$cellType.final)]
+sce.ls <- sce.ls[ ,-grep("Neuron.mixed", sce.ls$cellType.final)]
+sce.ls$cellType.final <- droplevels(sce.ls$cellType.final)
+
+# 24Jun: Drop those from the cell_colors.ls too
+#     (based on observations at https://github.com/lmweber/locus-c/blob/f2509bb1fc74c01155c9f3a74faf222bf2f1f1a1/code/analyses_sn/04_clusterAgglomeration.R#L348)
+cell_colors.ls <- cell_colors.ls[-grep("drop", names(cell_colors.ls))]
+cell_colors.ls <- cell_colors.ls[-grep("Neuron.mixed", names(cell_colors.ls))]
+
 
 
 ## re-print reducedDims with these new annotations ===
@@ -445,22 +453,22 @@ plotReducedDim(sce.ls, dimred="UMAP", colour_by="sum",
 plotReducedDim(sce.ls, dimred="UMAP", colour_by="doubletScore",
                point_alpha=0.3, point_size=1.5) +
     ggtitle("UMAP of LS (n=4)")
-plotReducedDim(sce.ls, dimred="UMAP", colour_by="cellType",
-               text_by="cellType", text_size=3,
+plotReducedDim(sce.ls, dimred="UMAP", colour_by="cellType.final",
+               text_by="cellType.final", text_size=3,
                point_alpha=0.3, point_size=1.5) +
-    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium),
-                       labels=paste0(levels(sce.ls$cellType)," (",
-                                     table(sce.ls$cellType),")")) +
+    scale_color_manual(values = cell_colors.ls,
+                       labels=paste0(levels(sce.ls$cellType.final)," (",
+                                     table(sce.ls$cellType.final),")")) +
     guides(color=guide_legend(ncol=1)) +
     ggtitle("UMAP of LS (n=4), colored by annotated graph-based clusters")
 
 # TSNE
-plotReducedDim(sce.ls, dimred="TSNE", colour_by="cellType",
-               text_by="cellType", text_size=3,
+plotReducedDim(sce.ls, dimred="TSNE", colour_by="cellType.final",
+               text_by="cellType.final", text_size=3,
                point_alpha=0.3, point_size=1.5) +
-    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium),
-                       labels=paste0(levels(sce.ls$cellType)," (",
-                                     table(sce.ls$cellType),")")) +
+    scale_color_manual(values = cell_colors.ls,
+                       labels=paste0(levels(sce.ls$cellType.final)," (",
+                                     table(sce.ls$cellType.final),")")) +
     guides(color=guide_legend(ncol=1)) +
     ggtitle("TSNE of LS (n=4), colored by annotated graph-based clusters")
 dev.off()
@@ -480,14 +488,15 @@ library(pheatmap)
 
 # Compute cluster modularity ratio (a measure of cluster separation)
 mod.ratio.merged.HC <- pairwiseModularity(graph = snn.gr.glmpca,
-                                          clusters = sce.ls$cellType,
+                                          clusters = sce.ls$cellType.final,
                                           as.ratio=TRUE)
 
 # Heatmap
-pdf(here("snRNAseq_mouse","plots","clusterModRatio_35clusters_LS-n4.pdf"))
+#pdf(here("snRNAseq_mouse","plots","clusterModRatio_35clusters_LS-n4.pdf"))
+pdf(here("snRNAseq_mouse","plots","clusterModRatio_37clusters_LS-n4.pdf"))
 pheatmap(log2(mod.ratio.merged.HC+1), cluster_rows=FALSE, cluster_cols=FALSE,
          color=colorRampPalette(c("white", "blue"))(100),
-         main="Modularity ratio for 35 graph-based clusters in LS (n=4)",
+         main="Modularity ratio for 37 graph-based clusters in LS (n=4)",
          fontsize_row=7.5, fontsize_col=7.5, angle_col=90,
          display_numbers=T, number_format="%.1f", fontsize_number=5.5,
          na_col="darkgrey")
@@ -586,37 +595,56 @@ plotExpressionCustom(sce = sce.inhibD,
         #     for more convincing doublets... maybe just flag for now
 
 
+## First make some merges based on deep dives with markers ===
+# Inhib_F + Inhib_G (co-express most of their top markers)
+sce.ls$cellType.final[sce.ls$cellType.final %in% c("Inhib_F", "Inhib_G")] <- "Inhib_F"
+# Same with Excit_A + Excit_E
+sce.ls$cellType.final[sce.ls$cellType.final %in% c("Excit_A", "Excit_E")] <- "Excit_A"
+
+
 # Re-assignment of Inhib_D subclusters:
     # - Keep '2' as Inhib_D, re-assign the rest
 sce.ls$cellType.final[sce.ls$cellType.final=="1"] <- "drop.likelyDoublet"
 sce.ls$cellType.final[sce.ls$cellType.final=="2"] <- "Inhib_D"
 # and the rest:
-sce.ls$cellType.final[sce.ls$cellType.final=="3"] <- "Inhib_I"
-sce.ls$cellType.final[sce.ls$cellType.final=="4"] <- "Inhib_J"
-sce.ls$cellType.final[sce.ls$cellType.final=="5"] <- "Inhib_K"
-sce.ls$cellType.final[sce.ls$cellType.final=="6"] <- "Inhib_L"
-sce.ls$cellType.final[sce.ls$cellType.final=="7"] <- "Inhib_M"
-sce.ls$cellType.final[sce.ls$cellType.final=="8"] <- "Inhib_N"
-sce.ls$cellType.final[sce.ls$cellType.final=="9"] <- "Excit_H"  # the hidden excit
-sce.ls$cellType.final[sce.ls$cellType.final=="10"] <- "Inhib_O"
-sce.ls$cellType.final[sce.ls$cellType.final=="11"] <- "Inhib_P"
-sce.ls$cellType.final[sce.ls$cellType.final=="12"] <- "Inhib_Q"
-sce.ls$cellType.final[sce.ls$cellType.final=="13"] <- "Inhib_R"
+sce.ls$cellType.final[sce.ls$cellType.final=="3"] <- "Inhib_G"
+    # Re-assign as 'Inhib_G' bc merged that with _F, above
+    # Already have an _H -->
+sce.ls$cellType.final[sce.ls$cellType.final=="4"] <- "Inhib_I"
+sce.ls$cellType.final[sce.ls$cellType.final=="5"] <- "Inhib_J"
+sce.ls$cellType.final[sce.ls$cellType.final=="6"] <- "Inhib_K"
+sce.ls$cellType.final[sce.ls$cellType.final=="7"] <- "Inhib_L"
+sce.ls$cellType.final[sce.ls$cellType.final=="8"] <- "Inhib_M"
+sce.ls$cellType.final[sce.ls$cellType.final=="9"] <- "Excit_E"
+    # A 'hidden' excit - Re-assign as 'Excit_E' bc merged that with _A, above
+sce.ls$cellType.final[sce.ls$cellType.final=="10"] <- "Inhib_N"
+sce.ls$cellType.final[sce.ls$cellType.final=="11"] <- "Inhib_O"
+sce.ls$cellType.final[sce.ls$cellType.final=="12"] <- "Inhib_P"
+sce.ls$cellType.final[sce.ls$cellType.final=="13"] <- "Inhib_Q"
 
-# And finally some merges based on deep dives with markers
-    ## TODO
+# Re-annotate 'Neuron.mixed_A' - only 'mixed' Neuronal population
+sce.ls$cellType.final[sce.ls$cellType.final=="Neuron.mixed_A"] <- "Neuron.mixed"
+
+
 
 # Re-factor
 sce.ls$cellType.final <- factor(sce.ls$cellType.final)
 
 # Check
-plotReducedDim(sce.ls, "UMAP", colour_by="cellType.final", point_size=2,
-               text_by="cellType.final") #+
-  # scale_color_manual(values = c(cbPalette, tableau20, tableau10medium),
-  #                    labels=paste0(levels(sce.ls$cellType.final)," (",
-  #                                  table(sce.ls$cellType.final),")"))
+plotReducedDim(sce.ls, "UMAP", colour_by="cellType.final", point_size=1.5,
+               text_by="cellType.final", text_size=3) +
+  scale_color_manual(values = cell_colors.ls,
+                     labels=paste0(levels(sce.ls$cellType.final)," (",
+                                   table(sce.ls$cellType.final),")"))
 
 
+## Can go ahead and assign final cell class color (37 levels)
+cell_colors.ls <- c(tableau20, tableau10medium, cbPalette[-6])
+names(cell_colors.ls) <- levels(sce.ls$cellType.final)
+
+# Save
+save(sce.ls, annotationTab.ls, cell_colors.ls,
+     file=here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"))
 
 
 
