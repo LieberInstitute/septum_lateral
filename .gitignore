@@ -5,3 +5,6 @@ snRNAseq_mouse/processed_data/SCE/
 
 # DE results from TrkB experiment
 snRNAseq_mouse/processed_data/tables/TrkBKO_DEgenes_FDR05.csv
+
+# Obsolete
+snRNAseq_mouse/plots/zold_pre24Jun_markers/
