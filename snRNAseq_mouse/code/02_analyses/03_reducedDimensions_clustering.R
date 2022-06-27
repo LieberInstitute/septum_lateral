@@ -305,40 +305,44 @@ table(unname(unlist(broadMarkers)) %in% rowData(sce.ls)$gene_name) #all good
 
 
 ## Expected region/sub-region markers:
-markers.curated <- list("Accumbens" = c("Ppp1r1b", "Adora2a"),
-                       "Pan.LS" = c("Ptpn3", "Grk5", "Ddn", "Met", "Lats2", "Gabra5",
-                                    "Dgkg", "Dgkh", "Ndnf", "Glp1r", "Gpr88", "Gpr12"),
+markers.curated <- list("Accumbens" = c("Ppp1r1b", "Adora2a","Rgs9","Syndig1l","Ric8b",
+                                        "Rgs4","Rgs7bp","Dgki"),
+                       "Pan.LS" = c("Dgkg", "Dgkh", "Prkcd", "Glp1r", "Trpc4", "Zic1",
+                                    "Homer2","Ptpn3"),
                        "MS.specific" = c("Nacc2", "Sgpp2", "Kcnab3", "Ngfr", "Lgi2", "Nrip3",
                                          "Lrrc55", "Trpc5", "Tshz3", "Scn1a"),
                        "Septal.Hip" = c("Grid2ip", "Slc17a7", "Matn2", "Bok", "Egr4"),
-                       "Ventricle.ependymal" = c("Lrrc74b")
+                       "IG" = c("Cabp7","Them6","Kcnk2"),
+                       "TT.IG" = c("Sv2b","Mtmr12","Zbtb16","Cck"),
+                       "Ventricle.ependymal" = c("Lrrc74b"),
+                       "TNoS" = c("Eomes","Col9a1","Eps8","Sln","Adgrd1"),
+                       "BNST" = c("Tac2","Glra3","Tmem145","Fxyd7","Rcn1"),
+                       "Diag.band" = c("Ntrk1", "Coro6", "Itih3", "Arhgap12", "Chat", "Kcnc2",
+                                       "Elavl2", "Lgi2", "Nacc2", "Syt17", "Rnf227", "Ngfr", "Slc18a3")
                        )
-
-
-
-
 
 
 
 
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_annotated.pdf")),
-pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
-#pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_annotated.pdf")),
+#pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
+pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
     height=6, width=14)
-for(i in 1:length(broadMarkers)){
+for(i in 1:length(markers.curated)){
     print(
         plotExpressionCustom(sce = sce.ls,
                              exprs_values = "logcounts",
-                             features = broadMarkers[[i]], 
-                             features_name = names(broadMarkers)[[i]], 
+                             features = markers.curated[[i]], 
+                             features_name = names(markers.curated)[[i]], 
                              #anno_name = "clusters.glmpca",
                              anno_name = "cellType.final",
                              ncol=4,
                              point_alpha=0.4, point_size=0.9,
                              scales="free_y", swap_rownames="gene_name") +  
             ggtitle(label=paste0("mouse LS (n4) clusters: ",
-                                 names(broadMarkers)[[i]], " markers")) +
+                                 names(markers.curated)[[i]], " curated markers")) +
+                                 #names(markers.curated)[[i]], " markers")) +
             theme(plot.title = element_text(size = 12),
                   axis.text.x = element_text(size=7)) +
             scale_color_manual(values = cell_colors.ls)
@@ -553,10 +557,6 @@ sce.ls$cellType.final[grep("Oligo", sce.ls$cellType.final)] <- "Oligo"
 sce.ls$cellType.final[grep("Astro", sce.ls$cellType.final)] <- "Astro"
 sce.ls$cellType.final[grep("Endo", sce.ls$cellType.final)] <- "Endo"
 
-# # TODO - need to fix
-# sce.ls$cellType.final[sce.ls$cellType.final == "Inhib_D"] <-
-#   as.character(sce.inhibD$cellType.sub)[match(colnames(sce.ls), colnames(sce.inhibD))]
-
 
 ## What if just didn't subset the SCE?
 sce.ls$cellType.final[sce.ls$cellType.final=="Inhib_D"] <-
@@ -596,31 +596,29 @@ plotExpressionCustom(sce = sce.inhibD,
 
 
 ## First make some merges based on deep dives with markers ===
-# Inhib_F + Inhib_G (co-express most of their top markers)
-sce.ls$cellType.final[sce.ls$cellType.final %in% c("Inhib_F", "Inhib_G")] <- "Inhib_F"
-# Same with Excit_A + Excit_E
+# Excit_A + Excit_E (co-express most of their top markers)
 sce.ls$cellType.final[sce.ls$cellType.final %in% c("Excit_A", "Excit_E")] <- "Excit_A"
+# Same with Excit_F + Excit_G 
+sce.ls$cellType.final[sce.ls$cellType.final %in% c("Excit_F", "Excit_G")] <- "Excit_F"
 
 
 # Re-assignment of Inhib_D subclusters:
     # - Keep '2' as Inhib_D, re-assign the rest
 sce.ls$cellType.final[sce.ls$cellType.final=="1"] <- "drop.likelyDoublet"
 sce.ls$cellType.final[sce.ls$cellType.final=="2"] <- "Inhib_D"
-# and the rest:
-sce.ls$cellType.final[sce.ls$cellType.final=="3"] <- "Inhib_G"
-    # Re-assign as 'Inhib_G' bc merged that with _F, above
-    # Already have an _H -->
-sce.ls$cellType.final[sce.ls$cellType.final=="4"] <- "Inhib_I"
-sce.ls$cellType.final[sce.ls$cellType.final=="5"] <- "Inhib_J"
-sce.ls$cellType.final[sce.ls$cellType.final=="6"] <- "Inhib_K"
-sce.ls$cellType.final[sce.ls$cellType.final=="7"] <- "Inhib_L"
-sce.ls$cellType.final[sce.ls$cellType.final=="8"] <- "Inhib_M"
+# and the rest - already have an _E : _H -->
+sce.ls$cellType.final[sce.ls$cellType.final=="3"] <- "Inhib_I"
+sce.ls$cellType.final[sce.ls$cellType.final=="4"] <- "Inhib_J"
+sce.ls$cellType.final[sce.ls$cellType.final=="5"] <- "Inhib_K"
+sce.ls$cellType.final[sce.ls$cellType.final=="6"] <- "Inhib_L"
+sce.ls$cellType.final[sce.ls$cellType.final=="7"] <- "Inhib_M"
+sce.ls$cellType.final[sce.ls$cellType.final=="8"] <- "Inhib_N"
 sce.ls$cellType.final[sce.ls$cellType.final=="9"] <- "Excit_E"
     # A 'hidden' excit - Re-assign as 'Excit_E' bc merged that with _A, above
-sce.ls$cellType.final[sce.ls$cellType.final=="10"] <- "Inhib_N"
-sce.ls$cellType.final[sce.ls$cellType.final=="11"] <- "Inhib_O"
-sce.ls$cellType.final[sce.ls$cellType.final=="12"] <- "Inhib_P"
-sce.ls$cellType.final[sce.ls$cellType.final=="13"] <- "Inhib_Q"
+sce.ls$cellType.final[sce.ls$cellType.final=="10"] <- "Inhib_O"
+sce.ls$cellType.final[sce.ls$cellType.final=="11"] <- "Inhib_P"
+sce.ls$cellType.final[sce.ls$cellType.final=="12"] <- "Inhib_Q"
+sce.ls$cellType.final[sce.ls$cellType.final=="13"] <- "Inhib_R"
 
 # Re-annotate 'Neuron.mixed_A' - only 'mixed' Neuronal population
 sce.ls$cellType.final[sce.ls$cellType.final=="Neuron.mixed_A"] <- "Neuron.mixed"
@@ -653,129 +651,132 @@ save(sce.ls, annotationTab.ls, cell_colors.ls,
 ## Reproducibility information ====
 print('Reproducibility information:')
 Sys.time()
-    #[1] "2022-04-06 14:36:01 EDT"
+    #[1] "2022-06-27 15:31:03 EDT"
 proc.time()
     #     user    system   elapsed 
-    # 3107.862    75.124 10736.221 
+    #1259.448   24.728 6910.033 
 options(width = 120)
 session_info()
     #─ Session info ───────────────────────────────────────────────────────────────
-        # setting  value
-        # version  R version 4.1.2 Patched (2021-11-04 r81138)
-        # os       CentOS Linux 7 (Core)
-        # system   x86_64, linux-gnu
-        # ui       X11
-        # language (EN)
-        # collate  en_US.UTF-8
-        # ctype    en_US.UTF-8
-        # tz       US/Eastern
-        # date     2022-04-06
-        # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
-        # 
-        # ─ Packages ───────────────────────────────────────────────────────────────────
-        # package              * version  date (UTC) lib source
-        # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
-        # batchelor            * 1.10.0   2021-10-26 [1] Bioconductor
-        # beachmat               2.10.0   2021-10-26 [2] Bioconductor
-        # beeswarm               0.4.0    2021-06-01 [2] CRAN (R 4.1.2)
-        # Biobase              * 2.54.0   2021-10-26 [2] Bioconductor
-        # BiocGenerics         * 0.40.0   2021-10-26 [2] Bioconductor
-        # BiocNeighbors          1.12.0   2021-10-26 [2] Bioconductor
-        # BiocParallel         * 1.28.3   2021-12-09 [2] Bioconductor
-        # BiocSingular           1.10.0   2021-10-26 [2] Bioconductor
-        # bitops                 1.0-7    2021-04-24 [2] CRAN (R 4.1.0)
-        # bluster              * 1.4.0    2021-10-26 [2] Bioconductor
-        # cli                    3.2.0    2022-02-14 [2] CRAN (R 4.1.2)
-        # cluster                2.1.3    2022-03-28 [3] CRAN (R 4.1.2)
-        # colorspace             2.0-3    2022-02-21 [2] CRAN (R 4.1.2)
-        # cowplot                1.1.1    2020-12-30 [2] CRAN (R 4.1.2)
-        # crayon                 1.5.1    2022-03-26 [2] CRAN (R 4.1.2)
-        # DBI                    1.1.2    2021-12-20 [2] CRAN (R 4.1.2)
-        # DelayedArray           0.20.0   2021-10-26 [2] Bioconductor
-        # DelayedMatrixStats     1.16.0   2021-10-26 [2] Bioconductor
-        # digest                 0.6.29   2021-12-01 [2] CRAN (R 4.1.2)
-        # dplyr                  1.0.8    2022-02-08 [2] CRAN (R 4.1.2)
-        # dqrng                  0.3.0    2021-05-01 [2] CRAN (R 4.1.2)
-        # DropletUtils         * 1.14.2   2022-01-09 [2] Bioconductor
-        # edgeR                  3.36.0   2021-10-26 [2] Bioconductor
-        # ellipsis               0.3.2    2021-04-29 [2] CRAN (R 4.1.0)
-        # fansi                  1.0.3    2022-03-24 [2] CRAN (R 4.1.2)
-        # farver                 2.1.0    2021-02-28 [2] CRAN (R 4.1.0)
-        # fs                     1.5.2    2021-12-08 [2] CRAN (R 4.1.2)
-        # gargle                 1.2.0    2021-07-02 [2] CRAN (R 4.1.0)
-        # generics               0.1.2    2022-01-31 [2] CRAN (R 4.1.2)
-        # GenomeInfoDb         * 1.30.1   2022-01-30 [2] Bioconductor
-        # GenomeInfoDbData       1.2.7    2021-11-01 [2] Bioconductor
-        # GenomicRanges        * 1.46.1   2021-11-18 [2] Bioconductor
-        # ggbeeswarm             0.6.0    2017-08-07 [2] CRAN (R 4.1.2)
-        # ggplot2              * 3.3.5    2021-06-25 [2] CRAN (R 4.1.0)
-        # ggrepel                0.9.1    2021-01-15 [2] CRAN (R 4.1.0)
-        # glue                   1.6.2    2022-02-24 [2] CRAN (R 4.1.2)
-        # googledrive            2.0.0    2021-07-08 [2] CRAN (R 4.1.0)
-        # gridExtra            * 2.3      2017-09-09 [2] CRAN (R 4.1.0)
-        # gtable                 0.3.0    2019-03-25 [2] CRAN (R 4.1.0)
-        # HDF5Array              1.22.1   2021-11-14 [2] Bioconductor
-        # here                 * 1.0.1    2020-12-13 [2] CRAN (R 4.1.2)
-        # igraph                 1.3.0    2022-04-01 [2] CRAN (R 4.1.2)
-        # IRanges              * 2.28.0   2021-10-26 [2] Bioconductor
-        # irlba                  2.3.5    2021-12-06 [2] CRAN (R 4.1.2)
-        # jaffelab             * 0.99.31  2021-12-13 [1] Github (LieberInstitute/jaffelab@2cbd55a)
-        # labeling               0.4.2    2020-10-20 [2] CRAN (R 4.1.0)
-        # lattice                0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
-        # lifecycle              1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
-        # limma                  3.50.1   2022-02-17 [2] Bioconductor
-        # locfit                 1.5-9.5  2022-03-03 [2] CRAN (R 4.1.2)
-        # magrittr               2.0.3    2022-03-30 [2] CRAN (R 4.1.2)
-        # Matrix                 1.4-1    2022-03-23 [3] CRAN (R 4.1.2)
-        # MatrixGenerics       * 1.6.0    2021-10-26 [2] Bioconductor
-        # matrixStats          * 0.61.0   2021-09-17 [2] CRAN (R 4.1.2)
-        # metapod                1.2.0    2021-10-26 [2] Bioconductor
-        # munsell                0.5.0    2018-06-12 [2] CRAN (R 4.1.0)
-        # pillar                 1.7.0    2022-02-01 [2] CRAN (R 4.1.2)
-        # pkgconfig              2.0.3    2019-09-22 [2] CRAN (R 4.1.0)
-        # purrr                  0.3.4    2020-04-17 [2] CRAN (R 4.1.0)
-        # R.methodsS3            1.8.1    2020-08-26 [2] CRAN (R 4.1.0)
-        # R.oo                   1.24.0   2020-08-26 [2] CRAN (R 4.1.0)
-        # R.utils                2.11.0   2021-09-26 [2] CRAN (R 4.1.2)
-        # R6                     2.5.1    2021-08-19 [2] CRAN (R 4.1.2)
-        # rafalib              * 1.0.0    2015-08-09 [1] CRAN (R 4.1.2)
-        # RColorBrewer           1.1-3    2022-04-03 [2] CRAN (R 4.1.2)
-        # Rcpp                   1.0.8.3  2022-03-17 [2] CRAN (R 4.1.2)
-        # RCurl                  1.98-1.6 2022-02-08 [2] CRAN (R 4.1.2)
-        # ResidualMatrix         1.4.0    2021-10-26 [1] Bioconductor
-        # rhdf5                  2.38.1   2022-03-10 [2] Bioconductor
-        # rhdf5filters           1.6.0    2021-10-26 [2] Bioconductor
-        # Rhdf5lib               1.16.0   2021-10-26 [2] Bioconductor
-        # rlang                  1.0.2    2022-03-04 [2] CRAN (R 4.1.2)
-        # rprojroot              2.0.3    2022-04-02 [2] CRAN (R 4.1.2)
-        # rsvd                   1.0.5    2021-04-16 [2] CRAN (R 4.1.2)
-        # S4Vectors            * 0.32.4   2022-03-24 [2] Bioconductor
-        # ScaledMatrix           1.2.0    2021-10-26 [2] Bioconductor
-        # scales                 1.1.1    2020-05-11 [2] CRAN (R 4.1.0)
-        # scater               * 1.22.0   2021-10-26 [2] Bioconductor
-        # scran                * 1.22.1   2021-11-14 [2] Bioconductor
-        # scry                 * 1.6.0    2021-10-26 [2] Bioconductor
-        # scuttle              * 1.4.0    2021-10-26 [2] Bioconductor
-        # segmented              1.3-4    2021-04-22 [1] CRAN (R 4.1.2)
-        # sessioninfo          * 1.2.2    2021-12-06 [2] CRAN (R 4.1.2)
-        # SingleCellExperiment * 1.16.0   2021-10-26 [2] Bioconductor
-        # sparseMatrixStats      1.6.0    2021-10-26 [2] Bioconductor
-        # statmod                1.4.36   2021-05-10 [2] CRAN (R 4.1.0)
-        # SummarizedExperiment * 1.24.0   2021-10-26 [2] Bioconductor
-        # tibble                 3.1.6    2021-11-07 [2] CRAN (R 4.1.2)
-        # tidyselect             1.1.2    2022-02-21 [2] CRAN (R 4.1.2)
-        # utf8                   1.2.2    2021-07-24 [2] CRAN (R 4.1.0)
-        # vctrs                  0.4.0    2022-03-30 [2] CRAN (R 4.1.2)
-        # vipor                  0.4.5    2017-03-22 [2] CRAN (R 4.1.2)
-        # viridis                0.6.2    2021-10-13 [2] CRAN (R 4.1.2)
-        # viridisLite            0.4.0    2021-04-13 [2] CRAN (R 4.1.0)
-        # withr                  2.5.0    2022-03-03 [2] CRAN (R 4.1.2)
-        # XVector                0.34.0   2021-10-26 [2] Bioconductor
-        # zlibbioc               1.40.0   2021-10-26 [2] Bioconductor
-        # 
-        # [1] /users/ntranngu/R/4.1.x
-        # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
-        # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
-        # 
-        # ──────────────────────────────────────────────────────────────────────────────
+    # setting  value
+    # version  R version 4.1.2 Patched (2021-11-04 r81138)
+    # os       CentOS Linux 7 (Core)
+    # system   x86_64, linux-gnu
+    # ui       X11
+    # language (EN)
+    # collate  en_US.UTF-8
+    # ctype    en_US.UTF-8
+    # tz       US/Eastern
+    # date     2022-06-27
+    # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
+    # 
+    # ─ Packages ───────────────────────────────────────────────────────────────────
+    # package              * version  date (UTC) lib source
+    # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
+    # batchelor            * 1.10.0   2021-10-26 [1] Bioconductor
+    # beachmat               2.10.0   2021-10-26 [2] Bioconductor
+    # beeswarm               0.4.0    2021-06-01 [2] CRAN (R 4.1.2)
+    # Biobase              * 2.54.0   2021-10-26 [2] Bioconductor
+    # BiocGenerics         * 0.40.0   2021-10-26 [2] Bioconductor
+    # BiocNeighbors          1.12.0   2021-10-26 [2] Bioconductor
+    # BiocParallel         * 1.28.3   2021-12-09 [2] Bioconductor
+    # BiocSingular           1.10.0   2021-10-26 [2] Bioconductor
+    # bitops                 1.0-7    2021-04-24 [2] CRAN (R 4.1.0)
+    # bluster              * 1.4.0    2021-10-26 [2] Bioconductor
+    # cli                    3.3.0    2022-04-25 [2] CRAN (R 4.1.2)
+    # cluster                2.1.3    2022-03-28 [3] CRAN (R 4.1.2)
+    # colorspace             2.0-3    2022-02-21 [2] CRAN (R 4.1.2)
+    # cowplot                1.1.1    2020-12-30 [2] CRAN (R 4.1.2)
+    # crayon                 1.5.1    2022-03-26 [2] CRAN (R 4.1.2)
+    # DBI                    1.1.3    2022-06-18 [2] CRAN (R 4.1.2)
+    # DelayedArray           0.20.0   2021-10-26 [2] Bioconductor
+    # DelayedMatrixStats     1.16.0   2021-10-26 [2] Bioconductor
+    # digest                 0.6.29   2021-12-01 [2] CRAN (R 4.1.2)
+    # dplyr                  1.0.9    2022-04-28 [2] CRAN (R 4.1.2)
+    # dqrng                  0.3.0    2021-05-01 [2] CRAN (R 4.1.2)
+    # DropletUtils         * 1.14.2   2022-01-09 [2] Bioconductor
+    # edgeR                  3.36.0   2021-10-26 [2] Bioconductor
+    # ellipsis               0.3.2    2021-04-29 [2] CRAN (R 4.1.0)
+    # fansi                  1.0.3    2022-03-24 [2] CRAN (R 4.1.2)
+    # farver                 2.1.0    2021-02-28 [2] CRAN (R 4.1.0)
+    # fs                     1.5.2    2021-12-08 [2] CRAN (R 4.1.2)
+    # gargle                 1.2.0    2021-07-02 [2] CRAN (R 4.1.0)
+    # generics               0.1.2    2022-01-31 [2] CRAN (R 4.1.2)
+    # GenomeInfoDb         * 1.30.1   2022-01-30 [2] Bioconductor
+    # GenomeInfoDbData       1.2.7    2021-11-01 [2] Bioconductor
+    # GenomicRanges        * 1.46.1   2021-11-18 [2] Bioconductor
+    # ggbeeswarm             0.6.0    2017-08-07 [2] CRAN (R 4.1.2)
+    # ggplot2              * 3.3.6    2022-05-03 [2] CRAN (R 4.1.2)
+    # ggrepel                0.9.1    2021-01-15 [2] CRAN (R 4.1.0)
+    # glue                   1.6.2    2022-02-24 [2] CRAN (R 4.1.2)
+    # googledrive            2.0.0    2021-07-08 [2] CRAN (R 4.1.0)
+    # gridExtra            * 2.3      2017-09-09 [2] CRAN (R 4.1.0)
+    # gtable                 0.3.0    2019-03-25 [2] CRAN (R 4.1.0)
+    # HDF5Array              1.22.1   2021-11-14 [2] Bioconductor
+    # here                 * 1.0.1    2020-12-13 [2] CRAN (R 4.1.2)
+    # igraph                 1.3.2    2022-06-13 [2] CRAN (R 4.1.2)
+    # IRanges              * 2.28.0   2021-10-26 [2] Bioconductor
+    # irlba                  2.3.5    2021-12-06 [2] CRAN (R 4.1.2)
+    # jaffelab             * 0.99.31  2021-12-13 [1] Github (LieberInstitute/jaffelab@2cbd55a)
+    # labeling               0.4.2    2020-10-20 [2] CRAN (R 4.1.0)
+    # lattice                0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
+    # lifecycle              1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
+    # limma                  3.50.3   2022-04-07 [2] Bioconductor
+    # locfit                 1.5-9.5  2022-03-03 [2] CRAN (R 4.1.2)
+    # magrittr               2.0.3    2022-03-30 [2] CRAN (R 4.1.2)
+    # MASS                   7.3-56   2022-03-23 [3] CRAN (R 4.1.2)
+    # Matrix                 1.4-1    2022-03-23 [3] CRAN (R 4.1.2)
+    # MatrixGenerics       * 1.6.0    2021-10-26 [2] Bioconductor
+    # matrixStats          * 0.62.0   2022-04-19 [2] CRAN (R 4.1.2)
+    # metapod                1.2.0    2021-10-26 [2] Bioconductor
+    # munsell                0.5.0    2018-06-12 [2] CRAN (R 4.1.0)
+    # nlme                   3.1-157  2022-03-25 [3] CRAN (R 4.1.2)
+    # pheatmap             * 1.0.12   2019-01-04 [2] CRAN (R 4.1.0)
+    # pillar                 1.7.0    2022-02-01 [2] CRAN (R 4.1.2)
+    # pkgconfig              2.0.3    2019-09-22 [2] CRAN (R 4.1.0)
+    # purrr                  0.3.4    2020-04-17 [2] CRAN (R 4.1.0)
+    # R.methodsS3            1.8.2    2022-06-13 [2] CRAN (R 4.1.2)
+    # R.oo                   1.25.0   2022-06-12 [2] CRAN (R 4.1.2)
+    # R.utils                2.11.0   2021-09-26 [2] CRAN (R 4.1.2)
+    # R6                     2.5.1    2021-08-19 [2] CRAN (R 4.1.2)
+    # rafalib              * 1.0.0    2015-08-09 [1] CRAN (R 4.1.2)
+    # RColorBrewer           1.1-3    2022-04-03 [2] CRAN (R 4.1.2)
+    # Rcpp                   1.0.8.3  2022-03-17 [2] CRAN (R 4.1.2)
+    # RCurl                  1.98-1.7 2022-06-09 [2] CRAN (R 4.1.2)
+    # ResidualMatrix         1.4.0    2021-10-26 [1] Bioconductor
+    # rhdf5                  2.38.1   2022-03-10 [2] Bioconductor
+    # rhdf5filters           1.6.0    2021-10-26 [2] Bioconductor
+    # Rhdf5lib               1.16.0   2021-10-26 [2] Bioconductor
+    # rlang                  1.0.2    2022-03-04 [2] CRAN (R 4.1.2)
+    # rprojroot              2.0.3    2022-04-02 [2] CRAN (R 4.1.2)
+    # rsvd                   1.0.5    2021-04-16 [2] CRAN (R 4.1.2)
+    # S4Vectors            * 0.32.4   2022-03-24 [2] Bioconductor
+    # ScaledMatrix           1.2.0    2021-10-26 [2] Bioconductor
+    # scales                 1.2.0    2022-04-13 [2] CRAN (R 4.1.2)
+    # scater               * 1.22.0   2021-10-26 [2] Bioconductor
+    # scran                * 1.22.1   2021-11-14 [2] Bioconductor
+    # scry                 * 1.6.0    2021-10-26 [2] Bioconductor
+    # scuttle              * 1.4.0    2021-10-26 [2] Bioconductor
+    # segmented              1.6-0    2022-05-31 [1] CRAN (R 4.1.2)
+    # sessioninfo          * 1.2.2    2021-12-06 [2] CRAN (R 4.1.2)
+    # SingleCellExperiment * 1.16.0   2021-10-26 [2] Bioconductor
+    # sparseMatrixStats      1.6.0    2021-10-26 [2] Bioconductor
+    # statmod                1.4.36   2021-05-10 [2] CRAN (R 4.1.0)
+    # SummarizedExperiment * 1.24.0   2021-10-26 [2] Bioconductor
+    # tibble                 3.1.7    2022-05-03 [2] CRAN (R 4.1.2)
+    # tidyselect             1.1.2    2022-02-21 [2] CRAN (R 4.1.2)
+    # utf8                   1.2.2    2021-07-24 [2] CRAN (R 4.1.0)
+    # vctrs                  0.4.1    2022-04-13 [2] CRAN (R 4.1.2)
+    # vipor                  0.4.5    2017-03-22 [2] CRAN (R 4.1.2)
+    # viridis                0.6.2    2021-10-13 [2] CRAN (R 4.1.2)
+    # viridisLite            0.4.0    2021-04-13 [2] CRAN (R 4.1.0)
+    # withr                  2.5.0    2022-03-03 [2] CRAN (R 4.1.2)
+    # XVector                0.34.0   2021-10-26 [2] Bioconductor
+    # zlibbioc               1.40.0   2021-10-26 [2] Bioconductor
+    # 
+    # [1] /users/ntranngu/R/4.1.x
+    # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
+    # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
+    # 
+    # ──────────────────────────────────────────────────────────────────────────────
 
