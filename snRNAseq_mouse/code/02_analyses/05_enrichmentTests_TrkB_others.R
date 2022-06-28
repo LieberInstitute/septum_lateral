@@ -77,8 +77,11 @@ table(DE.TrkB.KO$logFC > 0)
 
 
 ### First: Are any DE genes cell type markers? ========================
+load(here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"), verbose=T)
+    # sce.ls, annotationTab.ls, cell_colors.ls
+
 load(here("snRNAseq_mouse", "processed_data","SCE",
-          "markers-stats_LS-n4_findMarkers_35cellTypes.rda"), verbose=T)
+          "markers-stats_LS-n4_findMarkers_33cellTypes.rda"), verbose=T)
 
 length(intersect(DE.TrkB.KO$Symbol, rowData(sce.ls)$gene_name))
     # [1] 3524
@@ -116,48 +119,47 @@ markerList.t.pw <- lapply(markerList.t.pw, function(x){
 
 # For reference:
 lengths(markerList.t.pw)
-    # ambig.glial_A  ambig.glial_B   Aqp4.Rbpms_A   Aqp4.Rbpms_B        Astro_A 
-    #           142             22              8              0             30 
-    #       Astro_B  Astro.OPC_COP   drop.doublet    drop.lowNTx         Endo_A 
-    #             0             49              0             33              0 
-    #        Endo_B        Excit_A        Excit_B        Excit_C        Excit_D 
-    #           511             18             36             44             74 
-    #       Excit_E        Excit_F        Excit_G        Inhib_A        Inhib_B 
-    #            32             36              2              6             35 
-    #       Inhib_C        Inhib_D        Inhib_E        Inhib_F        Inhib_G 
-    #            31              1             44             31             42 
-    #       Inhib_H          Micro        Mural_A        Mural_B Neuron.mixed_A 
-    #            40            148             22            136              2 
-    #Neuron.Ppp1r1b        Oligo_A        Oligo_B            OPC        OPC_COP 
-    #           195              9            121             45            115 
+    #Aqp4.Rbpms      Astro       Endo  Ependymal    Excit_A    Excit_B    Excit_C 
+    #       493         98        328        270         46         25         16 
+    #   Excit_D    Excit_E    Excit_F    Inhib_A    Inhib_B    Inhib_C    Inhib_D 
+    #        69         25         14          2         29         14          0 
+    #   Inhib_E    Inhib_F    Inhib_G    Inhib_H    Inhib_I    Inhib_J    Inhib_K 
+    #        43         26         41         31          0          6          1 
+    #   Inhib_L    Inhib_M    Inhib_N    Inhib_O    Inhib_P    Inhib_Q    Inhib_R 
+    #        24         36         14         17          2          4         20 
+    #     Micro      Mural      Oligo        OPC    OPC_COP 
+    #       180         17        118         50        141 
 
 sapply(markerList.t.pw, function(x){
   round(length(intersect(x, DE.TrkB.KO$Symbol)) / length(x) * 100, 2)
 })
-    # ambig.glial_A  ambig.glial_B   Aqp4.Rbpms_A   Aqp4.Rbpms_B        Astro_A 
-    #          7.75          45.45          12.50            NaN          30.00 
-    #       Astro_B  Astro.OPC_COP   drop.doublet    drop.lowNTx         Endo_A 
-    #           NaN          30.61            NaN          51.52            NaN 
-    #        Endo_B        Excit_A        Excit_B        Excit_C        Excit_D 
-    #         36.20           5.56          41.67          15.91          20.27 
-    #       Excit_E        Excit_F        Excit_G        Inhib_A        Inhib_B 
-    #         18.75          27.78           0.00          16.67          14.29 
-    #       Inhib_C        Inhib_D        Inhib_E        Inhib_F        Inhib_G 
-    #         19.35           0.00          18.18          41.94          26.19 
-    #       Inhib_H          Micro        Mural_A        Mural_B Neuron.mixed_A 
-    #         37.50          64.86          40.91          24.26          50.00 
-    #Neuron.Ppp1r1b        Oligo_A        Oligo_B            OPC        OPC_COP 
-    #         20.51          33.33          33.06          11.11          22.61
+    #Aqp4.Rbpms      Astro       Endo  Ependymal    Excit_A    Excit_B    Excit_C 
+    #     17.65      33.67      32.01      21.48      10.87      32.00       6.25 
+    #   Excit_D    Excit_E    Excit_F    Inhib_A    Inhib_B    Inhib_C    Inhib_D 
+    #     21.74      12.00      28.57       0.00      10.34      21.43        NaN 
+    #   Inhib_E    Inhib_F    Inhib_G    Inhib_H    Inhib_I    Inhib_J    Inhib_K 
+    #     16.28      30.77      31.71      41.94        NaN      16.67       0.00 
+    #   Inhib_L    Inhib_M    Inhib_N    Inhib_O    Inhib_P    Inhib_Q    Inhib_R 
+    #     16.67       8.33      35.71      11.76       0.00      25.00      15.00 
+    #     Micro      Mural      Oligo        OPC    OPC_COP 
+    #     63.33      52.94      40.68      16.00      29.08 
 
 
 # Split by direction of FC
 DE.up <- DE.TrkB.KO[DE.TrkB.KO$logFC > 0, ]
 DE.down <- DE.TrkB.KO[DE.TrkB.KO$logFC < 0, ]
 
-
+# Ratio of up-regulated to down-regulated markers
 sapply(markerList.t.pw, function(x){
-  length(intersect(x, DE.up$Symbol)) / length(intersect(x, DE.down$Symbol)) 
+  round(length(intersect(x, DE.up$Symbol)) / length(intersect(x, DE.down$Symbol)), 2)
 })
+    ## Note that if none are up-regulated, will be 0 (even if some or down-regulated)
+
+# This is interesting...!:
+intersect(markerList.t.pw[["Inhib_N"]], DE.down$Symbol)
+    # [1] "Adra1b"        "Kit"           "A830082K12Rik" "Reln"         
+    # [5] "Slc2a13"
+
 
 DEmarkersNums <- matrix(c(0,0,0,0), ncol=1)
 for(i in names(markerList.t.pw)){
@@ -178,35 +180,35 @@ colnames(DEmarkersNums) <- names(markerList.t.pw)
 rownames(DEmarkersNums) <- c("nMarkers","total.intersecting","upRegulated","downRegulated")
 
 DEmarkersNums
-    #                    ambig.glial_A ambig.glial_B Aqp4.Rbpms_A Aqp4.Rbpms_B Astro_A Astro_B
-    # nMarkers                     142            22            8            0      30       0
-    # total.intersecting            11            10            1            0       9       0
-    # upRegulated                    9            10            1            0       9       0
-    # downRegulated                  2             0            0            0       0       0
+    #                   Aqp4.Rbpms Astro Endo Ependymal Excit_A Excit_B Excit_C
+    # nMarkers                  493    98  328       270      46      25      16
+    # total.intersecting         87    33  105        58       5       8       1
+    # upRegulated                73    33   91        44       1       0       0
+    # downRegulated              14     0   14        14       4       8       1
 
-    #                    Astro.OPC_COP drop.doublet drop.lowNTx Endo_A Endo_B Excit_A Excit_B Excit_C
-    # nMarkers                      49            0          33      0    511      18      36      44
-    # total.intersecting            15            0          17      0    185       1      15       7
-    # upRegulated                   15            0           5      0    175       0       0       0
-    # downRegulated                  0            0          12      0     10       1      15       7
+    #                    Excit_D Excit_E Excit_F Inhib_A Inhib_B Inhib_C Inhib_D
+    # nMarkers                69      25      14       2      29      14       0
+    # total.intersecting      15       3       4       0       3       3       0
+    # upRegulated              1       1       0       0       0       0       0
+    # downRegulated           14       2       4       0       3       3       0
 
-    #                    Excit_D Excit_E Excit_F Excit_G Inhib_A Inhib_B Inhib_C Inhib_D Inhib_E Inhib_F
-    # nMarkers                74      32      36       2       6      35      31       1      44      31
-    # total.intersecting      15       6      10       0       1       5       6       0       8      13
-    # upRegulated              1       2       1       0       0       0       0       0       0       0
-    # downRegulated           14       4       9       0       1       5       6       0       8      13
+    #                    Inhib_E Inhib_F Inhib_G Inhib_H Inhib_I Inhib_J Inhib_K
+    # nMarkers                43      26      41      31       0       6       1
+    # total.intersecting       7       8      13      13       0       1       0
+    # upRegulated              1       0       2       1       0       0       0
+    # downRegulated            6       8      11      12       0       1       0
 
-    #                    Inhib_G Inhib_H Micro Mural_A Mural_B Neuron.mixed_A Neuron.Ppp1r1b Oligo_A
-    # nMarkers                42      40   148      22     136              2            195       9
-    # total.intersecting      11      15    96       9      33              1             40       3
-    # upRegulated              0       1    92       8      29              0             27       3
-    # downRegulated           11      14     4       1       4              1             13       0
+    #                    Inhib_L Inhib_M Inhib_N Inhib_O Inhib_P Inhib_Q Inhib_R
+    # nMarkers                24      36      14      17       2       4      20
+    # total.intersecting       4       3       5       2       0       1       3
+    # upRegulated              1       2       0       0       0       0       2
+    # downRegulated            3       1       5       2       0       1       1
 
-    #                    Oligo_B OPC OPC_COP
-    # nMarkers               121  45     115
-    # total.intersecting      40   5      26
-    # upRegulated             38   1      16
-    # downRegulated            2   4      10
+    #                    Micro Mural Oligo OPC OPC_COP
+    # nMarkers             180    17   118  50     141
+    # total.intersecting   114     9    48   8      41
+    # upRegulated          111     9    45   6      31
+    # downRegulated          3     0     3   2      10
 
 
 # Intersecting gene IDs (for Lionel to explore) ===
@@ -224,39 +226,43 @@ for(i in names(markerList.t.pw)){
 
 
 ## Enrichment tests (with the '1vAll' numbers) ===
-sapply(markers.ls.t.1vAll, names)
+ # (skip for now - may want to run at a later time)
 
-# Take just the enriched set
-markerList.t.1vAll <- lapply(markers.ls.t.1vAll, function(x){
-  rownames(x[[2]])[ x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median==TRUE ]
-}
-)
+# sapply(markers.ls.t.1vAll, names)
+# 
+# # Take just the enriched set
+# markerList.t.1vAll <- lapply(markers.ls.t.1vAll, function(x){
+#   rownames(x[[2]])[ x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median==TRUE ]
+# }
+# )
+# 
+# # Change to gene symbols
+# markerList.t.1vAll <- lapply(markerList.t.1vAll, function(x){
+#   rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
+# })
+# 
+# ## From Andrew's code (at /dcl01/lieber/ajaffe/Keri/TrkBKO)
+#     # Load the RSE for the DE analyses 
+#     load("/dcl01/lieber/ajaffe/Keri/TrkBKO/preprocessed_data/rse_gene_TrkB_KO_LS_n8.Rdata",
+#          verbose=T)
+#         # rse_gene, getRPKM
+#     
+#     ## get phenotype data
+#     pd = read.csv("/dcl01/ajaffe/data/Nina/Keri/SunHong_102318/sampleList.txt",as.is=TRUE)
+#     rownames(pd) = paste0("Sample.", pd$SampleID)
+#     colData(rse_gene) = DataFrame(cbind(pd[colnames(rse_gene),], data.frame(colData(rse_gene))))
+#     
+#     geneExprs = log2(getRPKM(rse_gene,"Length")+1)
+#     
+#     ## check Bdnf 
+#     bdnf = geneExprs[rownames(rse_gene)[which(rowData(rse_gene)$Symbol == "Bdnf")],]
+#     boxplot(bdnf ~ rse_gene$Condition,las=3, ylab = "Bdnf: log2(RPKM+1)")
 
-# Change to gene symbols
-markerList.t.1vAll <- lapply(markerList.t.1vAll, function(x){
-  rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
-})
+#         # - more would need to be done (set up and run Fisher's tests)
+    
+    
+    
 
-## From Andrew's code (at /dcl01/lieber/ajaffe/Keri/TrkBKO)
-    # Load the RSE for the DE analyses 
-    load("/dcl01/lieber/ajaffe/Keri/TrkBKO/preprocessed_data/rse_gene_TrkB_KO_LS_n8.Rdata",
-         verbose=T)
-        # rse_gene, getRPKM
-    
-    ## get phenotype data
-    pd = read.csv("/dcl01/ajaffe/data/Nina/Keri/SunHong_102318/sampleList.txt",as.is=TRUE)
-    rownames(pd) = paste0("Sample.", pd$SampleID)
-    colData(rse_gene) = DataFrame(cbind(pd[colnames(rse_gene),], data.frame(colData(rse_gene))))
-    
-    geneExprs = log2(getRPKM(rse_gene,"Length")+1)
-    
-    ## check Bdnf 
-    bdnf = geneExprs[rownames(rse_gene)[which(rowData(rse_gene)$Symbol == "Bdnf")],]
-    boxplot(bdnf ~ rse_gene$Condition,las=3, ylab = "Bdnf: log2(RPKM+1)")
-
-    
-    
-    
 ## Want to know %(+) per cell type for Slc17a7, Slca7a6, Gad1 & Gad2 %'s =====
 # Adapted from https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/master/shiny_apps/00_clean_functions.R
 sce.hold <- sce.ls
