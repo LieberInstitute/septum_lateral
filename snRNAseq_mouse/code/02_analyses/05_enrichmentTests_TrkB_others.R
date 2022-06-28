@@ -269,7 +269,7 @@ for(i in names(cellType.idx)){
     assay(sce.ls, "counts")[, cellType.idx[[i]]],
     1,
     function(x){
-      mean(x != 0)
+      round(mean(x != 0), 3)
     }
   )
 }
