@@ -261,7 +261,7 @@ markerList.t.1vAll <- lapply(markerList.t.1vAll, function(x){
 # Adapted from https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/master/shiny_apps/00_clean_functions.R
 sce.hold <- sce.ls
 
-cellType.idx <- splitit(sce.ls$cellType)
+cellType.idx <- splitit(sce.ls$cellType.final)
 rowdat.sce <- rowData(sce.ls)
 for(i in names(cellType.idx)){
   message(Sys.time(), " computing propNucleiExprs for ", i)
@@ -283,7 +283,8 @@ rowData(sce.ls)[c("Slc17a7", "Slc17a6", "Gad1", "Gad2"), ]
 rowdat.sce <- rowData(sce.ls)
 
 write.table(rowdat.sce, file=here("snRNAseq_mouse","processed_data","tables",
-                                  "rowData_with_propExprsd_byCellType.tsv"),
+                                  #"rowData_with_propExprsd_byCellType.tsv"),
+                                  "rowData_with_propExprsd_byCellType.final.tsv"),
             sep="\t", quote = FALSE)
 
 
