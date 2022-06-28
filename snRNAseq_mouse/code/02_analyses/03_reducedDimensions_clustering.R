@@ -304,7 +304,7 @@ for(i in 1:length(broadMarkers)){
 table(unname(unlist(broadMarkers)) %in% rowData(sce.ls)$gene_name) #all good
 
 
-## Expected region/sub-region markers:
+## Expected region/sub-region markers / other curated sets ===
 markers.curated <- list("Accumbens" = c("Ppp1r1b", "Adora2a","Rgs9","Syndig1l","Ric8b",
                                         "Rgs4","Rgs7bp","Dgki"),
                        "Pan.LS" = c("Dgkg", "Dgkh", "Prkcd", "Glp1r", "Trpc4", "Zic1",
@@ -321,34 +321,52 @@ markers.curated <- list("Accumbens" = c("Ppp1r1b", "Adora2a","Rgs9","Syndig1l","
                                        "Elavl2", "Lgi2", "Nacc2", "Syt17", "Rnf227", "Ngfr", "Slc18a3")
                        )
 
+markers.curated.2 <- list(
+                      "GABA_sub" =  c("Sst", "Pvalb", "Cck", "Npy", "Calb1", "Calb2", "Vip", "Nts"),
+                      "Peptides"= c("Penk", "Pdyn", "Tac1", "Ghrh"),
+                      "PeptideR"= c("Oxtr", "Crhr1", "Crhr2", "Avpr1a", "Avpr1b", "Avpr2",
+                                    "Galr1", "Galr2", "Galr3", "Ghrhr", "Nr3c2"),
+                      "SexHormoneR"= c("Ar", "Esr1", "Esr2", "Pgr"),
+                      "MetaboSerotoninR"= c("Htr1a", "Htr1b", "Htr1d", "Htr1f",
+                                            "Htr2a", "Htr2b", "Htr2c", "Htr4", "Htr5a",
+                                            "Htr5b", "Htr6", "Htr7"),
+                      "IonoSerotoninR" = c("Htr3a", "Htr3b"),
+                      "AdrenergicR"= c("Adra1a", "Adra1b", "Adra1d", "Adra2a",
+                                       "Adra2b", "Adra2c", "Adrb1", "Adrb2", "Adrb3"),
+                      "DopamineR"= c("Drd1", "Drd2", "Drd3", "Drd4", "Drd5"),
+                      "Other"= c("Ntrk2", "Bdnf")
+                      )
 
 
 
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_annotated.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
-pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
-    height=6, width=14)
-for(i in 1:length(markers.curated)){
+#pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
+for(i in 1:length(markers.curated.2)){
+
+  pdf(here("snRNAseq_mouse","plots","supplemental", paste0("LS-n4_expression_", names(markers.curated.2)[i],"_Markers_finalAnnotations.pdf")),
+        height=6, width=14)
     print(
         plotExpressionCustom(sce = sce.ls,
                              exprs_values = "logcounts",
-                             features = markers.curated[[i]], 
-                             features_name = names(markers.curated)[[i]], 
+                             features = markers.curated.2[[i]], 
+                             features_name = names(markers.curated.2)[i], 
                              #anno_name = "clusters.glmpca",
                              anno_name = "cellType.final",
                              ncol=4,
                              point_alpha=0.4, point_size=0.9,
                              scales="free_y", swap_rownames="gene_name") +  
             ggtitle(label=paste0("mouse LS (n4) clusters: ",
-                                 names(markers.curated)[[i]], " curated markers")) +
+                                 names(markers.curated.2)[i], " curated markers")) +
                                  #names(markers.curated)[[i]], " markers")) +
             theme(plot.title = element_text(size = 12),
                   axis.text.x = element_text(size=7)) +
             scale_color_manual(values = cell_colors.ls)
     )
+    dev.off()
+
 }
-dev.off()
 
 
 
