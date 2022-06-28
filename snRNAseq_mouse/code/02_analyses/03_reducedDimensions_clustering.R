@@ -338,27 +338,38 @@ markers.curated.2 <- list(
                       )
 
 
+markers.besnard <- list(
+  "Rostrocaudal.Deep" = c("Cbln2", "Cbln4", "Pax6", "Sema3a"),
+  "Rostrocaudal.Superficial" = c("Col15a1", "Matn2", "Wfs1"),
+  "Rostral.Deep" = c("Drd3", "Galr1", "Igfbp5", "Pou6f2"),
+  "Rostral.Superficial" = c("Foxp2", "Ndst4", "Gdpd2", "Cdh7",
+                            "Crhr2", "Dach2", "Fst", "Lhx2"), 
+  "Caudal.Deep" = c("Asb4", "Otx2", "Pde1c", "Tacr1", "Trpc6"),
+  "Caudal.Superficial" = c("Cd24a", "Igfbp4")
+)
+
+
 
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_annotated.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
-for(i in 1:length(markers.curated.2)){
+for(i in 1:length(markers.besnard)){
 
-  pdf(here("snRNAseq_mouse","plots","supplemental", paste0("LS-n4_expression_", names(markers.curated.2)[i],"_Markers_finalAnnotations.pdf")),
+  pdf(here("snRNAseq_mouse","plots","supplemental", paste0("LS-n4_expression_Besnard-Leroy_", names(markers.besnard)[i],"_Markers_finalAnnotations.pdf")),
         height=6, width=14)
     print(
         plotExpressionCustom(sce = sce.ls,
                              exprs_values = "logcounts",
-                             features = markers.curated.2[[i]], 
-                             features_name = names(markers.curated.2)[i], 
+                             features = markers.besnard[[i]], 
+                             features_name = names(markers.besnard)[i], 
                              #anno_name = "clusters.glmpca",
                              anno_name = "cellType.final",
                              ncol=4,
                              point_alpha=0.4, point_size=0.9,
                              scales="free_y", swap_rownames="gene_name") +  
             ggtitle(label=paste0("mouse LS (n4) clusters: ",
-                                 names(markers.curated.2)[i], " curated markers")) +
+                                 names(markers.besnard)[i], " markers from Besnard, Leroy")) +
                                  #names(markers.curated)[[i]], " markers")) +
             theme(plot.title = element_text(size = 12),
                   axis.text.x = element_text(size=7)) +
