@@ -264,10 +264,60 @@ for(i in names(markerList.t.pw)){
     
 ### Can export previous GO enrichment test gene lists?? ========
 
+# As per /dcl01/lieber/ajaffe/Keri/TrkBKO/de_analysis.R, there's no .rda
+#   (or any file) at /dcl01/lieber/ajaffe/Keri/TrkBKO/rdas/
+
+# What about this?
+load("/dcl01/lieber/ajaffe/Keri/TrkBKO/gene_sets.rda", verbose=T)
+
+table(goDf$ONTOLOGY)
+    #  BP   CC   MF 
+    #2018  240  259 
+table(goDf$p.adj <= 0.05)
+    #FALSE  TRUE 
+    #  181  2336 
+table(goDf$p.adj <= 0.10) # all TRUE - so this is probably the results we want
 
 
+# Check these are all DE genes
+table(unlist(strsplit(goDf$geneID[1], split="/")) %in% DE.TrkB.KO$Symbol)
+    # all 103 (these are the intersecting b/tw DE genes) (see GeneRatio)
+
+# B/tw those top to significant terms
+table(unlist(strsplit(goDf$geneID[1], split="/")) %in% unlist(strsplit(goDf$geneID[2], split="/")))
+    # Same 103 genes in both terms
+
+# Now check top 100 in the significant GO terms list
+unlist(sapply(c(1:100), function(x){table(unlist(strsplit(goDf$geneID[x], split="/")) %in% DE.TrkB.KO$Symbol)}))
+    # Looks like a small number FALSE... this is probably bc the input for clusterProfiler
+    #     is the Entrez IDs, and the discrepancy/redundancy with gene Symbols, etc
 
 
+## For future exploration, since this is a lot of terms and genes...
+ #      can pull out those DE genes in a given significant term of interest as follows:
+DEgenesInTerm <- unlist(strsplit(goDf$geneID[goDf$Description=="regulation of synaptic plasticity"],
+                                 split="/"))
+
+DEgenesInTerm
+    # [1] "Rims2"    "Syt4"     "Prkcz"    "Grm5"     "Lrrtm1"   "Shisa9"  
+    # [7] "Ppp1r9a"  "Dgki"     "Kcnb1"    "Rab3a"    "Snca"     "Jph4"    
+    # [13] "Grik2"    "Snap47"   "Mapk1"    "Jph3"     "Ncdn"     "Syp"     
+    # [19] "Camk2b"   "Syngr1"   "Unc13a"   "Grin1"    "Rasgrf1"  "Rims1"   
+    # [25] "Ywhag"    "Egr1"     "Rab3gap1" "Grid2"    "Adgrb1"   "Npas4"   
+    # [31] "Dlg4"     "Rapgef2"  "Rims3"    "Hras"     "Arf1"     "Fgf14"   
+    # [37] "Stau2"    "Kit"      "Stxbp1"   "Crhr2"    "Snap25"   "Shisa7"  
+    # [43] "Nsg1"     "Rims4"    "Vamp2"    "Rasgrf2"  "Syt7"     "Ppfia3"  
+    # [49] "Reln"     "Plk2"     "Slc8a2"   "Nos1"     "Cplx2"    "Pak1"    
+    # [55] "Vgf"      "Nrgn"     "Atp2b2"   "Nsmf"     "Sipa1l1"  "Nlgn3"   
+    # [61] "Mapt"     "Baiap2"   "Gsk3b"   
+
+
+## Save the 'goDf' without the long gene lists ($geneID) as a CSV and commit, so can explore interactively,
+ #      THEN print out those genes in R
+goDf2print <- goDf[ ,c(1:9)]
+
+write.csv(goDf2print, file=here("snRNAseq_mouse","processed_data","tables","GOterms_TrkB-KO-DE_withoutGeneLists.csv"),
+          quote=F, row.names=F)
 
 
 ## Reproducibility information ====
