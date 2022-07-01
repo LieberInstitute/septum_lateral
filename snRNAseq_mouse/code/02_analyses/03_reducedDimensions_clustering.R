@@ -354,23 +354,22 @@ markers.besnard <- list(
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_annotated.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_broadMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
 #pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
-for(i in 1:length(markers.besnard)){
+for(i in 1:length(markers.curated)){
 
-  pdf(here("snRNAseq_mouse","plots","supplemental", paste0("LS-n4_expression_Besnard-Leroy_", names(markers.besnard)[i],"_Markers_finalAnnotations.pdf")),
+  pdf(here("snRNAseq_mouse","plots","supplemental", paste0("LS-n4_expression_", names(markers.curated)[i],"_Markers_finalAnnotations.pdf")),
         height=6, width=14)
     print(
         plotExpressionCustom(sce = sce.ls,
                              exprs_values = "logcounts",
-                             features = markers.besnard[[i]], 
-                             features_name = names(markers.besnard)[i], 
+                             features = markers.curated[[i]], 
+                             features_name = names(markers.curated)[i], 
                              #anno_name = "clusters.glmpca",
                              anno_name = "cellType.final",
                              ncol=4,
                              point_alpha=0.4, point_size=0.9,
                              scales="free_y", swap_rownames="gene_name") +  
             ggtitle(label=paste0("mouse LS (n4) clusters: ",
-                                 names(markers.besnard)[i], " markers from Besnard, Leroy")) +
-                                 #names(markers.curated)[[i]], " markers")) +
+                                 names(markers.curated)[i], " curated markers")) +
             theme(plot.title = element_text(size = 12),
                   axis.text.x = element_text(size=7)) +
             scale_color_manual(values = cell_colors.ls)
