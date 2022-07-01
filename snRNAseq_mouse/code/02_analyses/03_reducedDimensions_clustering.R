@@ -770,16 +770,91 @@ save(sce.ls, annotationTab.ls, cell_colors.ls,
 
 
 
+
+### For iSEE shiny app =============
+load(here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"), verbose=T)
+
+# As-is size:
+lobstr::obj_size(sce.ls) / 1024 ^ 3 # 7.17 GB
+
+# Remove the clusters we're not reporting
+sce.ls <- sce.ls[ ,-grep("drop.", sce.ls$cellType.final)]
+sce.ls <- sce.ls[ ,-grep("Neuron.mixed", sce.ls$cellType.final)]
+sce.ls$cellType.final <- droplevels(sce.ls$cellType.final)
+
+# Corresponding hexadecimal colors
+cell_colors.ls <- cell_colors.ls[-grep("drop", names(cell_colors.ls))]
+cell_colors.ls <- cell_colors.ls[-grep("Neuron.mixed", names(cell_colors.ls))]
+
+sce.hold <- sce.ls
+
+# Remove 'counts' & 'binomial_pearson_residuals' (just keep 'logcounts')
+assay(sce.ls, "counts") <- NULL
+assay(sce.ls, "binomial_pearson_residuals") <- NULL
+    lobstr::obj_size(sce.ls) / 1024 ^ 3 # 0.82 GB
+  
+# 'GLMPCA_50' is just the top 50 PCs from the 100 computed in 'GLMPCA_approx'
+reducedDim(sce.ls, "GLMPCA_approx") <- NULL
+    lobstr::obj_size(sce.ls) / 1024 ^ 3 # 0.80 GB
+
+# Because rownames are currently in Ensembl ID, re-assign & 'uniquify' to gene symbols
+rownames(sce.ls) <- uniquifyFeatureNames(rowData(sce.ls)$gene_id, rowData(sce.ls)$gene_name)
+
+lobstr::obj_size(sce.ls) / 1024 ^ 3
+
+## Some add'l metrics for rowData ===
+ #    As created/implemented in https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/master/shiny_apps/00_clean_functions.R
+rowData(sce.ls)$propNucleiExprs <- apply(
+  assay(sce.hold, "counts"),
+  1,
+  function(x) {
+    round(mean(x != 0), 3)
+  }
+)
+
+# The above, by cell type ===
+cellType.idx <- splitit(sce.ls$cellType.final)
+rowdat.sce <- rowData(sce.ls)
+for(i in names(cellType.idx)){
+  message(Sys.time(), " computing propNucleiExprs for ", i)
+  rowdat.sce[, paste0("propExprsIn.", i)] <- apply(
+    assay(sce.hold, "counts")[, cellType.idx[[i]]],
+    1,
+    function(x){
+      round(mean(x != 0), 3)
+    }
+  )
+}
+rowData(sce.ls) <- rowdat.sce
+
+## Clean up unnecessary info
+keepCols <- setdiff(colnames(colData(sce.ls)),
+                    c("high.mito","sizeFactor","clusters.glmpca","cellType","cellType.exp"))
+colData(sce.ls) <- colData(sce.ls)[ ,keepCols]
+
+lobstr::obj_size(sce.ls) / 1024 ^ 3 # 0.82 GB
+
+# Re-name these
+sce.ls.small <- sce.ls
+cell_cols.clean <- cell_colors.ls
+
+## Save this
+save(sce.ls.small, cell_cols.clean,
+     file=here("snRNAseq_mouse", "processed_data","SCE", "sce_for_iSEE_LS.rda"))
+
+
+
+
 ## Reproducibility information ====
 print('Reproducibility information:')
 Sys.time()
-    #[1] "2022-06-27 15:31:03 EDT"
+    #[1] "2022-07-01 01:05:06 EDT"
 proc.time()
     #     user    system   elapsed 
-    #1259.448   24.728 6910.033 
+    #   1497.611  135.700 8502.373 
 options(width = 120)
 session_info()
-    #─ Session info ───────────────────────────────────────────────────────────────
+    #─ Session info ───────────────────────────────────────────────────────────────────────────
     # setting  value
     # version  R version 4.1.2 Patched (2021-11-04 r81138)
     # os       CentOS Linux 7 (Core)
@@ -789,10 +864,10 @@ session_info()
     # collate  en_US.UTF-8
     # ctype    en_US.UTF-8
     # tz       US/Eastern
-    # date     2022-06-27
+    # date     2022-07-01
     # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
     # 
-    # ─ Packages ───────────────────────────────────────────────────────────────────
+    # ─ Packages ───────────────────────────────────────────────────────────────────────────────
     # package              * version  date (UTC) lib source
     # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
     # batchelor            * 1.10.0   2021-10-26 [1] Bioconductor
@@ -844,6 +919,7 @@ session_info()
     # lattice                0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
     # lifecycle              1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
     # limma                  3.50.3   2022-04-07 [2] Bioconductor
+    # lobstr                 1.1.2    2022-06-22 [2] CRAN (R 4.1.2)
     # locfit                 1.5-9.5  2022-03-03 [2] CRAN (R 4.1.2)
     # magrittr               2.0.3    2022-03-30 [2] CRAN (R 4.1.2)
     # MASS                   7.3-56   2022-03-23 [3] CRAN (R 4.1.2)
@@ -853,13 +929,13 @@ session_info()
     # metapod                1.2.0    2021-10-26 [2] Bioconductor
     # munsell                0.5.0    2018-06-12 [2] CRAN (R 4.1.0)
     # nlme                   3.1-157  2022-03-25 [3] CRAN (R 4.1.2)
-    # pheatmap             * 1.0.12   2019-01-04 [2] CRAN (R 4.1.0)
     # pillar                 1.7.0    2022-02-01 [2] CRAN (R 4.1.2)
     # pkgconfig              2.0.3    2019-09-22 [2] CRAN (R 4.1.0)
+    # prettyunits            1.1.1    2020-01-24 [2] CRAN (R 4.1.0)
     # purrr                  0.3.4    2020-04-17 [2] CRAN (R 4.1.0)
     # R.methodsS3            1.8.2    2022-06-13 [2] CRAN (R 4.1.2)
     # R.oo                   1.25.0   2022-06-12 [2] CRAN (R 4.1.2)
-    # R.utils                2.11.0   2021-09-26 [2] CRAN (R 4.1.2)
+    # R.utils                2.12.0   2022-06-28 [2] CRAN (R 4.1.2)
     # R6                     2.5.1    2021-08-19 [2] CRAN (R 4.1.2)
     # rafalib              * 1.0.0    2015-08-09 [1] CRAN (R 4.1.2)
     # RColorBrewer           1.1-3    2022-04-03 [2] CRAN (R 4.1.2)
@@ -869,7 +945,7 @@ session_info()
     # rhdf5                  2.38.1   2022-03-10 [2] Bioconductor
     # rhdf5filters           1.6.0    2021-10-26 [2] Bioconductor
     # Rhdf5lib               1.16.0   2021-10-26 [2] Bioconductor
-    # rlang                  1.0.2    2022-03-04 [2] CRAN (R 4.1.2)
+    # rlang                  1.0.3    2022-06-27 [2] CRAN (R 4.1.2)
     # rprojroot              2.0.3    2022-04-02 [2] CRAN (R 4.1.2)
     # rsvd                   1.0.5    2021-04-16 [2] CRAN (R 4.1.2)
     # S4Vectors            * 0.32.4   2022-03-24 [2] Bioconductor
@@ -900,5 +976,5 @@ session_info()
     # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
     # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
     # 
-    # ──────────────────────────────────────────────────────────────────────────────
+    # ──────────────────────────────────────────────────────────────────────────────────────────
 
