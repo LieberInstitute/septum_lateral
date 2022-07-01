@@ -22,10 +22,43 @@ here()
 
 
 load(here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"), verbose=T)
-# sce.ls, annotationTab.ls, cell_colors.ls
+    # sce.ls, annotationTab.ls, cell_colors.ls
 
 # For ease of querying
 rownames(sce.ls) <- uniquifyFeatureNames(rowData(sce.ls)$gene_id, rowData(sce.ls)$gene_name)
+
+
+## Want to know %(+) per cell type for Slc17a7, Slca7a6, Gad1 & Gad2 %'s =====
+# Adapted from https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/master/shiny_apps/00_clean_functions.R
+sce.hold <- sce.ls
+
+cellType.idx <- splitit(sce.ls$cellType.final)
+rowdat.sce <- rowData(sce.ls)
+for(i in names(cellType.idx)){
+  message(Sys.time(), " computing propNucleiExprs for ", i)
+  rowdat.sce[, paste0("propExprsIn.", i)] <- apply(
+    assay(sce.ls, "counts")[, cellType.idx[[i]]],
+    1,
+    function(x){
+      round(mean(x != 0), 3)
+    }
+  )
+}
+rowData(sce.ls) <- rowdat.sce
+# For ease of querying
+rownames(sce.ls) <- uniquifyFeatureNames(rowData(sce.ls)$gene_id, rowData(sce.ls)$gene_name)
+
+rowData(sce.ls)[c("Slc17a7", "Slc17a6", "Gad1", "Gad2"), ]
+
+# Save this for reference
+rowdat.sce <- rowData(sce.ls)
+
+write.table(rowdat.sce, file=here("snRNAseq_mouse","processed_data","tables",
+                                  #"rowData_with_propExprsd_byCellType.tsv"),
+                                  "rowData_with_propExprsd_byCellType.final.tsv"),
+            sep="\t", quote = FALSE)
+
+
 
 
 ## Combinatorial expression ======
