@@ -8,6 +8,8 @@ snRNAseq_mouse/processed_data/tables/TrkBKO_DEgenes_FDR05.csv
 
 # Obsolete
 snRNAseq_mouse/plots/zold_pre24Jun_markers/
+snRNAseq_mouse/plots/zold_pre30Jun_cellType.exp_markers/
+snRNAseq_mouse/processed_data/tables/zold_top40genesLists_LS-n4_33PREfinalCellTypes.csv
 
 # Because additional iterations are making for a large repo - will just post/update in G Drive location
 snRNAseq_mouse/plots/markers
