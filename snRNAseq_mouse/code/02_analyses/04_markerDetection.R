@@ -16,19 +16,6 @@ library(sessioninfo)
 
 here()
 
-### Palette taken from `scater`
-tableau10medium = c("#729ECE", "#FF9E4A", "#67BF5C", "#ED665D",
-                    "#AD8BC9", "#A8786E", "#ED97CA", "#A2A2A2",
-                    "#CDCC5D", "#6DCCDA")
-tableau20 = c("#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C",
-              "#98DF8A", "#D62728", "#FF9896", "#9467BD", "#C5B0D5",
-              "#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F",
-              "#C7C7C7", "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5")
-
-# From http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
-#      (since there are more than 30 clusters, but <=38)
-cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
-               "#0072B2", "#D55E00", "#CC79A7")
 
 # plotExpressionCustom for nicer aesthetics
 source("/dcs04/lieber/lcolladotor/pilotLC_LIBD001/locus-c/code/analyses_sn/plotExpressionCustom.R")
@@ -41,87 +28,109 @@ load(here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"), verbo
     # sce.ls, annotationTab.ls, cell_colors.ls
 
 table(sce.ls$cellType.final)
-    # 
+    #             Astro          Chol_Ex.D                ChP       drop.doublet 
+    #              5682                 67                 65                150 
+    #drop.likelyDoublet        drop.lowNTx               Endo          Ependymal 
+    #               573                180                158                486 
+    #          IoC_In.E            LS_In.C            LS_In.D            LS_In.M 
+    #               306                191               1075                167 
+    #           LS_In.N            LS_In.O            LS_In.P            LS_In.Q 
+    #                45                 69                190                 36 
+    #           LS_In.R              Micro            MS_In.J            MS_In.K 
+    #                68                166                111                402 
+    #             Mural       Neuron.mixed              Oligo                OPC 
+    #               222                 73               1583                464 
+    #           OPC_COP          Sept_In.G          Sept_In.I           Str_In.A 
+    #                53                363               1524                797 
+    #          Str_In.F           Str_In.H           Str_In.L          Thal_Ex.B 
+    #              4364                 86                 36                670 
+    #         TNoS_Ex.A      TT.IG.SH_Ex.C      TT.IG.SH_Ex.E      TT.IG.SH_Ex.F 
+    #               485                232                 31                930 
+    #        Ventr_In.B 
+    #               760 
 
 ## doubletScore distributions / cluster?
 cellClust.idx <- splitit(sce.ls$cellType.final)
 sapply(cellClust.idx, function(x){round(quantile(sce.ls$doubletScore[x]), 2)})
-    #      Aqp4.Rbpms Astro drop.doublet drop.likelyDoublet drop.lowNTx Endo
-    # 0%         0.00  0.00         0.06               0.00        0.00 0.00
-    # 25%        0.04  0.06         3.78               0.62        0.01 0.04
-    # 50%        0.10  0.18         4.83               2.01        0.03 0.06
-    # 75%        0.46  0.48         6.72               2.94        0.06 0.17
-    # 100%      10.39 14.84         9.39              11.38        7.93 5.98
+    #      Astro Chol_Ex.D  ChP drop.doublet drop.likelyDoublet drop.lowNTx Endo
+    # 0%    0.00      0.04 0.02         0.06               0.00        0.00 0.00
+    # 25%   0.06      0.38 0.36         3.78               0.62        0.01 0.04
+    # 50%   0.18      1.28 0.49         4.83               2.01        0.03 0.06
+    # 75%   0.48      1.39 0.53         6.72               2.94        0.06 0.17
+    # 100% 14.84      9.93 7.10         9.39              11.38        7.93 5.98
 
-    #      Ependymal Excit_A Excit_B Excit_C Excit_D Excit_E Excit_F Inhib_A Inhib_B
-    # 0%        0.02    0.00    0.02    0.03    0.04    0.12    0.02    0.01    0.00
-    # 25%       0.36    0.04    0.15    0.14    0.38    0.61    0.16    0.13    0.03
-    # 50%       0.49    0.07    0.39    0.46    1.28    0.78    0.29    0.25    0.07
-    # 75%       0.53    0.27    1.31    1.30    1.39    1.21    0.85    0.62    0.78
-    # 100%      7.10   12.53   10.41    6.82    9.93    7.56    9.25   10.44   11.46
+    #      Ependymal IoC_In.E LS_In.C LS_In.D LS_In.M LS_In.N LS_In.O LS_In.P LS_In.Q
+    # 0%        0.00     0.00    0.01    0.01    0.01    0.06    0.13    0.02    0.04
+    # 25%       0.04     0.02    0.23    0.17    0.11    0.32    0.28    0.17    0.19
+    # 50%       0.10     0.06    0.43    0.36    0.18    0.42    0.40    0.25    0.34
+    # 75%       0.46     0.52    1.08    0.93    0.30    0.74    0.79    0.42    0.84
+    # 100%     10.39     6.60    5.98   11.49    7.01    2.50    8.65    7.82    6.07
 
+    #      LS_In.R Micro MS_In.J MS_In.K Mural Neuron.mixed Oligo  OPC OPC_COP
+    # 0%      0.07  0.00    0.00    0.00  0.00         0.04  0.00 0.00    0.05
+    # 25%     0.16  0.06    0.12    0.13  0.04         0.17  0.03 0.01    0.24
+    # 50%     0.23  0.09    0.23    0.28  0.05         0.33  0.07 0.04    0.66
+    # 75%     0.34  0.17    0.87    0.67  0.07         0.69  0.19 0.91    0.93
+    # 100%    3.02  3.62    5.92   11.43  9.43         5.91  7.20 9.30    8.48
 
-    #      Inhib_C Inhib_D Inhib_E Inhib_F Inhib_G Inhib_H Inhib_I Inhib_J Inhib_K
-    # 0%      0.01    0.01    0.00    0.00    0.00    0.09    0.00    0.00    0.00
-    # 25%     0.23    0.17    0.02    0.16    0.04    0.30    0.13    0.12    0.13
-    # 50%     0.43    0.36    0.06    0.29    0.11    0.52    0.27    0.23    0.28
-    # 75%     1.08    0.93    0.52    0.90    0.84    0.91    0.74    0.87    0.67
-    # 100%    5.98   11.49    6.60   10.09    9.50    8.40   11.42    5.92   11.43
+    #      Sept_In.G Sept_In.I Str_In.A Str_In.F Str_In.H Str_In.L Thal_Ex.B
+    # 0%        0.00      0.00     0.01     0.00     0.09     0.01      0.02
+    # 25%       0.04      0.13     0.13     0.16     0.30     0.26      0.15
+    # 50%       0.11      0.27     0.25     0.29     0.52     0.39      0.39
+    # 75%       0.84      0.74     0.62     0.90     0.91     0.94      1.31
+    # 100%      9.50     11.42    10.44    10.09     8.40     9.41     10.41
 
-    #      Inhib_L Inhib_M Inhib_N Inhib_O Inhib_P Inhib_Q Inhib_R Micro Mural
-    # 0%      0.01    0.01    0.06    0.13    0.02    0.04    0.07  0.00  0.00
-    # 25%     0.26    0.11    0.32    0.28    0.17    0.19    0.16  0.06  0.04
-    # 50%     0.39    0.18    0.42    0.40    0.25    0.34    0.23  0.09  0.05
-    # 75%     0.94    0.30    0.74    0.79    0.42    0.84    0.34  0.17  0.07
-    # 100%    9.41    7.01    2.50    8.65    7.82    6.07    3.02  3.62  9.43
-
-    #      Neuron.mixed Oligo  OPC OPC_COP
-    # 0%           0.04  0.00 0.00    0.05
-    # 25%          0.17  0.03 0.01    0.24
-    # 50%          0.33  0.07 0.04    0.66
-    # 75%          0.69  0.19 0.91    0.93
-    # 100%         5.91  7.20 9.30    8.48
+    #      TNoS_Ex.A TT.IG.SH_Ex.C TT.IG.SH_Ex.E TT.IG.SH_Ex.F Ventr_In.B
+    # 0%        0.00          0.03          0.12          0.02       0.00
+    # 25%       0.04          0.14          0.61          0.16       0.03
+    # 50%       0.07          0.46          0.78          0.29       0.07
+    # 75%       0.27          1.30          1.21          0.85       0.78
+    # 100%     12.53          6.82          7.56          9.25      11.46
 
 sapply(cellClust.idx, function(x){quantile(sce.ls$sum[x])})
-    #      Aqp4.Rbpms    Astro drop.doublet drop.likelyDoublet drop.lowNTx     Endo
-    # 0%         1475   770.00      2524.00                995       716.0   912.00
-    # 25%        5142  2780.00      5443.75               4256       959.0  2506.75
-    # 50%        7382  3679.50      7017.00               7501      1279.0  5411.00
-    # 75%       11051  4991.75      8601.25              12432      1872.5  9237.75
-    # 100%     181764 32378.00     19299.00              56422     29767.0 48895.00
+    #         Astro Chol_Ex.D   ChP drop.doublet drop.likelyDoublet drop.lowNTx
+    # 0%     770.00    3191.0  3270      2524.00                995       716.0
+    # 25%   2780.00    5481.5  5620      5443.75               4256       959.0
+    # 50%   3679.50    8429.0  7739      7017.00               7501      1279.0
+    # 75%   4991.75   10386.5 12165      8601.25              12432      1872.5
+    # 100% 32378.00   23709.0 38139     19299.00              56422     29767.0
 
-    #      Ependymal Excit_A Excit_B  Excit_C Excit_D Excit_E Excit_F Inhib_A
-    # 0%        3270     980  1377.0  3157.00  3191.0    5919  1972.0    1947
-    # 25%       5620    4952  8945.0  9379.25  5481.5    9051 10227.0    5937
-    # 50%       7739    6694 12002.5 13230.50  8429.0   10714 14337.0    8099
-    # 75%      12165    9044 16862.0 18958.50 10386.5   14075 20052.5   11043
-    # 100%     38139   43894 64847.0 58550.00 23709.0   35325 60231.0   53149
+    #          Endo Ependymal IoC_In.E LS_In.C LS_In.D LS_In.M LS_In.N LS_In.O
+    # 0%     912.00      1475  1707.00  3595.0  1069.0    3068    4600    3005
+    # 25%   2506.75      5142  3605.50  9057.5  6909.5    7046    8307    6080
+    # 50%   5411.00      7382  5034.00 12421.0  9056.0    9079   11863    7613
+    # 75%   9237.75     11051  7344.25 17005.0 12044.5   11844   16078   10506
+    # 100% 48895.00    181764 40784.00 33512.0 45681.0   36314   40109   21836
 
-    #       Inhib_B Inhib_C Inhib_D  Inhib_E   Inhib_F Inhib_G  Inhib_H  Inhib_I
-    # 0%     933.00  3595.0  1069.0  1707.00    850.00  2053.0  2817.00  1768.00
-    # 25%   2680.00  9057.5  6909.5  3605.50   7810.75  6602.0  7266.25  6224.00
-    # 50%   4112.00 12421.0  9056.0  5034.00  10514.50  8630.0  9130.50  8654.00
-    # 75%   7178.75 17005.0 12044.5  7344.25  13983.25 13227.5 13190.75 11837.75
-    # 100% 83174.00 33512.0 45681.0 40784.00 134792.00 47249.0 50031.00 51958.00
+    #      LS_In.P  LS_In.Q  LS_In.R    Micro MS_In.J  MS_In.K    Mural Neuron.mixed
+    # 0%    6673.0  5602.00  5720.00   881.00  5982.0  2179.00   737.00         3855
+    # 25%  11536.5  8687.25 11226.75  2009.25 11439.5  7938.00  2244.75         8877
+    # 50%  13859.5 10348.50 13534.50  2908.50 16729.0 10361.00  3384.00        12019
+    # 75%  17912.5 13666.25 17733.25  4202.00 21484.5 13901.75  5403.00        16701
+    # 100% 57038.0 26839.00 51899.00 36079.00 57135.0 44825.00 36689.00        47248
 
-    #      Inhib_J  Inhib_K  Inhib_L Inhib_M Inhib_N Inhib_O Inhib_P  Inhib_Q
-    # 0%    5982.0  2179.00  4684.00    3068    4600    3005  6673.0  5602.00
-    # 25%  11439.5  7938.00  8697.00    7046    8307    6080 11536.5  8687.25
-    # 50%  16729.0 10361.00 11063.50    9079   11863    7613 13859.5 10348.50
-    # 75%  21484.5 13901.75 12831.25   11844   16078   10506 17912.5 13666.25
-    # 100% 57135.0 44825.00 36869.00   36314   40109   21836 57038.0 26839.00
+    #        Oligo      OPC OPC_COP Sept_In.G Sept_In.I Str_In.A  Str_In.F Str_In.H
+    # 0%     847.0  1037.00    2805    2053.0   1768.00     1947    850.00  2817.00
+    # 25%   2216.5  3564.25    5800    6602.0   6224.00     5937   7810.75  7266.25
+    # 50%   2947.0  5289.00    7404    8630.0   8654.00     8099  10514.50  9130.50
+    # 75%   4100.5  7997.25   11560   13227.5  11837.75    11043  13983.25 13190.75
+    # 100% 52916.0 41110.00   36554   47249.0  51958.00    53149 134792.00 50031.00
 
-    #       Inhib_R    Micro    Mural Neuron.mixed   Oligo      OPC OPC_COP
-    # 0%    5720.00   881.00   737.00         3855   847.0  1037.00    2805
-    # 25%  11226.75  2009.25  2244.75         8877  2216.5  3564.25    5800
-    # 50%  13534.50  2908.50  3384.00        12019  2947.0  5289.00    7404
-    # 75%  17733.25  4202.00  5403.00        16701  4100.5  7997.25   11560
-    # 100% 51899.00 36079.00 36689.00        47248 52916.0 41110.00   36554
+    #      Str_In.L Thal_Ex.B TNoS_Ex.A TT.IG.SH_Ex.C TT.IG.SH_Ex.E TT.IG.SH_Ex.F
+    # 0%    4684.00    1377.0       980       3157.00          5919        1972.0
+    # 25%   8697.00    8945.0      4952       9379.25          9051       10227.0
+    # 50%  11063.50   12002.5      6694      13230.50         10714       14337.0
+    # 75%  12831.25   16862.0      9044      18958.50         14075       20052.5
+    # 100% 36869.00   64847.0     43894      58550.00         35325       60231.0
 
+    #      Ventr_In.B
+    # 0%       933.00
+    # 25%     2680.00
+    # 50%     4112.00
+    # 75%     7178.75
+    # 100%   83174.00
 
-
-
-# First drop any flagged clusters for dropping    - not doing this time (until we have final annotations)
+# First drop any flagged clusters for dropping
 sce.ls <- sce.ls[ ,-grep("drop.",sce.ls$cellType.final)]
 sce.ls <- sce.ls[ ,-grep("Neuron.mixed", sce.ls$cellType.final)]
 sce.ls$cellType.final <- droplevels(sce.ls$cellType.final)
@@ -154,22 +163,7 @@ medianNon0.ls <- lapply(cellClust.idx, function(x){
 })
 
 sapply(medianNon0.ls, table)
-    #       Aqp4.Rbpms Astro  Endo Ependymal Excit_A Excit_B Excit_C Excit_D Excit_E
-    # FALSE      25636 27052 26439     25184   26193   24722   24492   25803   24898
-    # TRUE        2115   699  1312      2567    1558    3029    3259    1948    2853
-
-    #       Excit_F Inhib_A Inhib_B Inhib_C Inhib_D Inhib_E Inhib_F Inhib_G Inhib_H
-    # FALSE   24428   25734   26804   24630   25312   26549   25217   25480   25242
-    # TRUE     3323    2017     947    3121    2439    1202    2534    2271    2509
-
-    #       Inhib_I Inhib_J Inhib_K Inhib_L Inhib_M Inhib_N Inhib_O Inhib_P Inhib_Q
-    # FALSE   25505   23913   25004   24636   25474   24957   25698   24134   24702
-    # TRUE     2246    3838    2747    3115    2277    2794    2053    3617    3049
-
-    #       Inhib_R Micro Mural Oligo   OPC OPC_COP
-    # FALSE   24050 27078 27209 27217 26439   25887
-    # TRUE     3701   673   542   534  1312    1864
-
+    #
 
 
 ## Traditional t-test, pairwise ===
@@ -196,21 +190,24 @@ for(i in names(markers.ls.t.pw)){
 }
 
 sapply(markers.ls.t.pw, function(x){table(x$FDR<0.05 & x$non0median == TRUE)["TRUE"]})
-    #Aqp4.Rbpms.TRUE      Astro.TRUE       Endo.TRUE  Ependymal.TRUE    Excit_A.TRUE 
-    #            493              98             328             270              46 
-    #   Excit_B.TRUE    Excit_C.TRUE    Excit_D.TRUE    Excit_E.TRUE    Excit_F.TRUE 
-    #             25              16              69              25              14 
-    #   Inhib_A.TRUE    Inhib_B.TRUE    Inhib_C.TRUE      Inhib_D.NA    Inhib_E.TRUE 
-    #              2              29              14              NA              43 
-    #   Inhib_F.TRUE    Inhib_G.TRUE    Inhib_H.TRUE      Inhib_I.NA    Inhib_J.TRUE 
-    #             26              41              31              NA               6 
-    #   Inhib_K.TRUE    Inhib_L.TRUE    Inhib_M.TRUE    Inhib_N.TRUE    Inhib_O.TRUE 
-    #              1              24              36              14              17 
-    #   Inhib_P.TRUE    Inhib_Q.TRUE    Inhib_R.TRUE      Micro.TRUE      Mural.TRUE 
-    #              2               4              20             180              17 
-    #     Oligo.TRUE        OPC.TRUE    OPC_COP.TRUE 
-    #            118              50             141 
-
+    #     Astro.TRUE     Chol_Ex.D.TRUE           ChP.TRUE          Endo.TRUE 
+    #             98                 69                270                328 
+    # Ependymal.TRUE      IoC_In.E.TRUE       LS_In.C.TRUE         LS_In.D.NA 
+    #            493                 43                 14                 NA 
+    #   LS_In.M.TRUE       LS_In.N.TRUE       LS_In.O.TRUE       LS_In.P.TRUE 
+    #             36                 14                 17                  2 
+    #   LS_In.Q.TRUE       LS_In.R.TRUE         Micro.TRUE       MS_In.J.TRUE 
+    #              4                 20                180                  6 
+    #   MS_In.K.TRUE         Mural.TRUE         Oligo.TRUE           OPC.TRUE 
+    #              1                 17                118                 50 
+    #   OPC_COP.TRUE     Sept_In.G.TRUE       Sept_In.I.NA      Str_In.A.TRUE 
+    #            141                 41                 NA                  2 
+    #  Str_In.F.TRUE      Str_In.H.TRUE      Str_In.L.TRUE     Thal_Ex.B.TRUE 
+    #             26                 31                 24                 25 
+    # TNoS_Ex.A.TRUE TT.IG.SH_Ex.C.TRUE TT.IG.SH_Ex.E.TRUE TT.IG.SH_Ex.F.TRUE 
+    #             46                 16                 25                 14 
+    #Ventr_In.B.TRUE 
+    #             29 
 
 ## Save these
 save(markers.ls.t.pw, medianNon0.ls,
@@ -349,22 +346,21 @@ for(i in names(markers.ls.t.1vAll)){
 sapply(markers.ls.t.1vAll, function(x){
   table(x[[2]]$log.FDR < log(.001) & x[[2]]$non0median == TRUE)
 })
-    #       Aqp4.Rbpms Astro  Endo Ependymal Excit_A Excit_B Excit_C Excit_D Excit_E
-    # FALSE      26399 27270 26938     26714   27036   26120   26740   27243   27395
-    # TRUE        1352   481   813      1037     715    1631    1011     508     356
+    #       Astro Chol_Ex.D   ChP  Endo Ependymal IoC_In.E LS_In.C LS_In.D LS_In.M
+    # FALSE 27270     27243 26714 26938     26399    27222   26882   26237   26903
+    # TRUE    481       508  1037   813      1352      529     869    1514     848
 
-    #       Excit_F Inhib_A Inhib_B Inhib_C Inhib_D Inhib_E Inhib_F Inhib_G Inhib_H
-    # FALSE   26282   26845   27193   26882   26237   27222   26227   27109   27248
-    # TRUE     1469     906     558     869    1514     529    1524     642     503
+    #       LS_In.N LS_In.O LS_In.P LS_In.Q LS_In.R Micro MS_In.J MS_In.K Mural Oligo
+    # FALSE   27451   27328   26648   27452   26921 27338   27028   26528 27529 27367
+    # TRUE      300     423    1103     299     830   413     723    1223   222   384
 
-    #       Inhib_I Inhib_J Inhib_K Inhib_L Inhib_M Inhib_N Inhib_O Inhib_P Inhib_Q
-    # FALSE   26350   27028   26528   27446   26903   27451   27328   26648   27452
-    # TRUE     1401     723    1223     305     848     300     423    1103     299
+    #         OPC OPC_COP Sept_In.G Sept_In.I Str_In.A Str_In.F Str_In.H Str_In.L
+    # FALSE 27213   27300     27109     26350    26845    26227    27248    27446
+    # TRUE    538     451       642      1401      906     1524      503      305
 
-    #       Inhib_R Micro Mural Oligo   OPC OPC_COP
-    # FALSE   26921 27338 27529 27367 27213   27300
-    # TRUE      830   413   222   384   538     451
-
+    #       Thal_Ex.B TNoS_Ex.A TT.IG.SH_Ex.C TT.IG.SH_Ex.E TT.IG.SH_Ex.F Ventr_In.B
+    # FALSE     26120     27036         26740         27395         26282      27193
+    # TRUE       1631       715          1011           356          1469        558
 
 ## Print these to pngs
 markerList.t.1vAll <- lapply(markers.ls.t.1vAll, function(x){
@@ -417,15 +413,15 @@ write.csv(top40genes, file=here("snRNAseq_mouse", "processed_data","tables",
 
 
 
-
+rm(list=ls())
 
 ## Reproducibility information ====
 print('Reproducibility information:')
 Sys.time()
-#[1] "2022-06-27 18:59:20 EDT"
+#[1] "2022-06-30 13:22:13 EDT"
 proc.time()
 #     user    system   elapsed 
-#11772.950   155.072 11964.713 
+#   11601.10   158.64 11841.45 
 options(width = 120)
 session_info()
 # ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -438,7 +434,7 @@ session_info()
 # collate  en_US.UTF-8
 # ctype    en_US.UTF-8
 # tz       US/Eastern
-# date     2022-06-27
+# date     2022-06-30
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
 # 
 # ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -509,7 +505,7 @@ session_info()
 # Rcpp                   1.0.8.3  2022-03-17 [2] CRAN (R 4.1.2)
 # RCurl                  1.98-1.7 2022-06-09 [2] CRAN (R 4.1.2)
 # ResidualMatrix         1.4.0    2021-10-26 [1] Bioconductor
-# rlang                  1.0.2    2022-03-04 [2] CRAN (R 4.1.2)
+# rlang                  1.0.3    2022-06-27 [2] CRAN (R 4.1.2)
 # rprojroot              2.0.3    2022-04-02 [2] CRAN (R 4.1.2)
 # rsvd                   1.0.5    2021-04-16 [2] CRAN (R 4.1.2)
 # S4Vectors            * 0.32.4   2022-03-24 [2] Bioconductor
@@ -541,4 +537,7 @@ session_info()
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
 # 
 # ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
 
