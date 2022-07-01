@@ -319,6 +319,9 @@ goDf2print <- goDf[ ,c(1:9)]
 write.csv(goDf2print, file=here("snRNAseq_mouse","processed_data","tables","GOterms_TrkB-KO-DE_withoutGeneLists.csv"),
           quote=F, row.names=F)
 
+# jk there are commas in some Descriptions
+goDf2print$Description <- gsub(",", " -", goDf2print$Description)
+
 
 ## Reproducibility information ====
 print('Reproducibility information:')
