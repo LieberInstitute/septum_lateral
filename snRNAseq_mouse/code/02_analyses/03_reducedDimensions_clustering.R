@@ -493,7 +493,8 @@ plotReducedDim(sce.ls, dimred="UMAP", colour_by="cellType.final",
                        labels=paste0(levels(sce.ls$cellType.final)," (",
                                      table(sce.ls$cellType.final),")")) +
     guides(color=guide_legend(ncol=1)) +
-    ggtitle("UMAP of LS (n=4), colored by annotated graph-based clusters")
+    ggtitle("UMAP of LS (n=4), colored by annotated graph-based clusters") +
+  labs(colour="Cell type")
 
 # TSNE
 plotReducedDim(sce.ls, dimred="TSNE", colour_by="cellType.final",
@@ -503,7 +504,8 @@ plotReducedDim(sce.ls, dimred="TSNE", colour_by="cellType.final",
                        labels=paste0(levels(sce.ls$cellType.final)," (",
                                      table(sce.ls$cellType.final),")")) +
     guides(color=guide_legend(ncol=1)) +
-    ggtitle("TSNE of LS (n=4), colored by annotated graph-based clusters")
+    ggtitle("TSNE of LS (n=4), colored by annotated graph-based clusters") +
+  labs(colour="Cell type")
 dev.off()
 
 
@@ -673,6 +675,98 @@ names(cell_colors.ls) <- levels(sce.ls$cellType.final)
 save(sce.ls, annotationTab.ls, cell_colors.ls,
      file=here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"))
 
+
+
+
+
+### FINAL addition: (sub)region-specific annotations; re-annotation of 'Ependymal' ===========
+  #   - New insights from (sub)region localization of top marker genes to add to $cellType.final
+  #   - Additionally, Aqp4.Rbmps top markers --> ependymal, whereas the formerly-
+  #     called 'Ependymal' is actually choroid plexus
+
+load(here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"), verbose=T)
+    # sce.ls, annotationTab.ls, cell_colors.ls
+
+# Call the $cellType.final --> $cellType.exp[anded]
+sce.ls$cellType.exp <- sce.ls$cellType.final
+sce.ls$cellType.final <- NULL
+
+## Expand annotationTab.ls to capture summary of data analysis
+annotation.exp <- data.frame(matrix(unlist(rep(annotationTab.ls[which(annotationTab.ls$cellType == "Inhib_D"), ],
+                                               12)),
+                                    ncol=2, byrow=T))
+colnames(annotation.exp) <- colnames(annotationTab.ls)
+
+annotation.exp$cellType.exp <- c(
+  "drop.likelyDoublet","Excit_E",
+  paste0("Inhib_", c("I","J","K","L", "M","N","O","P", "Q","R"))
+  )
+
+## And as before:
+annotationTab.ls$cellType.exp <- annotationTab.ls$cellType
+annotationTab.ls$cellType.exp[grep("Aqp4.Rbpms", annotationTab.ls$cellType.exp)] <- "Aqp4.Rbpms"
+annotationTab.ls$cellType.exp[grep("Mural", annotationTab.ls$cellType.exp)] <- "Mural"
+annotationTab.ls$cellType.exp[grep("Oligo", annotationTab.ls$cellType.exp)] <- "Oligo"
+annotationTab.ls$cellType.exp[grep("Astro", annotationTab.ls$cellType.exp)] <- "Astro"
+annotationTab.ls$cellType.exp[grep("Endo", annotationTab.ls$cellType.exp)] <- "Endo"
+
+# Excit_A + Excit_E (co-express most of their top markers)
+annotationTab.ls$cellType.exp[annotationTab.ls$cellType.exp %in% c("Excit_A", "Excit_E")] <- "Excit_A"
+# Same with Excit_F + Excit_G 
+annotationTab.ls$cellType.exp[annotationTab.ls$cellType.exp %in% c("Excit_F", "Excit_G")] <- "Excit_F"
+
+annotationTab.ls$cellType.exp[annotationTab.ls$cellType.exp=="Neuron.mixed_A"] <- "Neuron.mixed"
+
+# Add expansion
+annotationTab.ls <- rbind(annotationTab.ls, annotation.exp)
+
+
+## Now finally add the new insights & (sub)region-specific prefixes, based on the above ===
+annotationTab.ls$cellType.final <- annotationTab.ls$cellType.exp
+annotationTab.ls$cellType.final[grep("Ependymal", annotationTab.ls$cellType.final)] <- "ChP"
+annotationTab.ls$cellType.final[grep("Aqp4.Rbpms", annotationTab.ls$cellType.final)] <- "Ependymal"
+
+annotationTab.ls$cellType.final[grep("Excit_A", annotationTab.ls$cellType.final)] <- "TNoS_Ex.A"
+annotationTab.ls$cellType.final[grep("Excit_B", annotationTab.ls$cellType.final)] <- "Thal_Ex.B"
+annotationTab.ls$cellType.final[grep("Excit_C", annotationTab.ls$cellType.final)] <- "TT.IG.SH_Ex.C"
+annotationTab.ls$cellType.final[grep("Excit_D", annotationTab.ls$cellType.final)] <- "Chol_Ex.D"
+annotationTab.ls$cellType.final[grep("Excit_E", annotationTab.ls$cellType.final)] <- "TT.IG.SH_Ex.E"
+annotationTab.ls$cellType.final[grep("Excit_F", annotationTab.ls$cellType.final)] <- "TT.IG.SH_Ex.F"
+
+annotationTab.ls$cellType.final[grep("Inhib_A", annotationTab.ls$cellType.final)] <- "Str_In.A"
+annotationTab.ls$cellType.final[grep("Inhib_B", annotationTab.ls$cellType.final)] <- "Ventr_In.B"
+annotationTab.ls$cellType.final[grep("Inhib_C", annotationTab.ls$cellType.final)] <- "LS_In.C"
+annotationTab.ls$cellType.final[grep("Inhib_D", annotationTab.ls$cellType.final)] <- "LS_In.D"
+annotationTab.ls$cellType.final[grep("Inhib_E", annotationTab.ls$cellType.final)] <- "IoC_In.E"
+annotationTab.ls$cellType.final[grep("Inhib_F", annotationTab.ls$cellType.final)] <- "Str_In.F"
+annotationTab.ls$cellType.final[grep("Inhib_G", annotationTab.ls$cellType.final)] <- "Sept_In.G"
+annotationTab.ls$cellType.final[grep("Inhib_H", annotationTab.ls$cellType.final)] <- "Str_In.H"
+annotationTab.ls$cellType.final[grep("Inhib_I", annotationTab.ls$cellType.final)] <- "Sept_In.I"
+
+annotationTab.ls$cellType.final[grep("Inhib_J", annotationTab.ls$cellType.final)] <- "MS_In.J"
+annotationTab.ls$cellType.final[grep("Inhib_K", annotationTab.ls$cellType.final)] <- "MS_In.K"
+annotationTab.ls$cellType.final[grep("Inhib_L", annotationTab.ls$cellType.final)] <- "Str_In.L"
+annotationTab.ls$cellType.final[grep("Inhib_M", annotationTab.ls$cellType.final)] <- "LS_In.M"
+annotationTab.ls$cellType.final[grep("Inhib_N", annotationTab.ls$cellType.final)] <- "LS_In.N"
+annotationTab.ls$cellType.final[grep("Inhib_O", annotationTab.ls$cellType.final)] <- "LS_In.O"
+annotationTab.ls$cellType.final[grep("Inhib_P", annotationTab.ls$cellType.final)] <- "LS_In.P"
+annotationTab.ls$cellType.final[grep("Inhib_Q", annotationTab.ls$cellType.final)] <- "LS_In.Q"
+annotationTab.ls$cellType.final[grep("Inhib_R", annotationTab.ls$cellType.final)] <- "LS_In.R"
+
+# Then re-annotate
+sce.ls$cellType.final <- annotationTab.ls$cellType.final[match(sce.ls$cellType.exp,
+                                                               annotationTab.ls$cellType.exp)]
+sce.ls$cellType.final <- factor(sce.ls$cellType.final)
+table(sce.ls$cellType.final)
+
+## Re-assign final cell class color (37 levels)
+cell_colors.ls <- c(tableau20, tableau10medium, cbPalette[-6])
+names(cell_colors.ls) <- levels(sce.ls$cellType.final)
+
+
+# Save
+save(sce.ls, annotationTab.ls, cell_colors.ls,
+     file=here("snRNAseq_mouse", "processed_data","SCE", "sce_updated_LS.rda"))
 
 
 
