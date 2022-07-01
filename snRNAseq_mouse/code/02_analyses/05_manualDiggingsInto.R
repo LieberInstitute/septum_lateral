@@ -75,40 +75,6 @@ lapply(cellType.idx, function(x){
 
 
 
-sce.ls$MSN.D1 <- NA
-sce.ls$MSN.D1[grep("MSN.D1", sce.ls$cellType)] <- TRUE
-
-sce.ls$MSN.D1.0 <- NA
-sce.ls$MSN.D1.0 <- sce.ls$MSN.D1 & geneExprs["DRD1", ]==0
-
-# Now plot & color by this - is DRD2 expressed?
-plotExpression(sce.ls, exprs_values = "logcounts", features=c("DRD1", "DRD2"),
-               x="cellType", colour_by="MSN.D1.0", point_alpha=0.5, point_size=1.2, ncol=5,
-               add_legend=T) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(size = 25))
-
-
-sce.ls$MSN.D2 <- NA
-sce.ls$MSN.D2[grep("MSN.D2", sce.ls$cellType)] <- TRUE
-
-sce.ls$MSN.D2.0 <- NA
-sce.ls$MSN.D2.0 <- sce.ls$MSN.D2 & geneExprs["DRD2", ]==0
-
-# Now plot & color by this - is DRD1 expressed?
-plotExpression(sce.ls, exprs_values = "logcounts", features=c("DRD1", "DRD2"),
-               x="cellType", colour_by="MSN.D2.0", point_alpha=0.5, point_size=1.2, ncol=5,
-               add_legend=T) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(size = 25))
-
-
-
-
-# non-0 expression of BOTH? ===
-table(geneExprs["DRD1", union(which(sce.ls$MSN.D1), which(sce.ls$MSN.D2))] > 0 &
-        geneExprs["DRD2", union(which(sce.ls$MSN.D1), which(sce.ls$MSN.D2))] > 0)
-
-
-
 
 
 
