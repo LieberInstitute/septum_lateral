@@ -4,7 +4,8 @@ initial <- list()
 # Settings for Reduced dimension plot 1
 ################################################################################
 
-initial[["ReducedDimensionPlot1"]] <- new("ReducedDimensionPlot", Type = "UMAP", XAxis = 1L, YAxis = 2L,
+initial[["ReducedDimensionPlot1"]] <- new("ReducedDimensionPlot",
+    Type = "UMAP", XAxis = 1L, YAxis = 2L,
     FacetRowByColData = "Sample", FacetColumnByColData = "Sample",
     ColorByColumnData = "cellType.final", ColorByFeatureNameAssay = "logcounts",
     ColorBySampleNameColor = "#FF0000", ShapeByColumnData = "Sample",
@@ -21,33 +22,41 @@ initial[["ReducedDimensionPlot1"]] <- new("ReducedDimensionPlot", Type = "UMAP",
     FontSize = 1, LegendPointSize = 1, LegendPosition = "Bottom",
     HoverInfo = TRUE, LabelCenters = FALSE, LabelCentersBy = "Sample",
     LabelCentersColor = "#000000", VersionInfo = list(iSEE = structure(list(
-        c(2L, 8L, 0L)), class = c("package_version", "numeric_version"
-    ))), PanelId = c(ReducedDimensionPlot = 1L), PanelHeight = 600L,
+        c(2L, 8L, 0L)
+    ), class = c("package_version", "numeric_version"))), PanelId = c(ReducedDimensionPlot = 1L), PanelHeight = 600L,
     PanelWidth = 3L, SelectionBoxOpen = FALSE, RowSelectionSource = "---",
     ColumnSelectionSource = "---", DataBoxOpen = FALSE, RowSelectionDynamicSource = FALSE,
     ColumnSelectionDynamicSource = FALSE, RowSelectionRestrict = FALSE,
-    ColumnSelectionRestrict = FALSE, SelectionHistory = list())
+    ColumnSelectionRestrict = FALSE, SelectionHistory = list()
+)
 
 ################################################################################
 # Settings for Row data table 1
 ################################################################################
 
-initial[["RowDataTable1"]] <- new("RowDataTable", Selected = "Snap25", Search = "", SearchColumns = c("",
-"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-"", "", "", "", "", "", "", ""), HiddenColumns = character(0),
-    VersionInfo = list(iSEE = structure(list(c(2L, 8L, 0L)), class = c("package_version",
-    "numeric_version"))), PanelId = c(RowDataTable = 1L), PanelHeight = 600L,
+initial[["RowDataTable1"]] <- new("RowDataTable",
+    Selected = "Snap25", Search = "", SearchColumns = c(
+        "",
+        "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", ""
+    ), HiddenColumns = character(0),
+    VersionInfo = list(iSEE = structure(list(c(2L, 8L, 0L)), class = c(
+        "package_version",
+        "numeric_version"
+    ))), PanelId = c(RowDataTable = 1L), PanelHeight = 600L,
     PanelWidth = 3L, SelectionBoxOpen = FALSE, RowSelectionSource = "---",
     ColumnSelectionSource = "---", DataBoxOpen = FALSE, RowSelectionDynamicSource = FALSE,
     ColumnSelectionDynamicSource = FALSE, RowSelectionRestrict = FALSE,
-    ColumnSelectionRestrict = FALSE, SelectionHistory = list())
+    ColumnSelectionRestrict = FALSE, SelectionHistory = list()
+)
 
 ################################################################################
 # Settings for Feature assay plot 1
 ################################################################################
 
-initial[["FeatureAssayPlot1"]] <- new("FeatureAssayPlot", Assay = "logcounts", XAxis = "Column data",
+initial[["FeatureAssayPlot1"]] <- new("FeatureAssayPlot",
+    Assay = "logcounts", XAxis = "Column data",
     XAxisColumnData = "cellType.final", XAxisFeatureName = "Snap25",
     XAxisFeatureSource = "---", XAxisFeatureDynamicSource = FALSE,
     YAxisFeatureName = "Snap25", YAxisFeatureSource = "RowDataTable1",
@@ -67,9 +76,10 @@ initial[["FeatureAssayPlot1"]] <- new("FeatureAssayPlot", Assay = "logcounts", X
     FontSize = 1, LegendPointSize = 1, LegendPosition = "Bottom",
     HoverInfo = TRUE, LabelCenters = FALSE, LabelCentersBy = "Sample",
     LabelCentersColor = "#000000", VersionInfo = list(iSEE = structure(list(
-        c(2L, 8L, 0L)), class = c("package_version", "numeric_version"
-    ))), PanelId = c(FeatureAssayPlot = 1L), PanelHeight = 600L,
+        c(2L, 8L, 0L)
+    ), class = c("package_version", "numeric_version"))), PanelId = c(FeatureAssayPlot = 1L), PanelHeight = 600L,
     PanelWidth = 6L, SelectionBoxOpen = FALSE, RowSelectionSource = "---",
     ColumnSelectionSource = "---", DataBoxOpen = FALSE, RowSelectionDynamicSource = FALSE,
     ColumnSelectionDynamicSource = FALSE, RowSelectionRestrict = FALSE,
-    ColumnSelectionRestrict = FALSE, SelectionHistory = list())
+    ColumnSelectionRestrict = FALSE, SelectionHistory = list()
+)
