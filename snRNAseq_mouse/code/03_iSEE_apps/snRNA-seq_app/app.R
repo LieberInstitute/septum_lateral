@@ -2,7 +2,7 @@
 library("SingleCellExperiment")
 library("iSEE")
 library("shiny")
-#library("rColorBrewer")
+#library("RColorBrewer")
 
 load("sce_for_iSEE_LS.rda", verbose = TRUE)
 
