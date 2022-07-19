@@ -24,7 +24,7 @@ sce.ls.small$Sample <- as.factor(sce.ls.small$Sample)
 iSEE(
     sce.ls.small,
     appTitle = "mm_LS_2022",
-    # initial = initial,
+    initial = initial,
     colormap = ExperimentColorMap(colData = list(
         Sample = function(n) {
             cols <- paletteer::paletteer_d(
