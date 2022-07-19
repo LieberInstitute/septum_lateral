@@ -2,7 +2,7 @@
 library("SingleCellExperiment")
 library("iSEE")
 library("shiny")
-# library("RColorBrewer")
+library("paletteer")
 
 load("sce_for_iSEE_LS.rda", verbose = TRUE)
 
@@ -19,19 +19,28 @@ source("initial.R", print.eval = TRUE)
 #   colData(sce.ls.small)[, c("cellType.final", "donor")]
 # )
 
+sce.ls.small$Sample <- as.factor(sce.ls.small$Sample)
 
 iSEE(
     sce.ls.small,
     appTitle = "mm_LS_2022",
-    initial = initial,
-    # colormap = ExperimentColorMap(colData = list(
-    #     donor = function(n) {
-    #         cols <- RColorBrewer::brewer.pal(8, "Dark2")
-    #         names(cols) <- paste0("donor", seq_len(8))
-    #         return(cols)
-    #     },
-    #     cellType.final = function(n) {
-    #         cell_colors.ls[!grepl("drop", names(cell_colors))]
-    #     }
-    # ))
+    # initial = initial,
+    colormap = ExperimentColorMap(colData = list(
+        Sample = function(n) {
+            cols <- paletteer::paletteer_d(
+                palette = "RColorBrewer::Dark2",
+                n = length(levels(sce.ls.small$Sample))
+            )
+            names(cols) <- levels(sce.ls.small$Sample)
+            return(cols)
+        },
+        cellType.final = function(n) {
+            cols <- paletteer::paletteer_d(
+                palette = "Polychrome::palette36",
+                n = length(levels(sce.ls.small$cellType.final))
+            )
+            names(cols) <- levels(sce.ls.small$cellType.final)
+            return(cols)
+        }
+    ))
 )
