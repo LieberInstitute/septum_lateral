@@ -14,3 +14,4 @@ snRNAseq_mouse/processed_data/tables/zold_top40genesLists_LS-n4_33PREfinalCellTy
 # Because additional iterations are making for a large repo - will just post/update in G Drive location
 snRNAseq_mouse/plots/markers
 snRNAseq_mouse/plots/supplemental
+.Rproj.user
