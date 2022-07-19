@@ -6,10 +6,11 @@ library("shiny")
 
 load("sce_for_iSEE_LS.rda", verbose = TRUE)
 
-lobstr::obj_size(sce.ls.small) / 1024^3
-# 0.8161497 B
+## Don't run this on app.R since we don't want to run this every single time
+# lobstr::obj_size(sce.ls.small)
+# 876.33 MB
 
-source("initial.R", print.eval =TRUE)
+source("initial.R", print.eval = TRUE)
 
 ## From https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/810b47364af4c8afe426bd2a6b559bd6a9f1cc98/shiny_apps/tran2021_AMY/app.R#L10-L14
 ## Related to https://github.com/iSEE/iSEE/issues/568
