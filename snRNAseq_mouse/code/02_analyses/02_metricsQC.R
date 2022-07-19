@@ -20,23 +20,23 @@ here()
 ### Mito rate QC ============
 
 # Load nuclei-called SCE
-load(here("snRNAseq_mouse","processed_data","SCE", "sce_working_LS.rda"), verbose=T)
-    # sce.ls
+load(here("snRNAseq_mouse", "processed_data", "SCE", "sce_working_LS.rda"), verbose = T)
+# sce.ls
 
 sce.ls
-    # class: SingleCellExperiment
-    # dim: 32285 25527
-    # metadata(1): Samples
-    # assays(1): counts
-    # rownames(32285): ENSMUSG00000051951 ENSMUSG00000089699 ...
-    #   ENSMUSG00000095019 ENSMUSG00000095041
-    # rowData names(6): source type ... gene_name gene_type
-    # colnames(25527): 1_AAACCCAAGGTACATA-1 1_AAACCCACATCCGAGC-1 ...
-    #   4_TTTGTTGCATACAGCT-1 4_TTTGTTGGTCAAACGG-1
-    # colData names(4): Sample Barcode mouseNums Sex
-    # reducedDimNames(0):
-    # mainExpName: NULL
-    # altExpNames(0):
+# class: SingleCellExperiment
+# dim: 32285 25527
+# metadata(1): Samples
+# assays(1): counts
+# rownames(32285): ENSMUSG00000051951 ENSMUSG00000089699 ...
+#   ENSMUSG00000095019 ENSMUSG00000095041
+# rowData names(6): source type ... gene_name gene_type
+# colnames(25527): 1_AAACCCAAGGTACATA-1 1_AAACCCACATCCGAGC-1 ...
+#   4_TTTGTTGCATACAGCT-1 4_TTTGTTGGTCAAACGG-1
+# colData names(4): Sample Barcode mouseNums Sex
+# reducedDimNames(0):
+# mainExpName: NULL
+# altExpNames(0):
 
 head(colData(sce.ls))
 
@@ -44,19 +44,21 @@ head(colData(sce.ls))
 sample.idx <- splitit(sce.ls$Sample)
 
 stats <- list()
-for(i in names(sample.idx)){
-  stats[[i]] <- perCellQCMetrics(sce.ls[ ,sample.idx[[i]]],
-                                 subsets=list(Mito = which(seqnames(sce.ls) == "chrM")))
-  }
+for (i in names(sample.idx)) {
+    stats[[i]] <- perCellQCMetrics(sce.ls[, sample.idx[[i]]],
+        subsets = list(Mito = which(seqnames(sce.ls) == "chrM"))
+    )
+}
 names(stats) <- names(sample.idx)
 
 save(sce.ls, stats,
-     file=here("snRNAseq_mouse","processed_data","SCE", "sce_working_LS.rda"))
+    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_working_LS.rda")
+)
 
 
 ## 17Mar2022 work ===
-load(here("snRNAseq_mouse","processed_data","SCE", "sce_working_LS.rda"), verbose=T)
-    # sce.ls, stats
+load(here("snRNAseq_mouse", "processed_data", "SCE", "sce_working_LS.rda"), verbose = T)
+# sce.ls, stats
 
 
 
@@ -67,44 +69,49 @@ load(here("snRNAseq_mouse","processed_data","SCE", "sce_working_LS.rda"), verbos
 #       nuclei even if they had a single MT transcript (throwing out upwards of 50% of the sample)
 
 # First check computation of mito percent:
-table(stats[[1]]$subsets_Mito_percent == (stats[[1]]$subsets_Mito_sum/stats[[1]]$sum)*100)
-    # All TRUE
+table(stats[[1]]$subsets_Mito_percent == (stats[[1]]$subsets_Mito_sum / stats[[1]]$sum) * 100)
+# All TRUE
 
 test.stats <- stats
 
-for(i in 1:length(test.stats)){
-  test.stats[[i]]$pseudo_subsets_Mito_sum <- test.stats[[i]]$subsets_Mito_sum + 1
-  test.stats[[i]]$pseudo_subsets_Mito_percent <- test.stats[[i]]$pseudo_subsets_Mito_sum / (test.stats[[i]]$sum+1) * 100
+for (i in 1:length(test.stats)) {
+    test.stats[[i]]$pseudo_subsets_Mito_sum <- test.stats[[i]]$subsets_Mito_sum + 1
+    test.stats[[i]]$pseudo_subsets_Mito_percent <- test.stats[[i]]$pseudo_subsets_Mito_sum / (test.stats[[i]]$sum + 1) * 100
 }
 
 ## Lapply: MAD approach for mito rate thresholding
 pseudo.high.mito <- lapply(test.stats, function(x) {
-  isOutlier(x$pseudo_subsets_Mito_percent,
-            nmads=3,
-            type="higher")
-  })
+    isOutlier(x$pseudo_subsets_Mito_percent,
+        nmads = 3,
+        type = "higher"
+    )
+})
 pseudo.high.mito.table <- lapply(pseudo.high.mito, table)
 
 # Percent dropped
-sapply(pseudo.high.mito.table, function(x) round(x[2]/sum(x), 3))
-    #1M.TRUE 2F.TRUE 3M.TRUE 4F.TRUE 
-    #0.096   0.073   0.128   0.107
+sapply(pseudo.high.mito.table, function(x) round(x[2] / sum(x), 3))
+# 1M.TRUE 2F.TRUE 3M.TRUE 4F.TRUE
+# 0.096   0.073   0.128   0.107
 
 # Thresholds
-sapply(pseudo.high.mito, function(x){round(attributes(x)[["thresholds"]]["higher"], 4)})
-    #1M.higher 2F.higher 3M.higher 4F.higher 
-    #0.3476    0.2545    0.1644    0.1693
+sapply(pseudo.high.mito, function(x) {
+    round(attributes(x)[["thresholds"]]["higher"], 4)
+})
+# 1M.higher 2F.higher 3M.higher 4F.higher
+# 0.3476    0.2545    0.1644    0.1693
 
 
 ## Bind [true] stats to colData
 # (we'll just keep the 'pseudo' result since this was made/meant to work with a range of data)
 table(rownames(do.call("rbind", stats)) == colnames(sce.ls))
-    # all 25527 TRUE
+# all 25527 TRUE
 
-colData(sce.ls) <- cbind(colData(sce.ls),
-                         do.call("rbind", stats),
-                         do.call("c", pseudo.high.mito))
-#colnames(colData(sce.ls))[which(colnames(colData(sce.ls)) == "do.call(\"c\", pseudo.high.mito)")] <- "high.mito"
+colData(sce.ls) <- cbind(
+    colData(sce.ls),
+    do.call("rbind", stats),
+    do.call("c", pseudo.high.mito)
+)
+# colnames(colData(sce.ls))[which(colnames(colData(sce.ls)) == "do.call(\"c\", pseudo.high.mito)")] <- "high.mito"
 colnames(colData(sce.ls))[11] <- "high.mito"
 
 # $sum == $total
@@ -112,98 +119,114 @@ sce.ls$total <- NULL
 
 # Store original for comparison/plotting
 sce.ls.unfiltered <- sce.ls
-sce.ls <- sce.ls[ ,!sce.ls$high.mito]
+sce.ls <- sce.ls[, !sce.ls$high.mito]
 
 
 
 
 ## Plot some metrics
-mitoCutoffs <- sapply(pseudo.high.mito, function(x){round(attributes(x)[["thresholds"]]["higher"], 3)})
-names(mitoCutoffs) <- gsub(".higher","", names(mitoCutoffs))
+mitoCutoffs <- sapply(pseudo.high.mito, function(x) {
+    round(attributes(x)[["thresholds"]]["higher"], 3)
+})
+names(mitoCutoffs) <- gsub(".higher", "", names(mitoCutoffs))
 
-pdf(here("snRNAseq_mouse","plots","LS-n3_QCmetrics_high-mitoColored.pdf"), height=4)
-for(i in names(sample.idx)){
-  grid.arrange(
-    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], y="sum", colour_by="high.mito", point_alpha=0.4) +
-      scale_y_log10() + ggtitle(paste0("Total count: ", i)),
-    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], y="detected", colour_by="high.mito", point_alpha=0.4) +
-      scale_y_log10() + ggtitle("Detected features"),
-    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], y="subsets_Mito_percent",
-                colour_by="high.mito", point_alpha=0.4) +
-      ggtitle(paste0("Mito % (cutoff = ", mitoCutoffs[i],")")),
-    ncol=3
-  )
-  # Mito rate vs n detected features
-  print(
-    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], x="detected", y="subsets_Mito_percent",
-                colour_by="high.mito", point_size=2.5, point_alpha=0.5) +
-      ggtitle(paste0("Sample: ", i,
-                     ";     pre-QC nNuclei: ", ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]),";      ",
-                     "nNuclei kept: ", ncol(sce.ls[ ,sce.ls$Sample==i])," (",
-                     round(ncol(sce.ls[ ,sce.ls$Sample==i]) /
-                             ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]) * 100, 2), "%)"
-      ))
-  )
-  # Detected features vs total count
-  print(
-    plotColData(sce.ls.unfiltered[ ,sample.idx[[i]]], x="sum", y="detected",
-                colour_by="high.mito", point_size=2.5, point_alpha=0.5) +
-      ggtitle(paste0("Sample: ", i,
-                     ";     pre-QC nNuclei: ", ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]),";      ",
-                     "nNuclei kept: ", ncol(sce.ls[ ,sce.ls$Sample==i])," (",
-                     round(ncol(sce.ls[ ,sce.ls$Sample==i]) /
-                             ncol(sce.ls.unfiltered[ ,sce.ls.unfiltered$Sample==i]) * 100, 2), "%)"
-      ))
-  )
+pdf(here("snRNAseq_mouse", "plots", "LS-n3_QCmetrics_high-mitoColored.pdf"), height = 4)
+for (i in names(sample.idx)) {
+    grid.arrange(
+        plotColData(sce.ls.unfiltered[, sample.idx[[i]]], y = "sum", colour_by = "high.mito", point_alpha = 0.4) +
+            scale_y_log10() + ggtitle(paste0("Total count: ", i)),
+        plotColData(sce.ls.unfiltered[, sample.idx[[i]]], y = "detected", colour_by = "high.mito", point_alpha = 0.4) +
+            scale_y_log10() + ggtitle("Detected features"),
+        plotColData(sce.ls.unfiltered[, sample.idx[[i]]],
+            y = "subsets_Mito_percent",
+            colour_by = "high.mito", point_alpha = 0.4
+        ) +
+            ggtitle(paste0("Mito % (cutoff = ", mitoCutoffs[i], ")")),
+        ncol = 3
+    )
+    # Mito rate vs n detected features
+    print(
+        plotColData(sce.ls.unfiltered[, sample.idx[[i]]],
+            x = "detected", y = "subsets_Mito_percent",
+            colour_by = "high.mito", point_size = 2.5, point_alpha = 0.5
+        ) +
+            ggtitle(paste0(
+                "Sample: ", i,
+                ";     pre-QC nNuclei: ", ncol(sce.ls.unfiltered[, sce.ls.unfiltered$Sample == i]), ";      ",
+                "nNuclei kept: ", ncol(sce.ls[, sce.ls$Sample == i]), " (",
+                round(ncol(sce.ls[, sce.ls$Sample == i]) /
+                    ncol(sce.ls.unfiltered[, sce.ls.unfiltered$Sample == i]) * 100, 2), "%)"
+            ))
+    )
+    # Detected features vs total count
+    print(
+        plotColData(sce.ls.unfiltered[, sample.idx[[i]]],
+            x = "sum", y = "detected",
+            colour_by = "high.mito", point_size = 2.5, point_alpha = 0.5
+        ) +
+            ggtitle(paste0(
+                "Sample: ", i,
+                ";     pre-QC nNuclei: ", ncol(sce.ls.unfiltered[, sce.ls.unfiltered$Sample == i]), ";      ",
+                "nNuclei kept: ", ncol(sce.ls[, sce.ls$Sample == i]), " (",
+                round(ncol(sce.ls[, sce.ls$Sample == i]) /
+                    ncol(sce.ls.unfiltered[, sce.ls.unfiltered$Sample == i]) * 100, 2), "%)"
+            ))
+    )
 }
 dev.off()
 
 
 
 ### Doublet score computation (no filtering here) ============
-  # Use default params, because this is at the single-sample-level
-  # (multi-batch normalization, PCA, etc. will be performed across corresponding samples)
+# Use default params, because this is at the single-sample-level
+# (multi-batch normalization, PCA, etc. will be performed across corresponding samples)
 
 library(scDblFinder)
 
 ## To speed up, run on sample-level top-HVGs - just take top 1000 ===
 sample.idx <- splitit(sce.ls$Sample)
 
-sce.ls.sample.list <- lapply(sample.idx, function(x){ logNormCounts(sce.ls[ ,x]) })
+sce.ls.sample.list <- lapply(sample.idx, function(x) {
+    logNormCounts(sce.ls[, x])
+})
 geneVar.samples <- lapply(sce.ls.sample.list, modelGeneVar)
-topHVGs <- lapply(geneVar.samples, function(x) {getTopHVGs(x, n=1000)})
+topHVGs <- lapply(geneVar.samples, function(x) {
+    getTopHVGs(x, n = 1000)
+})
 
 # Compute doublet density scores
 Sys.time()
-    # [1] "2022-03-22 14:08:16 EDT"
+# [1] "2022-03-22 14:08:16 EDT"
 set.seed(109)
 dbl.dens.focused <- lapply(names(sample.idx), function(x) {
-  computeDoubletDensity(sce.ls.sample.list[[x]], subset.row=topHVGs[[x]])})
+    computeDoubletDensity(sce.ls.sample.list[[x]], subset.row = topHVGs[[x]])
+})
 Sys.time()
-    #[1] "2022-03-22 14:12:35 EDT"
+# [1] "2022-03-22 14:12:35 EDT"
 names(dbl.dens.focused) <- names(sample.idx)
 
 
 sce.ls$doubletScore <- do.call("c", dbl.dens.focused)
-sapply(sample.idx, function(x){
-  quantile(sce.ls$doubletScore[x], probs=seq(0.05,1,by=0.05))
-  })
+sapply(sample.idx, function(x) {
+    quantile(sce.ls$doubletScore[x], probs = seq(0.05, 1, by = 0.05))
+})
 
 
 
 # Save
-save(sce.ls, sce.ls.unfiltered, 
-     file=here("snRNAseq_mouse", "processed_data","SCE", "sce_working_LS.rda"))
+save(sce.ls, sce.ls.unfiltered,
+    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_working_LS.rda")
+)
 
 
 
 ## Reproducibility information ====
-print('Reproducibility information:')
+print("Reproducibility information:")
 Sys.time()
-    #[1] "2022-03-22 14:22:10 EDT"
+# [1] "2022-03-22 14:22:10 EDT"
 proc.time()
-    #    user   system  elapsed 
-    # 901.100   93.653 2881.093 
+#    user   system  elapsed
+# 901.100   93.653 2881.093
 options(width = 120)
 session_info()
 # ─ Session info ─────────────────────────────────────────────────────────────────────
@@ -218,7 +241,7 @@ session_info()
 # tz       US/Eastern
 # date     2022-03-22
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
-# 
+#
 # ─ Packages ─────────────────────────────────────────────────────────────────────────
 # package              * version  date (UTC) lib source
 # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
@@ -326,10 +349,9 @@ session_info()
 # XVector                0.34.0   2021-10-26 [2] Bioconductor
 # yaml                   2.3.5    2022-02-21 [2] CRAN (R 4.1.2)
 # zlibbioc               1.40.0   2021-10-26 [2] Bioconductor
-# 
+#
 # [1] /users/ntranngu/R/4.1.x
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
-# 
+#
 # ────────────────────────────────────────────────────────────────────────────────────
-

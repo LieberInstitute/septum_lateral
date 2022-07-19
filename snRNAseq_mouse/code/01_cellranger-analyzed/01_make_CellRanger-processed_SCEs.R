@@ -16,104 +16,110 @@ library(here)
 library(sessioninfo)
 
 here()
-  # [1] "/dcs04/lieber/marmaypag/pilotLS_LIBD1070"
-  
+# [1] "/dcs04/lieber/marmaypag/pilotLS_LIBD1070"
+
 # hm this is kinda weird bc we are in:
 getwd()
-  # [1] "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_cellranger-analyzed"
+# [1] "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/code/01_cellranger-analyzed"
 
 
 ## These operations can definitely be built into a function to streamline, but let's
- # first read in the count data from the processed (nuclei-already-called) first sample,
- # '1M_C_LS':
+# first read in the count data from the processed (nuclei-already-called) first sample,
+# '1M_C_LS':
 Sys.time()
-  #[1] "2022-01-19 13:16:11 EST"
+# [1] "2022-01-19 13:16:11 EST"
 sce.m1 <- read10xCounts(
-  samples = "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/cellranger/1M_C_LS/outs/filtered_feature_bc_matrix/",
-  sample.names = "1M_C_LS",
-  type = "sparse",
-  col.names = TRUE
+    samples = "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/cellranger/1M_C_LS/outs/filtered_feature_bc_matrix/",
+    sample.names = "1M_C_LS",
+    type = "sparse",
+    col.names = TRUE
 )
 Sys.time()
-  #[1] "2022-01-19 13:16:35 EST"
+# [1] "2022-01-19 13:16:35 EST"
 
 # A summary of this object:
 sce.m1
-  # class: SingleCellExperiment 
-  # dim: 32285 8304 
-  # metadata(1): Samples
-  # assays(1): counts
-  # rownames(32285): ENSMUSG00000051951 ENSMUSG00000089699 ...
-  #   ENSMUSG00000095019 ENSMUSG00000095041
-  # rowData names(3): ID Symbol Type
-  # colnames(8304): AAACCCAAGGTACATA-1 AAACCCACATCCGAGC-1 ...
-  #   TTTGTTGTCACGGAGA-1 TTTGTTGTCCAACCGG-1
-  # colData names(2): Sample Barcode
-  # reducedDimNames(0):
-  # mainExpName: NULL
-  # altExpNames(0):
+# class: SingleCellExperiment
+# dim: 32285 8304
+# metadata(1): Samples
+# assays(1): counts
+# rownames(32285): ENSMUSG00000051951 ENSMUSG00000089699 ...
+#   ENSMUSG00000095019 ENSMUSG00000095041
+# rowData names(3): ID Symbol Type
+# colnames(8304): AAACCCAAGGTACATA-1 AAACCCACATCCGAGC-1 ...
+#   TTTGTTGTCACGGAGA-1 TTTGTTGTCCAACCGG-1
+# colData names(2): Sample Barcode
+# reducedDimNames(0):
+# mainExpName: NULL
+# altExpNames(0):
 
 
 ## Currently there are just Ensembl ID, Symbol, and 'Type' in the rowData
 head(rowData(sce.m1))
 
-  # Note that the rownames are the Ensembl gene names - let's switch to the more familiar gene symbols:
-  # ...but also notice that length(unique(rowData(sce.m1)$Symbol)) != nrow(sce.m1)
-  #   - That's because some gene symbols are used multiple times.
+# Note that the rownames are the Ensembl gene names - let's switch to the more familiar gene symbols:
+# ...but also notice that length(unique(rowData(sce.m1)$Symbol)) != nrow(sce.m1)
+#   - That's because some gene symbols are used multiple times.
 
 # -> To avoid getting into sticky situations, let's 'uniquify' these names:
-rowData(sce.m1)$Symbol.uniq <- scuttle::uniquifyFeatureNames(ID=rowData(sce.m1)$ID, names=rowData(sce.m1)$Symbol)
+rowData(sce.m1)$Symbol.uniq <- scuttle::uniquifyFeatureNames(ID = rowData(sce.m1)$ID, names = rowData(sce.m1)$Symbol)
 rownames(sce.m1) <- rowData(sce.m1)$Symbol.uniq
 
 
 ## Read in Cell Ranger's t-SNE and add as an entry to the reducedDims slot, calling it 'TSNE_CR'
-TSNE.coords <- read.csv(file="/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/cellranger/1M_C_LS/outs/analysis/tsne/2_components/projection.csv",
-                        header=TRUE, row.names=1)
+TSNE.coords <- read.csv(
+    file = "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/cellranger/1M_C_LS/outs/analysis/tsne/2_components/projection.csv",
+    header = TRUE, row.names = 1
+)
 
 head(TSNE.coords)
-  #                       TSNE.1     TSNE.2
-  # AAACCCAAGGTACATA-1 -15.54532 -33.666412
-  # AAACCCACATCCGAGC-1 -10.86300  11.466032
-  # AAACCCAGTAGCTCGC-1 -33.65646  14.447342
-  # AAACCCAGTTACGGAG-1  15.50977   1.180676
-  # AAACCCATCACGGACC-1 -16.26428  18.028536
-  # AAACCCATCCTCTGCA-1  15.79586  28.272553
+#                       TSNE.1     TSNE.2
+# AAACCCAAGGTACATA-1 -15.54532 -33.666412
+# AAACCCACATCCGAGC-1 -10.86300  11.466032
+# AAACCCAGTAGCTCGC-1 -33.65646  14.447342
+# AAACCCAGTTACGGAG-1  15.50977   1.180676
+# AAACCCATCACGGACC-1 -16.26428  18.028536
+# AAACCCATCCTCTGCA-1  15.79586  28.272553
 
 # Check it's the same order as the colnames of the SCE
-table(rownames(TSNE.coords) == colnames(sce.m1))  # all TRUE, good.
+table(rownames(TSNE.coords) == colnames(sce.m1)) # all TRUE, good.
 reducedDim(sce.m1, "TSNE_CR") <- TSNE.coords
 
 
 ## Do the same for the graph-based clustering - in this case as a column vector (class 'factor') in the colData:
-graph.clust <- read.csv(file="/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/cellranger/1M_C_LS/outs/analysis/clustering/graphclust/clusters.csv",
-                        header=TRUE, row.names=1)
+graph.clust <- read.csv(
+    file = "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/cellranger/1M_C_LS/outs/analysis/clustering/graphclust/clusters.csv",
+    header = TRUE, row.names = 1
+)
 
-table(rownames(graph.clust) == colnames(sce.m1))  # all TRUE, good.
+table(rownames(graph.clust) == colnames(sce.m1)) # all TRUE, good.
 colData(sce.m1)$cluster.graph <- factor(graph.clust$Cluster)
 
 # What's the distribution?
 table(sce.m1$cluster.graph)
-  #    1    2    3    4    5    6    7    8    9   10 
-  # 2034 1767 1197 1111  555  453  416  341  290  140 
+#    1    2    3    4    5    6    7    8    9   10
+# 2034 1767 1197 1111  555  453  416  341  290  140
 
 
 ## Plot TSNE, coloring by graph-based clusters - this is the same as what's in the web summary :)
-#plotReducedDim(sce.m1, dimred="TSNE_CR", colour_by="cluster.graph", text_by="cluster.graph")
+# plotReducedDim(sce.m1, dimred="TSNE_CR", colour_by="cluster.graph", text_by="cluster.graph")
 
 # Can also print some violin plots of your favorite genes - however we first want to log-transform-normalize
 #   the counts, due to such variable total counts/cell type(/nuclei)
-sce.m1 <- logNormCounts(sce.m1, assay.type="counts", log=TRUE, pseudo.count=1)
-  # This creates & stores another assays entry, called "logcounts"
+sce.m1 <- logNormCounts(sce.m1, assay.type = "counts", log = TRUE, pseudo.count = 1)
+# This creates & stores another assays entry, called "logcounts"
 sce.m1
 
 pdf("./graphics/1M_C_LS_CR-analysis_TSNE_and_violinPlots-std_graphClusters.pdf")
 # TSNE:
-plotReducedDim(sce.m1, dimred="TSNE_CR", colour_by="cluster.graph", text_by="cluster.graph") +
-  ggtitle("Cell-Ranger-automated analysis: TSNE (sample '1M_C_LS')")
+plotReducedDim(sce.m1, dimred = "TSNE_CR", colour_by = "cluster.graph", text_by = "cluster.graph") +
+    ggtitle("Cell-Ranger-automated analysis: TSNE (sample '1M_C_LS')")
 # Violin plots of whatever genes you want to print
-plotExpression(sce.m1, x="cluster.graph", colour_by="cluster.graph", exprs_values="logcounts",
-               features=c("Snap25", "Mbp", "Gfap", "Drd3", "Oxtr", "Nts"),
-               ncol=2, scales="free_y")
+plotExpression(sce.m1,
+    x = "cluster.graph", colour_by = "cluster.graph", exprs_values = "logcounts",
+    features = c("Snap25", "Mbp", "Gfap", "Drd3", "Oxtr", "Nts"),
+    ncol = 2, scales = "free_y"
+)
 dev.off()
 
 
@@ -121,54 +127,62 @@ dev.off()
 #   (italicizes the gene names and plots the median)
 source("/dcl01/lieber/ajaffe/Matt/MNT_thesis/snRNAseq/10x_pilot_FINAL/plotExpressionCustom.R")
 
-pdf("./graphics/1M_C_LS_CR-analysis_violinPlots-custom_broadMarkers_graphClusters.pdf", width=7, height=10)
-plotExpressionCustom(sce.m1, anno_name="cluster.graph", exprs_values="logcounts",
-                     # Broad cell types
-                     features=c("Snap25", "Syt1", # neuronal
-                                "Slc17a7","Slc7a6", # excit
-                                "Gad1","Gad2", # inhib
-                                "Mbp","Plp1", # oligo
-                                "Gfap","Slc1a2", # astro
-                                "Pdgfra","Vcan", # OPC
-                                "Cd74","C3", # micro
-                                "Cldn5","Flt1", # endothelial
-                                "Col1a2","Tbx18"), # mural
-                     features_name="custom-selected",
-                     ncol=2, scales="free_y")
+pdf("./graphics/1M_C_LS_CR-analysis_violinPlots-custom_broadMarkers_graphClusters.pdf", width = 7, height = 10)
+plotExpressionCustom(sce.m1,
+    anno_name = "cluster.graph", exprs_values = "logcounts",
+    # Broad cell types
+    features = c(
+        "Snap25", "Syt1", # neuronal
+        "Slc17a7", "Slc7a6", # excit
+        "Gad1", "Gad2", # inhib
+        "Mbp", "Plp1", # oligo
+        "Gfap", "Slc1a2", # astro
+        "Pdgfra", "Vcan", # OPC
+        "Cd74", "C3", # micro
+        "Cldn5", "Flt1", # endothelial
+        "Col1a2", "Tbx18"
+    ), # mural
+    features_name = "custom-selected",
+    ncol = 2, scales = "free_y"
+)
 dev.off()
 
 # From Keri/various RNAscope probes recently shown (human) data on
 pdf("./graphics/1M_C_LS_CR-analysis_violinPlots-custom_specificMarkers_graphClusters.pdf")
-plotExpressionCustom(sce.m1, anno_name="cluster.graph", exprs_values="logcounts",
-                                # Broad cell types
-                     features=c("Drd3", "Oxtr", "Nts",
-                                "Gad1", "Ppp1r1b", "Slc17a6", "Slc32a1",
-                                "Calb1", "Pvalb", "Chat"),
-                     features_name="custom-selected",
-                     ncol=3, scales="free_y")
+plotExpressionCustom(sce.m1,
+    anno_name = "cluster.graph", exprs_values = "logcounts",
+    # Broad cell types
+    features = c(
+        "Drd3", "Oxtr", "Nts",
+        "Gad1", "Ppp1r1b", "Slc17a6", "Slc32a1",
+        "Calb1", "Pvalb", "Chat"
+    ),
+    features_name = "custom-selected",
+    ncol = 3, scales = "free_y"
+)
 dev.off()
 
 
 # For reference - what I usually look at, in human:
-    # markers.mathys.tran = list(
-    #   'neurons' = c('SYT1', 'SNAP25', 'GRIN1'),
-    #   'excitatory_neuron' = c('CAMK2A', 'NRGN','SLC17A7', 'SLC17A6', 'SLC17A8'),
-    #   'inhibitory_neuron' = c('GAD1', 'GAD2', 'SLC32A1'),
-    #   'oligodendrocyte' = c('MBP', 'MOBP', 'PLP1'),
-    #   'oligodendrocyte_precursor' = c('PDGFRA', 'VCAN', 'CSPG4'),
-    #   'microglia' = c('CD74', 'CSF1R', 'C3'),
-    #   'astrocytes' = c('GFAP', 'TNC', 'AQP4', 'SLC1A2'),
-    #   'endothelial' = c('CLDN5', 'FLT1', 'VTN'),
-    #   # MSN markers
-    #   'MSNs.pan' = c("PPP1R1B","BCL11B"),# "CTIP2")
-    #   'MSNs.D1' = c("DRD1", "PDYN", "TAC1"),
-    #   'MSNs.D2' = c("DRD2", "PENK"),
-    #   # Post-hoc from Tran-Maynard, et al. Neuron 2021
-    #   'differn_committed_OPC' = c("SOX4", "BCAN", "GPR17", "TNS3"),
-    #   'Tcell' = c('SKAP1', 'ITK', 'CD247'),
-    #   'Mural' = c('COL1A2', 'TBX18', 'RBPMS'),
-    #   'Macro' = c('CD163', 'SIGLEC1', 'F13A1')
-    # )
+# markers.mathys.tran = list(
+#   'neurons' = c('SYT1', 'SNAP25', 'GRIN1'),
+#   'excitatory_neuron' = c('CAMK2A', 'NRGN','SLC17A7', 'SLC17A6', 'SLC17A8'),
+#   'inhibitory_neuron' = c('GAD1', 'GAD2', 'SLC32A1'),
+#   'oligodendrocyte' = c('MBP', 'MOBP', 'PLP1'),
+#   'oligodendrocyte_precursor' = c('PDGFRA', 'VCAN', 'CSPG4'),
+#   'microglia' = c('CD74', 'CSF1R', 'C3'),
+#   'astrocytes' = c('GFAP', 'TNC', 'AQP4', 'SLC1A2'),
+#   'endothelial' = c('CLDN5', 'FLT1', 'VTN'),
+#   # MSN markers
+#   'MSNs.pan' = c("PPP1R1B","BCL11B"),# "CTIP2")
+#   'MSNs.D1' = c("DRD1", "PDYN", "TAC1"),
+#   'MSNs.D2' = c("DRD2", "PENK"),
+#   # Post-hoc from Tran-Maynard, et al. Neuron 2021
+#   'differn_committed_OPC' = c("SOX4", "BCAN", "GPR17", "TNS3"),
+#   'Tcell' = c('SKAP1', 'ITK', 'CD247'),
+#   'Mural' = c('COL1A2', 'TBX18', 'RBPMS'),
+#   'Macro' = c('CD163', 'SIGLEC1', 'F13A1')
+# )
 
 
 
@@ -177,15 +191,15 @@ dev.off()
 
 
 ## Reproducibility information ====
-print('Reproducibility information:')
+print("Reproducibility information:")
 Sys.time()
-#[1] "2022-01-19 17:04:56 EST"
+# [1] "2022-01-19 17:04:56 EST"
 proc.time()
-#     user    system   elapsed 
+#     user    system   elapsed
 #  277.934     8.779 14192.693
 options(width = 120)
 session_info()
-#─ Session info ───────────────────────────────────────────────────────────────
+# ─ Session info ───────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
 # os       CentOS Linux 7 (Core)
@@ -197,7 +211,7 @@ session_info()
 # tz       US/Eastern
 # date     2022-01-19
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
-# 
+#
 # ─ Packages ───────────────────────────────────────────────────────────────────
 # package              * version  date (UTC) lib source
 # assertthat             0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
@@ -298,10 +312,9 @@ session_info()
 # XVector                0.34.0   2021-10-26 [2] Bioconductor
 # yaml                   2.2.1    2020-02-01 [2] CRAN (R 4.1.0)
 # zlibbioc               1.40.0   2021-10-26 [2] Bioconductor
-# 
+#
 # [1] /users/ntranngu/R/4.1.x
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
-# 
+#
 # ──────────────────────────────────────────────────────────────────────────────
-

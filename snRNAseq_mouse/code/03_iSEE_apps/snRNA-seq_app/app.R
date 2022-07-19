@@ -2,7 +2,7 @@
 library("SingleCellExperiment")
 library("iSEE")
 library("shiny")
-#library("RColorBrewer")
+# library("RColorBrewer")
 
 load("sce_for_iSEE_LS.rda", verbose = TRUE)
 
@@ -22,7 +22,7 @@ source("initial.R", print.eval = TRUE)
 
 iSEE(
     sce.ls.small,
-    appTitle = "mm_LS_2022" ,
+    appTitle = "mm_LS_2022",
     initial = initial,
     # colormap = ExperimentColorMap(colData = list(
     #     donor = function(n) {
