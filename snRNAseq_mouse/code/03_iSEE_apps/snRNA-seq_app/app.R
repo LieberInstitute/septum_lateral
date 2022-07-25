@@ -21,6 +21,7 @@ source("initial.R", print.eval = TRUE)
 
 sce.ls.small$Sample <- as.factor(sce.ls.small$Sample)
 
+sce.ls.small <- registerAppOptions(sce.ls.small, color.maxlevels = 33)
 iSEE(
     sce.ls.small,
     appTitle = "mm_LS_2022",
@@ -29,16 +30,18 @@ iSEE(
         Sample = function(n) {
             cols <- paletteer::paletteer_d(
                 palette = "RColorBrewer::Dark2",
-                n = length(levels(sce.ls.small$Sample))
+                n = length(unique(sce.ls.small$Sample))
             )
+            cols <- as.vector(cols)
             names(cols) <- levels(sce.ls.small$Sample)
             return(cols)
         },
         cellType.final = function(n) {
             cols <- paletteer::paletteer_d(
                 palette = "Polychrome::palette36",
-                n = length(levels(sce.ls.small$cellType.final))
+                n = length(unique(sce.ls.small$cellType.final))
             )
+            cols <- as.vector(cols)
             names(cols) <- levels(sce.ls.small$cellType.final)
             return(cols)
         }
