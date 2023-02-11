@@ -17,9 +17,9 @@ library(pheatmap)
 
 here()
 
-#If you need to mamually set working directory
+# If you need to mamually set working directory
 setwd("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/")
-getwd() #to check it's in the right place
+getwd() # to check it's in the right place
 
 
 # plotExpressionCustom for nicer aesthetics
@@ -28,15 +28,15 @@ source("/dcs04/lieber/lcolladotor/pilotLC_LIBD001/locus-c/code/analyses_sn/plotE
 
 ### Palette taken from `scater`
 tableau10medium <- c(
-  "#729ECE", "#FF9E4A", "#67BF5C", "#ED665D",
-  "#AD8BC9", "#A8786E", "#ED97CA", "#A2A2A2",
-  "#CDCC5D", "#6DCCDA"
+    "#729ECE", "#FF9E4A", "#67BF5C", "#ED665D",
+    "#AD8BC9", "#A8786E", "#ED97CA", "#A2A2A2",
+    "#CDCC5D", "#6DCCDA"
 )
 tableau20 <- c(
-  "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C",
-  "#98DF8A", "#D62728", "#FF9896", "#9467BD", "#C5B0D5",
-  "#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F",
-  "#C7C7C7", "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5"
+    "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C",
+    "#98DF8A", "#D62728", "#FF9896", "#9467BD", "#C5B0D5",
+    "#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F",
+    "#C7C7C7", "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5"
 )
 
 ## ===
@@ -70,7 +70,7 @@ table(sce.ls$cellType.final)
 ## doubletScore distributions / cluster?
 cellClust.idx <- splitit(sce.ls$cellType.final)
 sapply(cellClust.idx, function(x) {
-  round(quantile(sce.ls$doubletScore[x]), 2)
+    round(quantile(sce.ls$doubletScore[x]), 2)
 })
 #      Astro Chol_Ex.D  ChP drop.doublet drop.likelyDoublet drop.lowNTx Endo
 # 0%    0.00      0.04 0.02         0.06               0.00        0.00 0.00
@@ -108,7 +108,7 @@ sapply(cellClust.idx, function(x) {
 # 100%     12.53          6.82          7.56          9.25      11.46
 
 sapply(cellClust.idx, function(x) {
-  quantile(sce.ls$sum[x])
+    quantile(sce.ls$sum[x])
 })
 #         Astro Chol_Ex.D   ChP drop.doublet drop.likelyDoublet drop.lowNTx
 # 0%     770.00    3191.0  3270      2524.00                995       716.0
@@ -179,9 +179,9 @@ sce.ls <- logNormCounts(sce.ls)
 # Will use this to assess more 'valid', non-noise-driving markers
 cellClust.idx <- splitit(sce.ls$cellType.final)
 medianNon0.ls <- lapply(cellClust.idx, function(x) {
-  apply(as.matrix(assay(sce.ls, "logcounts")), 1, function(y) {
-    median(y[x]) > 0
-  })
+    apply(as.matrix(assay(sce.ls, "logcounts")), 1, function(y) {
+        median(y[x]) > 0
+    })
 })
 
 sapply(medianNon0.ls, table)
@@ -194,13 +194,13 @@ mod <- mod[, -1, drop = F] # intercept otherwise automatically dropped by `findM
 
 # Run pairwise t-tests
 markers.ls.t.pw <- findMarkers(sce.ls,
-                               groups = sce.ls$cellType.final,
-                               assay.type = "logcounts", design = mod, test = "t",
-                               direction = "up", pval.type = "all", full.stats = T
+    groups = sce.ls$cellType.final,
+    assay.type = "logcounts", design = mod, test = "t",
+    direction = "up", pval.type = "all", full.stats = T
 )
 
 sapply(markers.ls.t.pw, function(x) {
-  table(x$FDR < 0.05)
+    table(x$FDR < 0.05)
 })
 #
 
@@ -209,18 +209,18 @@ sapply(markers.ls.t.pw, function(x) {
 
 # Add respective 'non0median' column to the stats for each set of markers
 for (i in names(markers.ls.t.pw)) {
-  markers.ls.t.pw[[i]] <- cbind(
-    markers.ls.t.pw[[i]],
-    medianNon0.ls[[i]][match(
-      rownames(markers.ls.t.pw[[i]]),
-      names(medianNon0.ls[[i]])
-    )]
-  )
-  colnames(markers.ls.t.pw[[i]])[36] <- "non0median"
+    markers.ls.t.pw[[i]] <- cbind(
+        markers.ls.t.pw[[i]],
+        medianNon0.ls[[i]][match(
+            rownames(markers.ls.t.pw[[i]]),
+            names(medianNon0.ls[[i]])
+        )]
+    )
+    colnames(markers.ls.t.pw[[i]])[36] <- "non0median"
 }
 
 sapply(markers.ls.t.pw, function(x) {
-  table(x$FDR < 0.05 & x$non0median == TRUE)["TRUE"]
+    table(x$FDR < 0.05 & x$non0median == TRUE)["TRUE"]
 })
 #     Astro.TRUE     Chol_Ex.D.TRUE           ChP.TRUE          Endo.TRUE
 #             98                 69                270                328
@@ -243,10 +243,10 @@ sapply(markers.ls.t.pw, function(x) {
 
 ## Save these
 save(markers.ls.t.pw, medianNon0.ls,
-     file = here(
-       "snRNAseq_mouse", "processed_data", "SCE",
-       "markers-stats_LS-n4_findMarkers_33cellTypes.rda"
-     )
+    file = here(
+        "snRNAseq_mouse", "processed_data", "SCE",
+        "markers-stats_LS-n4_findMarkers_33cellTypes.rda"
+    )
 )
 
 # # As needed
@@ -256,16 +256,16 @@ save(markers.ls.t.pw, medianNon0.ls,
 
 # Print these to pngs
 markerList.t.pw <- lapply(markers.ls.t.pw, function(x) {
-  rownames(x)[x$FDR < 0.05 & x$non0median == TRUE]
+    rownames(x)[x$FDR < 0.05 & x$non0median == TRUE]
 })
 
 # Change to gene symbols
 markerList.t.pw <- lapply(markerList.t.pw, function(x) {
-  rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
+    rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
 })
 
 genes.top40.t <- lapply(markerList.t.pw, function(x) {
-  head(x, n = 40)
+    head(x, n = 40)
 })
 
 smaller.set <- names(genes.top40.t)[lengths(genes.top40.t) <= 20]
@@ -273,53 +273,53 @@ left.set <- setdiff(names(genes.top40.t), smaller.set)
 
 # Now remove those with no significant markers
 smaller.set <- setdiff(
-  smaller.set,
-  names(genes.top40.t)[lengths(genes.top40.t) == 0]
+    smaller.set,
+    names(genes.top40.t)[lengths(genes.top40.t) == 0]
 )
 
 # Smaller graphical window
 dir.create(here("snRNAseq_mouse", "plots", "markers"))
 for (i in smaller.set) {
-  png(here(
-    "snRNAseq_mouse", "plots", "markers",
-    paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")
-  ), height = 950, width = 1200)
-  print(
-    plotExpressionCustom(
-      sce = sce.hold,
-      features = genes.top40.t[[i]],
-      features_name = i,
-      anno_name = "cellType.final",
-      ncol = 5, point_alpha = 0.4,
-      scales = "free_y", swap_rownames = "gene_name"
-    ) +
-      scale_color_manual(values = cell_colors.ls) +
-      ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
+    png(here(
+        "snRNAseq_mouse", "plots", "markers",
+        paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")
+    ), height = 950, width = 1200)
+    print(
+        plotExpressionCustom(
+            sce = sce.hold,
+            features = genes.top40.t[[i]],
+            features_name = i,
+            anno_name = "cellType.final",
+            ncol = 5, point_alpha = 0.4,
+            scales = "free_y", swap_rownames = "gene_name"
+        ) +
+            scale_color_manual(values = cell_colors.ls) +
+            ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
+            theme(plot.title = element_text(size = 20))
+    )
+    dev.off()
 }
 
 # 20-40 markers
 for (i in left.set) {
-  png(here(
-    "snRNAseq_mouse", "plots", "markers",
-    paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")
-  ), height = 1900, width = 1200)
-  print(
-    plotExpressionCustom(
-      sce = sce.hold,
-      features = genes.top40.t[[i]],
-      features_name = i,
-      anno_name = "cellType.final",
-      ncol = 5, point_alpha = 0.4,
-      scales = "free_y", swap_rownames = "gene_name"
-    ) +
-      scale_color_manual(values = cell_colors.ls) +
-      ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
+    png(here(
+        "snRNAseq_mouse", "plots", "markers",
+        paste0("LS_t_pairwise_top40markers-", i, "_logExprs.png")
+    ), height = 1900, width = 1200)
+    print(
+        plotExpressionCustom(
+            sce = sce.hold,
+            features = genes.top40.t[[i]],
+            features_name = i,
+            anno_name = "cellType.final",
+            ncol = 5, point_alpha = 0.4,
+            scales = "free_y", swap_rownames = "gene_name"
+        ) +
+            scale_color_manual(values = cell_colors.ls) +
+            ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
+            theme(plot.title = element_text(size = 20))
+    )
+    dev.off()
 }
 
 
@@ -332,24 +332,24 @@ mod <- mod[, -1, drop = F] # intercept otherwise automatically dropped by `findM
 
 markers.ls.t.1vAll <- list()
 for (i in levels(sce.ls$cellType.final)) {
-  # Make temporary contrast
-  sce.ls$contrast <- ifelse(sce.ls$cellType.final == i, 1, 0)
-  # Test cluster vs. all others
-  markers.ls.t.1vAll[[i]] <- findMarkers(sce.ls,
-                                         groups = sce.ls$contrast,
-                                         assay.type = "logcounts", design = mod, test = "t",
-                                         std.lfc = TRUE,
-                                         direction = "up", pval.type = "all", full.stats = T
-  )
+    # Make temporary contrast
+    sce.ls$contrast <- ifelse(sce.ls$cellType.final == i, 1, 0)
+    # Test cluster vs. all others
+    markers.ls.t.1vAll[[i]] <- findMarkers(sce.ls,
+        groups = sce.ls$contrast,
+        assay.type = "logcounts", design = mod, test = "t",
+        std.lfc = TRUE,
+        direction = "up", pval.type = "all", full.stats = T
+    )
 }
 
 
 ## Save these
 save(markers.ls.t.pw, markers.ls.t.1vAll, medianNon0.ls,
-     file = here(
-       "snRNAseq_mouse", "processed_data", "SCE",
-       "markers-stats_LS-n4_findMarkers_33cellTypes.rda"
-     )
+    file = here(
+        "snRNAseq_mouse", "processed_data", "SCE",
+        "markers-stats_LS-n4_findMarkers_33cellTypes.rda"
+    )
 )
 
 
@@ -361,51 +361,51 @@ class(markers.ls.t.1vAll[[1]])
 
 
 sapply(markers.ls.t.1vAll, function(x) {
-  table(x[["1"]]$stats.0$log.FDR < log(.001))
+    table(x[["1"]]$stats.0$log.FDR < log(.001))
 })
 #
 
 # Do some reorganizing
 markers.ls.t.1vAll <- lapply(markers.ls.t.1vAll, function(x) {
-  # Basically take the 'stats.[1 or 0]' since is redundant with the 'summary'-level stats
-  lapply(x, function(y) {
-    y[, 4]
-  })
+    # Basically take the 'stats.[1 or 0]' since is redundant with the 'summary'-level stats
+    lapply(x, function(y) {
+        y[, 4]
+    })
 })
 
 # Re-name std.lfc column and the entries; add non-0-median info
 for (i in names(markers.ls.t.1vAll)) {
-  colnames(markers.ls.t.1vAll[[i]][["0"]])[1] <- "std.logFC"
-  colnames(markers.ls.t.1vAll[[i]][["1"]])[1] <- "std.logFC"
-  # Add non0median Boolean - might be informative for both sets of stats
-  markers.ls.t.1vAll[[i]][["0"]] <- cbind(
-    markers.ls.t.1vAll[[i]][["0"]],
-    medianNon0.ls[[i]][match(
-      rownames(markers.ls.t.1vAll[[i]][["0"]]),
-      names(medianNon0.ls[[i]])
-    )]
-  )
-  colnames(markers.ls.t.1vAll[[i]][["0"]])[4] <- "non0median"
-  
-  # "1" aka 'enriched'
-  markers.ls.t.1vAll[[i]][["1"]] <- cbind(
-    markers.ls.t.1vAll[[i]][["1"]],
-    medianNon0.ls[[i]][match(
-      rownames(markers.ls.t.1vAll[[i]][["1"]]),
-      names(medianNon0.ls[[i]])
-    )]
-  )
-  colnames(markers.ls.t.1vAll[[i]][["1"]])[4] <- "non0median"
-  
-  # Then re-name the entries to more interpretable, because we'll keeping both contrasts
-  names(markers.ls.t.1vAll[[i]]) <- paste0(i, c("_depleted", "_enriched"))
+    colnames(markers.ls.t.1vAll[[i]][["0"]])[1] <- "std.logFC"
+    colnames(markers.ls.t.1vAll[[i]][["1"]])[1] <- "std.logFC"
+    # Add non0median Boolean - might be informative for both sets of stats
+    markers.ls.t.1vAll[[i]][["0"]] <- cbind(
+        markers.ls.t.1vAll[[i]][["0"]],
+        medianNon0.ls[[i]][match(
+            rownames(markers.ls.t.1vAll[[i]][["0"]]),
+            names(medianNon0.ls[[i]])
+        )]
+    )
+    colnames(markers.ls.t.1vAll[[i]][["0"]])[4] <- "non0median"
+
+    # "1" aka 'enriched'
+    markers.ls.t.1vAll[[i]][["1"]] <- cbind(
+        markers.ls.t.1vAll[[i]][["1"]],
+        medianNon0.ls[[i]][match(
+            rownames(markers.ls.t.1vAll[[i]][["1"]]),
+            names(medianNon0.ls[[i]])
+        )]
+    )
+    colnames(markers.ls.t.1vAll[[i]][["1"]])[4] <- "non0median"
+
+    # Then re-name the entries to more interpretable, because we'll keeping both contrasts
+    names(markers.ls.t.1vAll[[i]]) <- paste0(i, c("_depleted", "_enriched"))
 }
 
 
 
 ## Marker numbers with the non-0-median filter
 sapply(markers.ls.t.1vAll, function(x) {
-  table(x[[2]]$log.FDR < log(.001) & x[[2]]$non0median == TRUE)
+    table(x[[2]]$log.FDR < log(.001) & x[[2]]$non0median == TRUE)
 })
 #       Astro Chol_Ex.D   ChP  Endo Ependymal IoC_In.E LS_In.C LS_In.D LS_In.M
 # FALSE 27270     27243 26714 26938     26399    27222   26882   26237   26903
@@ -425,37 +425,37 @@ sapply(markers.ls.t.1vAll, function(x) {
 
 ## Print these to pngs
 markerList.t.1vAll <- lapply(markers.ls.t.1vAll, function(x) {
-  rownames(x[[2]])[x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE]
+    rownames(x[[2]])[x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE]
 })
 
 # Change to gene symbols
 markerList.t.1vAll <- lapply(markerList.t.1vAll, function(x) {
-  rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
+    rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
 })
 
 genes.top40.t <- lapply(markerList.t.1vAll, function(x) {
-  head(x, n = 40)
+    head(x, n = 40)
 })
 
 for (i in names(genes.top40.t)) {
-  png(here(
-    "snRNAseq_mouse", "plots", "markers",
-    paste0("LS_t_1vALL_top40markers-", i, "_logExprs.png")
-  ), height = 1900, width = 1200)
-  print(
-    plotExpressionCustom(
-      sce = sce.hold,
-      features = genes.top40.t[[i]],
-      features_name = i,
-      anno_name = "cellType.final",
-      ncol = 5, point_alpha = 0.4,
-      scales = "free_y", swap_rownames = "gene_name"
-    ) +
-      scale_color_manual(values = cell_colors.ls) +
-      ggtitle(label = paste0("LS ", i, " top markers: 'cluster-vs-all-others' t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
+    png(here(
+        "snRNAseq_mouse", "plots", "markers",
+        paste0("LS_t_1vALL_top40markers-", i, "_logExprs.png")
+    ), height = 1900, width = 1200)
+    print(
+        plotExpressionCustom(
+            sce = sce.hold,
+            features = genes.top40.t[[i]],
+            features_name = i,
+            anno_name = "cellType.final",
+            ncol = 5, point_alpha = 0.4,
+            scales = "free_y", swap_rownames = "gene_name"
+        ) +
+            scale_color_manual(values = cell_colors.ls) +
+            ggtitle(label = paste0("LS ", i, " top markers: 'cluster-vs-all-others' t-tests (FDR<0.05)")) +
+            theme(plot.title = element_text(size = 20))
+    )
+    dev.off()
 }
 
 
@@ -466,21 +466,21 @@ names(markerList.t.1vAll) <- paste0(names(markerList.t.1vAll), "_1vAll")
 # Many of the PW results don't have 40 markers:
 extend.idx <- names(which(lengths(markerList.t.pw) < 40))
 for (i in extend.idx) {
-  markerList.t.pw[[i]] <- c(markerList.t.pw[[i]], rep("", 40 - length(markerList.t.pw[[i]])))
+    markerList.t.pw[[i]] <- c(markerList.t.pw[[i]], rep("", 40 - length(markerList.t.pw[[i]])))
 }
 
 top40genes <- cbind(
-  sapply(markerList.t.pw, function(x) head(x, n = 40)),
-  sapply(markerList.t.1vAll, function(y) head(y, n = 40))
+    sapply(markerList.t.pw, function(x) head(x, n = 40)),
+    sapply(markerList.t.1vAll, function(y) head(y, n = 40))
 )
 top40genes <- top40genes[, sort(colnames(top40genes))]
 
 write.csv(top40genes,
-          file = here(
-            "snRNAseq_mouse", "processed_data", "tables",
-            "top40genesLists_LS-n4_33finalCellTypes.csv"
-          ),
-          row.names = FALSE
+    file = here(
+        "snRNAseq_mouse", "processed_data", "tables",
+        "top40genesLists_LS-n4_33finalCellTypes.csv"
+    ),
+    row.names = FALSE
 )
 
 
@@ -503,9 +503,9 @@ sce.ls$cellType.broad <- droplevels(sce.ls$cellType.broad)
 # Will use this to assess more 'valid', non-noise-driving markers
 cellClust.idx <- splitit(sce.ls$cellType.broad)
 medianNon0.ls.broad <- lapply(cellClust.idx, function(x) {
-  apply(as.matrix(assay(sce.ls, "logcounts")), 1, function(y) {
-    median(y[x]) > 0
-  })
+    apply(as.matrix(assay(sce.ls, "logcounts")), 1, function(y) {
+        median(y[x]) > 0
+    })
 })
 
 sapply(medianNon0.ls.broad, table)
@@ -519,13 +519,13 @@ mod <- mod[, -1, drop = F] # intercept otherwise automatically dropped by `findM
 
 # Run pairwise t-tests
 markers.ls.t.pw.broad <- findMarkers(sce.ls,
-                                     groups = sce.ls$cellType.broad,
-                                     assay.type = "logcounts", design = mod, test = "t",
-                                     direction = "up", pval.type = "all", full.stats = T
+    groups = sce.ls$cellType.broad,
+    assay.type = "logcounts", design = mod, test = "t",
+    direction = "up", pval.type = "all", full.stats = T
 )
 
 sapply(markers.ls.t.pw.broad, function(x) {
-  table(x$FDR < 0.05)
+    table(x$FDR < 0.05)
 })
 #       Astro  Chol   ChP  Endo Ependymal   IoC    LS Micro    MS Mural Neuroblast Oligo   OPC  Sept
 # FALSE 32010 31922 31390 31268     30909 32084 32229 31285 32218 31896      31914 31887 32079 32275
@@ -539,41 +539,41 @@ sapply(markers.ls.t.pw.broad, function(x) {
 
 # Add respective 'non0median' column to the stats for each set of markers
 for (i in names(markers.ls.t.pw.broad)) {
-  markers.ls.t.pw.broad[[i]] <- cbind(
-    markers.ls.t.pw.broad[[i]],
-    medianNon0.ls.broad[[i]][match(
-      rownames(markers.ls.t.pw.broad[[i]]),
-      names(medianNon0.ls.broad[[i]])
-    )]
-  )
-  colnames(markers.ls.t.pw.broad[[i]])[21] <- "non0median"
+    markers.ls.t.pw.broad[[i]] <- cbind(
+        markers.ls.t.pw.broad[[i]],
+        medianNon0.ls.broad[[i]][match(
+            rownames(markers.ls.t.pw.broad[[i]]),
+            names(medianNon0.ls.broad[[i]])
+        )]
+    )
+    colnames(markers.ls.t.pw.broad[[i]])[21] <- "non0median"
 }
 
 sapply(markers.ls.t.pw.broad, function(x) {
-  table(x$FDR < 0.05 & x$non0median == TRUE)["TRUE"]
+    table(x$FDR < 0.05 & x$non0median == TRUE)["TRUE"]
 })
-# Astro.TRUE       Chol.TRUE        ChP.TRUE       Endo.TRUE  Ependymal.TRUE        IoC.TRUE 
-#        119             126             357             360             564              98 
-#    LS.TRUE      Micro.TRUE         MS.TRUE      Mural.TRUE Neuroblast.TRUE      Oligo.TRUE 
-#         24             207              17              22              76             167 
-#   OPC.TRUE       Sept.TRUE        Str.TRUE       Thal.TRUE       TNoS.TRUE   TT.IG.SH.TRUE 
+# Astro.TRUE       Chol.TRUE        ChP.TRUE       Endo.TRUE  Ependymal.TRUE        IoC.TRUE
+#        119             126             357             360             564              98
+#    LS.TRUE      Micro.TRUE         MS.TRUE      Mural.TRUE Neuroblast.TRUE      Oligo.TRUE
+#         24             207              17              22              76             167
+#   OPC.TRUE       Sept.TRUE        Str.TRUE       Thal.TRUE       TNoS.TRUE   TT.IG.SH.TRUE
 #        104               2             116             107              86             100
 
 
 
 
 markerList.t.pw.broad <- lapply(markers.ls.t.pw.broad, function(x) {
-  rownames(x)[x$FDR < 0.05& x$non0median == TRUE]
+    rownames(x)[x$FDR < 0.05 & x$non0median == TRUE]
 })
 
 
 # Change to gene symbols
 markerList.t.pw.broad <- lapply(markerList.t.pw.broad, function(x) {
-  rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
+    rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
 })
 
 genes.top40.t <- lapply(markerList.t.pw.broad, function(x) {
-  head(x, n = 40)
+    head(x, n = 40)
 })
 
 smaller.set <- names(genes.top40.t)[lengths(genes.top40.t) <= 20]
@@ -581,51 +581,53 @@ left.set <- setdiff(names(genes.top40.t), smaller.set)
 
 # Now remove those with no significant markers
 smaller.set <- setdiff(
-  smaller.set,
-  names(genes.top40.t)[lengths(genes.top40.t) == 0]
+    smaller.set,
+    names(genes.top40.t)[lengths(genes.top40.t) == 0]
 )
 
 # Smaller graphical window
 for (i in smaller.set) {
-  png(
-    paste0("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/markers/LS_t_pairwise_top40markers_cellType.broad-", i, ".png"),
-    height = 950, width = 1200)
-  print(
-    plotExpressionCustom(
-      sce = sce.hold,
-      features = genes.top40.t[[i]],
-      features_name = i,
-      anno_name = "cellType.broad",
-      ncol = 5, point_alpha = 0.4,
-      scales = "free_y", swap_rownames = "gene_name"
-    ) +
-      #scale_color_manual(values = tableau20) +
-      ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
+    png(
+        paste0("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/markers/LS_t_pairwise_top40markers_cellType.broad-", i, ".png"),
+        height = 950, width = 1200
+    )
+    print(
+        plotExpressionCustom(
+            sce = sce.hold,
+            features = genes.top40.t[[i]],
+            features_name = i,
+            anno_name = "cellType.broad",
+            ncol = 5, point_alpha = 0.4,
+            scales = "free_y", swap_rownames = "gene_name"
+        ) +
+            # scale_color_manual(values = tableau20) +
+            ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
+            theme(plot.title = element_text(size = 20))
+    )
+    dev.off()
 }
 
 # 20-40 markers
 for (i in left.set) {
-  png(
-    paste0("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/markers/LS_t_pairwise_top40markers_cellType.broad-", i, ".png"),
-    height = 1900, width = 1200)
-  print(
-    plotExpressionCustom(
-      sce = sce.hold,
-      features = genes.top40.t[[i]],
-      features_name = i,
-      anno_name = "cellType.broad",
-      ncol = 5, point_alpha = 0.4,
-      scales = "free_y", swap_rownames = "gene_name"
-    ) +
-      
-      #scale_color_manual(values = tableau20) +
-      ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
+    png(
+        paste0("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/markers/LS_t_pairwise_top40markers_cellType.broad-", i, ".png"),
+        height = 1900, width = 1200
+    )
+    print(
+        plotExpressionCustom(
+            sce = sce.hold,
+            features = genes.top40.t[[i]],
+            features_name = i,
+            anno_name = "cellType.broad",
+            ncol = 5, point_alpha = 0.4,
+            scales = "free_y", swap_rownames = "gene_name"
+        ) +
+
+            # scale_color_manual(values = tableau20) +
+            ggtitle(label = paste0("LS ", i, " top markers: single-nucleus-level p.w. t-tests (FDR<0.05)")) +
+            theme(plot.title = element_text(size = 20))
+    )
+    dev.off()
 }
 
 
@@ -634,93 +636,94 @@ for (i in left.set) {
 ## 1-v-rest ===
 markers.ls.t.1vAll.broad <- list()
 for (i in levels(sce.ls$cellType.broad)) {
-  # Make temporary contrast
-  sce.ls$contrast <- ifelse(sce.ls$cellType.broad == i, 1, 0)
-  # Test cluster vs. all others
-  markers.ls.t.1vAll.broad[[i]] <- findMarkers(sce.ls,
-                                               groups = sce.ls$contrast,
-                                               assay.type = "logcounts", design = mod, test = "t",
-                                               std.lfc = TRUE,
-                                               direction = "up", pval.type = "all", full.stats = T
-  )
+    # Make temporary contrast
+    sce.ls$contrast <- ifelse(sce.ls$cellType.broad == i, 1, 0)
+    # Test cluster vs. all others
+    markers.ls.t.1vAll.broad[[i]] <- findMarkers(sce.ls,
+        groups = sce.ls$contrast,
+        assay.type = "logcounts", design = mod, test = "t",
+        std.lfc = TRUE,
+        direction = "up", pval.type = "all", full.stats = T
+    )
 }
 
 # Do some reorganizing
 markers.ls.t.1vAll.broad <- lapply(markers.ls.t.1vAll.broad, function(x) {
-  # Basically take the 'stats.[1 or 0]' since is redundant with the 'summary'-level stats
-  lapply(x, function(y) {
-    y[, 4]
-  })
+    # Basically take the 'stats.[1 or 0]' since is redundant with the 'summary'-level stats
+    lapply(x, function(y) {
+        y[, 4]
+    })
 })
 
 # Re-name std.lfc column and the entries; add non-0-median info
 for (i in names(markers.ls.t.1vAll.broad)) {
-  colnames(markers.ls.t.1vAll.broad[[i]][["0"]])[1] <- "std.logFC"
-  colnames(markers.ls.t.1vAll.broad[[i]][["1"]])[1] <- "std.logFC"
-  # Add non0median Boolean - might be informative for both sets of stats
-  markers.ls.t.1vAll.broad[[i]][["0"]] <- cbind(
-    markers.ls.t.1vAll.broad[[i]][["0"]],
-    medianNon0.ls.broad[[i]][match(
-      rownames(markers.ls.t.1vAll.broad[[i]][["0"]]),
-      names(medianNon0.ls.broad[[i]])
-    )]
-  )
-  colnames(markers.ls.t.1vAll.broad[[i]][["0"]])[4] <- "non0median"
-  
-  # "1" aka 'enriched'
-  markers.ls.t.1vAll.broad[[i]][["1"]] <- cbind(
-    markers.ls.t.1vAll.broad[[i]][["1"]],
-    medianNon0.ls.broad[[i]][match(
-      rownames(markers.ls.t.1vAll.broad[[i]][["1"]]),
-      names(medianNon0.ls.broad[[i]])
-    )]
-  )
-  colnames(markers.ls.t.1vAll.broad[[i]][["1"]])[4] <- "non0median"
-  
-  # Then re-name the entries to more interpretable, because we'll keeping both contrasts
-  names(markers.ls.t.1vAll.broad[[i]]) <- paste0(i, c("_depleted", "_enriched"))
+    colnames(markers.ls.t.1vAll.broad[[i]][["0"]])[1] <- "std.logFC"
+    colnames(markers.ls.t.1vAll.broad[[i]][["1"]])[1] <- "std.logFC"
+    # Add non0median Boolean - might be informative for both sets of stats
+    markers.ls.t.1vAll.broad[[i]][["0"]] <- cbind(
+        markers.ls.t.1vAll.broad[[i]][["0"]],
+        medianNon0.ls.broad[[i]][match(
+            rownames(markers.ls.t.1vAll.broad[[i]][["0"]]),
+            names(medianNon0.ls.broad[[i]])
+        )]
+    )
+    colnames(markers.ls.t.1vAll.broad[[i]][["0"]])[4] <- "non0median"
+
+    # "1" aka 'enriched'
+    markers.ls.t.1vAll.broad[[i]][["1"]] <- cbind(
+        markers.ls.t.1vAll.broad[[i]][["1"]],
+        medianNon0.ls.broad[[i]][match(
+            rownames(markers.ls.t.1vAll.broad[[i]][["1"]]),
+            names(medianNon0.ls.broad[[i]])
+        )]
+    )
+    colnames(markers.ls.t.1vAll.broad[[i]][["1"]])[4] <- "non0median"
+
+    # Then re-name the entries to more interpretable, because we'll keeping both contrasts
+    names(markers.ls.t.1vAll.broad[[i]]) <- paste0(i, c("_depleted", "_enriched"))
 }
 
 
 ## Print these to pngs
 markerList.t.1vAll.broad <- lapply(markers.ls.t.1vAll.broad, function(x) {
-  rownames(x[[2]])[x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE]
+    rownames(x[[2]])[x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE]
 })
 
 
 lengths(markerList.t.1vAll.broad)
-# Astro       Chol        ChP       Endo  Ependymal        IoC         LS      Micro         MS 
-#   488        700       1392        890       1439        607       1925        453       1757 
-# Mural Neuroblast      Oligo        OPC       Sept        Str       Thal       TNoS   TT.IG.SH 
-#   253        602        388        633       1503       1592       1900        841       1790 
+# Astro       Chol        ChP       Endo  Ependymal        IoC         LS      Micro         MS
+#   488        700       1392        890       1439        607       1925        453       1757
+# Mural Neuroblast      Oligo        OPC       Sept        Str       Thal       TNoS   TT.IG.SH
+#   253        602        388        633       1503       1592       1900        841       1790
 
 
 # Change to gene symbols
 markerList.t.1vAll.broad <- lapply(markerList.t.1vAll.broad, function(x) {
-  rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
+    rowData(sce.ls)$gene_name[match(x, rowData(sce.ls)$gene_id)]
 })
 
 genes.top40.t <- lapply(markerList.t.1vAll.broad, function(x) {
-  head(x, n = 40)
+    head(x, n = 40)
 })
 
 for (i in names(genes.top40.t)) {
-  png(paste0("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/markers/LS_t_1vALL_top40markers_cellType.broad", i, ".png"),
-      height = 1900, width = 1200)
-  print(
-    plotExpressionCustom(
-      sce = sce.hold,
-      features = genes.top40.t[[i]],
-      features_name = i,
-      anno_name = "cellType.broad",
-      ncol = 5, point_alpha = 0.4,
-      scales = "free_y", swap_rownames = "gene_name"
-    ) +
-      #scale_color_manual(values = cell_colors.ls) +
-      ggtitle(label = paste0("LS ", i, "(broad) top markers: 'cluster-vs-all-others' t-tests (FDR<0.05)")) +
-      theme(plot.title = element_text(size = 20))
-  )
-  dev.off()
+    png(paste0("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/markers/LS_t_1vALL_top40markers_cellType.broad", i, ".png"),
+        height = 1900, width = 1200
+    )
+    print(
+        plotExpressionCustom(
+            sce = sce.hold,
+            features = genes.top40.t[[i]],
+            features_name = i,
+            anno_name = "cellType.broad",
+            ncol = 5, point_alpha = 0.4,
+            scales = "free_y", swap_rownames = "gene_name"
+        ) +
+            # scale_color_manual(values = cell_colors.ls) +
+            ggtitle(label = paste0("LS ", i, "(broad) top markers: 'cluster-vs-all-others' t-tests (FDR<0.05)")) +
+            theme(plot.title = element_text(size = 20))
+    )
+    dev.off()
 }
 
 
@@ -729,7 +732,8 @@ for (i in names(genes.top40.t)) {
 
 
 save(markers.ls.t.pw.broad, markers.ls.t.1vAll.broad, medianNon0.ls.broad,
-     file="/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/SCE/markers-stats_LS-n4_findMarkers_33cellTypes.broad.rda")
+    file = "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/SCE/markers-stats_LS-n4_findMarkers_33cellTypes.broad.rda"
+)
 
 
 
@@ -740,18 +744,18 @@ names(markerList.t.1vAll.broad) <- paste0(names(markerList.t.1vAll.broad), "_1vA
 # Many of the PW results don't have 40 markers:
 extend.idx <- names(which(lengths(markerList.t.pw.broad) < 40))
 for (i in extend.idx) {
-  markerList.t.pw.broad[[i]] <- c(markerList.t.pw.broad[[i]], rep("", 40 - length(markerList.t.pw.broad[[i]])))
+    markerList.t.pw.broad[[i]] <- c(markerList.t.pw.broad[[i]], rep("", 40 - length(markerList.t.pw.broad[[i]])))
 }
 
 top40genes <- cbind(
-  sapply(markerList.t.pw.broad, function(x) head(x, n = 40)),
-  sapply(markerList.t.1vAll.broad, function(y) head(y, n = 40))
+    sapply(markerList.t.pw.broad, function(x) head(x, n = 40)),
+    sapply(markerList.t.1vAll.broad, function(y) head(y, n = 40))
 )
 top40genes <- top40genes[, sort(colnames(top40genes))]
 
 write.csv(top40genes,
-          file = "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/tables/top40genesLists_LS-n4_finalCellTypes_broad.csv",
-          row.names = FALSE
+    file = "/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/tables/top40genesLists_LS-n4_finalCellTypes_broad.csv",
+    row.names = FALSE
 )
 
 
@@ -887,40 +891,46 @@ session_info()
 #
 # ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-#Additions from Lionel below:
+# Additions from Lionel below:
 
-#Broad Marker Expression Heatmap for Fig 1
+# Broad Marker Expression Heatmap for Fig 1
 sce.ls <- sce.ls[, -grep("drop", sce.ls$cellType.final)]
 sce.ls <- sce.ls[, -grep("mixed", sce.ls$cellType.final)]
 sce.ls$cellType.final <- droplevels(sce.ls$cellType.final)
 
-#to check if it dropped
+# to check if it dropped
 levels(sce.ls$cellType.final)
 
 dat <- assay(sce.ls, "logcounts")
 rownames(dat) <- rowData(sce.ls)$gene_name
 
-genes <- c("Snap25", "Slc17a7", "Slc17a6", "Gad1", "Gad2", "Mbp", "Mobp", "Pdgfra",
-           "Vcan", "Bcan", "Sox4", "Slc1a2", "Aqp4", "Flt1", "Cldn5",
-           "Cx3cr1", "Csf1r", "Col1a2", "Rbpms")
+genes <- c(
+    "Snap25", "Slc17a7", "Slc17a6", "Gad1", "Gad2", "Mbp", "Mobp", "Pdgfra",
+    "Vcan", "Bcan", "Sox4", "Slc1a2", "Aqp4", "Flt1", "Cldn5",
+    "Cx3cr1", "Csf1r", "Col1a2", "Rbpms"
+)
 
 
 dat <- dat[genes, ]
 
 cellClust.idx <- splitit(sce.ls$cellType.final)
 
-current_dat <- do.call(cbind, lapply(cellClust.idx, function(ii) {rowMeans(dat[ , ii])}))
+current_dat <- do.call(cbind, lapply(cellClust.idx, function(ii) {
+    rowMeans(dat[, ii])
+}))
 
-pdf('/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/heatmap_broadMarkers_LAH.pdf', useDingbats=TRUE, height=6, width=10)
+pdf("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/heatmap_broadMarkers_LAH.pdf", useDingbats = TRUE, height = 6, width = 10)
 
-pheatmap(current_dat, cluster_rows = FALSE, cluster_cols = FALSE, breaks = seq(0.02, 3, length.out = 101),
-         color = colorRampPalette(RColorBrewer::brewer.pal(n = 7, name = "OrRd"))(100),
-         fontsize_row = 14.5, fontsize_col = 14.5)
-grid::grid.text(label="log2-\nExprs", x=0.96, y=0.6, gp=grid::gpar(fontsize=10))
+pheatmap(current_dat,
+    cluster_rows = FALSE, cluster_cols = FALSE, breaks = seq(0.02, 3, length.out = 101),
+    color = colorRampPalette(RColorBrewer::brewer.pal(n = 7, name = "OrRd"))(100),
+    fontsize_row = 14.5, fontsize_col = 14.5
+)
+grid::grid.text(label = "log2-\nExprs", x = 0.96, y = 0.6, gp = grid::gpar(fontsize = 10))
 
 dev.off()
 
-#Broad Marker Expression Heatmap for Fig 1
+# Broad Marker Expression Heatmap for Fig 1
 neuron.sce.ls <- sce.ls
 neuron.sce.ls <- neuron.sce.ls[, -grep("Astro", neuron.sce.ls$cellType.final)]
 neuron.sce.ls <- neuron.sce.ls[, -grep("ChP", neuron.sce.ls$cellType.final)]
@@ -936,30 +946,36 @@ neuron.sce.ls$cellType.final <- droplevels(neuron.sce.ls$cellType.final)
 
 levels(neuron.sce.ls$cellType.final)
 
-#Generate heatmap for only neurons
+# Generate heatmap for only neurons
 dat <- assay(neuron.sce.ls, "logcounts")
 rownames(dat) <- rowData(neuron.sce.ls)$gene_name
 
-genes <- c("Sv2b", "Pcsk5", "Satb2", "Samd3", "Sema3a", "Synpo2", "Bcl11b", "Rarb",
-           "Tac1", "Penk", "Trpc5", "Elavl2", "Trpc4","Homer2", "Ptpn3", "Trhde", "Cpne7",
-           "Nrp1", "Pkib", "Drd3", "Chat")
+genes <- c(
+    "Sv2b", "Pcsk5", "Satb2", "Samd3", "Sema3a", "Synpo2", "Bcl11b", "Rarb",
+    "Tac1", "Penk", "Trpc5", "Elavl2", "Trpc4", "Homer2", "Ptpn3", "Trhde", "Cpne7",
+    "Nrp1", "Pkib", "Drd3", "Chat"
+)
 
 dat <- dat[genes, ]
 
 cellClust.idx <- splitit(neuron.sce.ls$cellType.final)
 
-current_dat <- do.call(cbind, lapply(cellClust.idx, function(ii) {rowMeans(dat[ , ii])}))
+current_dat <- do.call(cbind, lapply(cellClust.idx, function(ii) {
+    rowMeans(dat[, ii])
+}))
 
-pdf('/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/heatmap_NeuronalRegionMarkers 2.pdf', useDingbats=TRUE, height=6, width=16)
+pdf("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/heatmap_NeuronalRegionMarkers 2.pdf", useDingbats = TRUE, height = 6, width = 16)
 
-pheatmap(current_dat, cluster_rows = FALSE, cluster_cols = FALSE, breaks = seq(0.02, 3, length.out = 101),
-         color = colorRampPalette(RColorBrewer::brewer.pal(n = 7, name = "OrRd"))(100),
-         fontsize_row = 14.5, fontsize_col = 14.5)
-grid::grid.text(label="", x=0.96, y=0.6, gp=grid::gpar(fontsize=10))
+pheatmap(current_dat,
+    cluster_rows = FALSE, cluster_cols = FALSE, breaks = seq(0.02, 3, length.out = 101),
+    color = colorRampPalette(RColorBrewer::brewer.pal(n = 7, name = "OrRd"))(100),
+    fontsize_row = 14.5, fontsize_col = 14.5
+)
+grid::grid.text(label = "", x = 0.96, y = 0.6, gp = grid::gpar(fontsize = 10))
 
 dev.off()
 
-#Generate heatmap for only LS clusters
+# Generate heatmap for only LS clusters
 ls.sce.ls <- neuron.sce.ls
 ls.sce.ls <- ls.sce.ls[, -grep("MS", ls.sce.ls$cellType.final)]
 ls.sce.ls <- ls.sce.ls[, -grep("Chol", ls.sce.ls$cellType.final)]
@@ -974,7 +990,7 @@ ls.sce.ls$cellType.final <- droplevels(ls.sce.ls$cellType.final)
 levels(ls.sce.ls$cellType.final)
 
 
-#Generate heatmap for only LS clusters
+# Generate heatmap for only LS clusters
 dat <- assay(ls.sce.ls, "logcounts")
 rownames(dat) <- rowData(ls.sce.ls)$gene_name
 
@@ -984,24 +1000,27 @@ dat <- dat[genes, ]
 
 cellClust.idx <- splitit(ls.sce.ls$cellType.final)
 
-current_dat <- do.call(cbind, lapply(cellClust.idx, function(ii) {rowMeans(dat[ , ii])}))
+current_dat <- do.call(cbind, lapply(cellClust.idx, function(ii) {
+    rowMeans(dat[, ii])
+}))
 
-pdf('/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/heatmap_LSClusters_Hormone Receptors.pdf', useDingbats=TRUE, height=6, width=7)
+pdf("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/heatmap_LSClusters_Hormone Receptors.pdf", useDingbats = TRUE, height = 6, width = 7)
 
-pheatmap(current_dat, cluster_rows = FALSE, cluster_cols = FALSE, breaks = seq(0.02, 2.5, length.out = 101),
-         color = colorRampPalette(RColorBrewer::brewer.pal(n = 7, name = "OrRd"))(100),
-         fontsize_row = 14.5, fontsize_col = 14.5)
-grid::grid.text(label="log2-\nExprs", x=0.96, y=0.6, gp=grid::gpar(fontsize=10))
+pheatmap(current_dat,
+    cluster_rows = FALSE, cluster_cols = FALSE, breaks = seq(0.02, 2.5, length.out = 101),
+    color = colorRampPalette(RColorBrewer::brewer.pal(n = 7, name = "OrRd"))(100),
+    fontsize_row = 14.5, fontsize_col = 14.5
+)
+grid::grid.text(label = "log2-\nExprs", x = 0.96, y = 0.6, gp = grid::gpar(fontsize = 10))
 
 dev.off()
 
 
 
-#Monoamine Receptors: c("Htr1a", "Htr1b", "Htr1d", "Htr1f", "Htr2a", "Htr2b", "Htr2c", "Htr4", "Htr5a", "Htr5b", "Htr6", "Htr7",
-#"Adra1a", "Adra1b", "Adra1d","Adra2a", "Adra2b", "Adra2c", "Adrb1", "Adrb2", "Adrb3", "Drd1", "Drd2", "Drd3")
+# Monoamine Receptors: c("Htr1a", "Htr1b", "Htr1d", "Htr1f", "Htr2a", "Htr2b", "Htr2c", "Htr4", "Htr5a", "Htr5b", "Htr6", "Htr7",
+# "Adra1a", "Adra1b", "Adra1d","Adra2a", "Adra2b", "Adra2c", "Adrb1", "Adrb2", "Adrb3", "Drd1", "Drd2", "Drd3")
 
-#Cluster Markers: c("Kcnmb2", "Gpr176", "Col19a1", "Tac1", "Nos1", "Npy", "Sst", "Stac2", "Grid2ip", "Trpc6", "Trpc3", "Npas1", "Cnr1", "Kcnq4", "Reln", 
-#"Pax6", "Gpc3", "Gabrg1", "Rnf207", "St8sia6", "Crhr2", "Tafa1", "Htr1b", "Slc18a2", "Col15a1", "Ano2", "Ntf3", "Vipr2", "Cpa6", "Lgr5")
+# Cluster Markers: c("Kcnmb2", "Gpr176", "Col19a1", "Tac1", "Nos1", "Npy", "Sst", "Stac2", "Grid2ip", "Trpc6", "Trpc3", "Npas1", "Cnr1", "Kcnq4", "Reln",
+# "Pax6", "Gpc3", "Gabrg1", "Rnf207", "St8sia6", "Crhr2", "Tafa1", "Htr1b", "Slc18a2", "Col15a1", "Ano2", "Ntf3", "Vipr2", "Cpa6", "Lgr5")
 
-#GABAergic Markers: c("Slc17a6", "Slc17a7", "Gad1", "Gad2", "Sst", "Nts", "Pvalb", "Calb1", "Calb2", "Npy", "Nos1", "Penk", "Tac1", "Pdyn")
-
+# GABAergic Markers: c("Slc17a6", "Slc17a7", "Gad1", "Gad2", "Sst", "Nts", "Pvalb", "Calb1", "Calb2", "Npy", "Nos1", "Penk", "Tac1", "Pdyn")

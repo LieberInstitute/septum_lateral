@@ -1,4 +1,3 @@
-
 library("SingleCellExperiment")
 library("iSEE")
 library("shiny")
@@ -17,8 +16,8 @@ source("initial.R", print.eval = TRUE)
 ## From https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/810b47364af4c8afe426bd2a6b559bd6a9f1cc98/shiny_apps/tran2021_AMY/app.R#L10-L14
 ## Related to https://github.com/iSEE/iSEE/issues/568
 colData(sce.ls.small) <- cbind(
-  colData(sce.ls.small)[, !colnames(colData(sce.ls.small)) %in% c("Sample", "cellType.final")],
-  colData(sce.ls.small)[, c("cellType.final", "Sample")]
+    colData(sce.ls.small)[, !colnames(colData(sce.ls.small)) %in% c("Sample", "cellType.final")],
+    colData(sce.ls.small)[, c("cellType.final", "Sample")]
 )
 
 sce.ls.small$Sample <- as.factor(sce.ls.small$Sample)

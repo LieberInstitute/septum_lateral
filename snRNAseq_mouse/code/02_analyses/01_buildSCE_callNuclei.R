@@ -99,7 +99,6 @@ bcRanks.ls <- list()
 Sys.time()
 # [1] "2022-03-10 08:09:53 EST"
 for (i in names(sample.idx)) {
-
     # Re-define the `lower=` param by identifying the 'second knee point'
     bcRanks.ls[[i]] <- barcodeRanks(counts(sce.ls[, sample.idx[[i]]]),
         fit.bounds = c(10, 1e3)
