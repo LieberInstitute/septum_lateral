@@ -20,21 +20,21 @@ library(sessioninfo)
 
 ### Palette taken from `scater`
 tableau10medium <- c(
-    "#729ECE", "#FF9E4A", "#67BF5C", "#ED665D",
-    "#AD8BC9", "#A8786E", "#ED97CA", "#A2A2A2",
-    "#CDCC5D", "#6DCCDA"
+  "#729ECE", "#FF9E4A", "#67BF5C", "#ED665D",
+  "#AD8BC9", "#A8786E", "#ED97CA", "#A2A2A2",
+  "#CDCC5D", "#6DCCDA"
 )
 tableau20 <- c(
-    "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C",
-    "#98DF8A", "#D62728", "#FF9896", "#9467BD", "#C5B0D5",
-    "#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F",
-    "#C7C7C7", "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5"
+  "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C",
+  "#98DF8A", "#D62728", "#FF9896", "#9467BD", "#C5B0D5",
+  "#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F",
+  "#C7C7C7", "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5"
 )
 # From http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
 #      (since there are more than 30 clusters, but <=38)
 cbPalette <- c(
-    "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
-    "#0072B2", "#D55E00", "#CC79A7"
+  "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
+  "#0072B2", "#D55E00", "#CC79A7"
 )
 here()
 # [1] "/dcs04/lieber/marmaypag/pilotLS_LIBD1070"
@@ -64,9 +64,9 @@ sce.ls
 # altExpNames(0):
 
 sce.ls <- devianceFeatureSelection(sce.ls,
-    assay = "counts", fam = "binomial", sorted = F,
-    # these are default params btw
-    batch = as.factor(sce.ls$Sample)
+                                   assay = "counts", fam = "binomial", sorted = F,
+                                   # these are default params btw
+                                   batch = as.factor(sce.ls$Sample)
 )
 
 
@@ -78,8 +78,8 @@ table(is.na(rowData(sce.ls)$binomial_deviance))
 # Observe:
 pdf(here("snRNAseq_mouse", "plots", "featureSelxn_binomialDeviance-byGene.pdf"), height = 5)
 plot(sort(rowData(sce.ls)$binomial_deviance, decreasing = T),
-    type = "l", xlab = "ranked genes",
-    ylab = "binomial deviance", main = "Feature Selection with Deviance: LS (n=4)"
+     type = "l", xlab = "ranked genes",
+     ylab = "binomial deviance", main = "Feature Selection with Deviance: LS (n=4)"
 )
 abline(v = 2000, lty = 2, col = "red")
 dev.off()
@@ -89,9 +89,9 @@ dev.off()
 Sys.time()
 # [1] "2022-03-23 10:37:02 EDT"
 sce.ls <- nullResiduals(sce.ls,
-    assay = "counts", fam = "binomial", # default params
-    # type="deviance")#, batch=as.factor(sce.ls$Sample))
-    type = "pearson"
+                        assay = "counts", fam = "binomial", # default params
+                        # type="deviance")#, batch=as.factor(sce.ls$Sample))
+                        type = "pearson"
 )
 # MNT comment: previously in other projects, 'batch=' threw an error
 #             (and we perform MNN-batch correction anyway, if relevant)
@@ -120,7 +120,7 @@ sce.ls
 
 ## Save into a new file, call 'updated' as opposed to 'working':
 save(sce.ls,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
 )
 
 
@@ -137,11 +137,11 @@ Sys.time()
 # [1] "2022-03-23 12:44:41 EDT"
 set.seed(109)
 sce.ls <- runPCA(sce.ls,
-    # exprs_values="binomial_deviance_residuals",
-    exprs_values = "binomial_pearson_residuals",
-    subset_row = hdgs.ls, ncomponents = 100,
-    name = "GLMPCA_approx",
-    BSPARAM = BiocSingular::IrlbaParam()
+                 # exprs_values="binomial_deviance_residuals",
+                 exprs_values = "binomial_pearson_residuals",
+                 subset_row = hdgs.ls, ncomponents = 100,
+                 name = "GLMPCA_approx",
+                 BSPARAM = BiocSingular::IrlbaParam()
 )
 Sys.time()
 # [1] "2022-03-23 14:22:15 EDT"      - this took ~1hr40min to compute...
@@ -171,39 +171,39 @@ Sys.time()
 # UMAP
 set.seed(109)
 sce.ls <- runUMAP(sce.ls,
-    dimred = "GLMPCA_approx",
-    n_dimred = 50, name = "UMAP"
+                  dimred = "GLMPCA_approx",
+                  n_dimred = 50, name = "UMAP"
 )
 # t-SNE
 set.seed(109)
 sce.ls <- runTSNE(sce.ls,
-    dimred = "GLMPCA_approx",
-    n_dimred = 50, name = "TSNE"
+                  dimred = "GLMPCA_approx",
+                  n_dimred = 50, name = "TSNE"
 )
 
 # Visualize top PCs and these 2D embeddings:
 pdf(here("snRNAseq_mouse", "plots", "reducedDims_mouseLS-n4_noBatchCorrxn.pdf"))
 plotReducedDim(sce.ls,
-    dimred = "GLMPCA_approx", colour_by = "Sample",
-    ncomponents = 4, point_alpha = 0.3, point_size = 1.5
+               dimred = "GLMPCA_approx", colour_by = "Sample",
+               ncomponents = 4, point_alpha = 0.3, point_size = 1.5
 )
 # UMAPs, along with some other metrics
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "Sample",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "Sample",
+               point_alpha = 0.3, point_size = 1.5
 )
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "sum",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "sum",
+               point_alpha = 0.3, point_size = 1.5
 )
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "doubletScore",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "doubletScore",
+               point_alpha = 0.3, point_size = 1.5
 )
 # TSNE
 plotReducedDim(sce.ls,
-    dimred = "TSNE", colour_by = "Sample",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "TSNE", colour_by = "Sample",
+               point_alpha = 0.3, point_size = 1.5
 )
 dev.off()
 
@@ -222,7 +222,7 @@ dev.off()
 
 ## Save for now
 save(sce.ls,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
 )
 
 
@@ -247,7 +247,7 @@ sce.ls$clusters.glmpca <- factor(clusters.glmpca$membership)
 
 # Also save the graph & community info
 save(snn.gr.glmpca, clusters.glmpca,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "graph_clusters_glmpca_LS-n3.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "graph_clusters_glmpca_LS-n3.rda")
 )
 
 table(sce.ls$clusters.glmpca, sce.ls$Sample)
@@ -256,7 +256,7 @@ table(sce.ls$clusters.glmpca, sce.ls$Sample)
 ## doubletScore distributions / cluster?
 cellClust.idx <- splitit(sce.ls$clusters.glmpca)
 sapply(cellClust.idx, function(x) {
-    round(quantile(sce.ls$doubletScore[x]), 2)
+  round(quantile(sce.ls$doubletScore[x]), 2)
 })
 #          1     2    3     4    5     6    7     8    9   10    11   12    13
 # 0%    0.01  0.00 0.01  0.00 0.01  0.00 0.00  0.00 0.00 0.00  0.02 0.00  0.00
@@ -293,45 +293,45 @@ sce.ls <- multiBatchNorm(sce.ls, batch = sce.ls$Sample)
 
 # Save
 save(sce.ls,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
 )
 
 
 ## Broad markers of interest:
 markers.mathys.tran <- list(
-    "neuron" = c("SYT1", "SNAP25", "GRIN1"),
-    "excit_neuron" = c("SLC17A7", "SLC17A6", "SLC17A8"),
-    "inhib_neuron" = c("GAD1", "GAD2", "SLC32A1"),
-    # Norepinephrine & serotonergic markers
-    "neuron.NE" = c("TH", "DBH", "SLC6A2", "SLC18A2", "GCH1", "DDC"), # SLC6A3 - saw no DAT
-    "neuron.5HT" = c("SLC6A4", "TPH1", "TPH2", "DDC"),
-    # SERT, serotonin T (aka 5-HTT);
-    "monoamine.metab" = c("COMT", "MAOA", "MAOB"),
-    # MSN markers
-    "MSNs.pan" = c("PPP1R1B", "BCL11B"), # "CTIP2")
-    "MSNs.D1" = c("DRD1", "PDYN", "TAC1"),
-    "MSNs.D2" = c("DRD2", "PENK"),
-    ## Non-neuronal:
-    "oligodendrocyte" = c("MBP", "MOBP", "PLP1"),
-    "oligo_precursor" = c("PDGFRA", "VCAN", "CSPG4"),
-    "microglia" = c("CD74", "CSF1R", "C3"),
-    "astrocyte" = c("GFAP", "TNC", "AQP4", "SLC1A2"),
-    "endothelial" = c("CLDN5", "FLT1", "VTN"),
-    # Post-hoc from Tran-Maynard, et al. Neuron 2021
-    "differn_committed_OPC" = c("SOX4", "BCAN", "GPR17", "TNS3"),
-    "Tcell" = c("SKAP1", "ITK", "CD247"),
-    "Mural" = c("COL1A2", "TBX18", "RBPMS"),
-    "Macro" = c("CD163", "SIGLEC1", "F13A1")
+  "neuron" = c("SYT1", "SNAP25", "GRIN1"),
+  "excit_neuron" = c("SLC17A7", "SLC17A6", "SLC17A8"),
+  "inhib_neuron" = c("GAD1", "GAD2", "SLC32A1"),
+  # Norepinephrine & serotonergic markers
+  "neuron.NE" = c("TH", "DBH", "SLC6A2", "SLC18A2", "GCH1", "DDC"), # SLC6A3 - saw no DAT
+  "neuron.5HT" = c("SLC6A4", "TPH1", "TPH2", "DDC"),
+  # SERT, serotonin T (aka 5-HTT);
+  "monoamine.metab" = c("COMT", "MAOA", "MAOB"),
+  # MSN markers
+  "MSNs.pan" = c("PPP1R1B", "BCL11B"), # "CTIP2")
+  "MSNs.D1" = c("DRD1", "PDYN", "TAC1"),
+  "MSNs.D2" = c("DRD2", "PENK"),
+  ## Non-neuronal:
+  "oligodendrocyte" = c("MBP", "MOBP", "PLP1"),
+  "oligo_precursor" = c("PDGFRA", "VCAN", "CSPG4"),
+  "microglia" = c("CD74", "CSF1R", "C3"),
+  "astrocyte" = c("GFAP", "TNC", "AQP4", "SLC1A2"),
+  "endothelial" = c("CLDN5", "FLT1", "VTN"),
+  # Post-hoc from Tran-Maynard, et al. Neuron 2021
+  "differn_committed_OPC" = c("SOX4", "BCAN", "GPR17", "TNS3"),
+  "Tcell" = c("SKAP1", "ITK", "CD247"),
+  "Mural" = c("COL1A2", "TBX18", "RBPMS"),
+  "Macro" = c("CD163", "SIGLEC1", "F13A1")
 )
 
 
 # Will have to 'make these mouse'
 broadMarkers <- markers.mathys.tran
 for (i in 1:length(broadMarkers)) {
-    broadMarkers[[i]] <- paste0(
-        substr(broadMarkers[[i]], 1, 1),
-        tolower(substr(broadMarkers[[i]], 2, nchar(broadMarkers[[i]])))
-    )
+  broadMarkers[[i]] <- paste0(
+    substr(broadMarkers[[i]], 1, 1),
+    tolower(substr(broadMarkers[[i]], 2, nchar(broadMarkers[[i]])))
+  )
 }
 
 table(unname(unlist(broadMarkers)) %in% rowData(sce.ls)$gene_name) # all good
@@ -339,63 +339,63 @@ table(unname(unlist(broadMarkers)) %in% rowData(sce.ls)$gene_name) # all good
 
 ## Expected region/sub-region markers / other curated sets ===
 markers.curated <- list(
-    "Accumbens" = c(
-        "Ppp1r1b", "Adora2a", "Rgs9", "Syndig1l", "Ric8b",
-        "Rgs4", "Rgs7bp", "Dgki"
-    ),
-    "Pan.LS" = c(
-        "Dgkg", "Dgkh", "Prkcd", "Glp1r", "Trpc4", "Zic1",
-        "Homer2", "Ptpn3"
-    ),
-    "MS.specific" = c(
-        "Nacc2", "Sgpp2", "Kcnab3", "Ngfr", "Lgi2", "Nrip3",
-        "Lrrc55", "Trpc5", "Tshz3", "Scn1a"
-    ),
-    "Septal.Hip" = c("Grid2ip", "Slc17a7", "Matn2", "Bok", "Egr4"),
-    "IG" = c("Cabp7", "Them6", "Kcnk2"),
-    "TT.IG" = c("Sv2b", "Mtmr12", "Zbtb16", "Cck"),
-    "Ventricle.ependymal" = c("Lrrc74b"),
-    "TNoS" = c("Eomes", "Col9a1", "Eps8", "Sln", "Adgrd1"),
-    "BNST" = c("Tac2", "Glra3", "Tmem145", "Fxyd7", "Rcn1"),
-    "Diag.band" = c(
-        "Ntrk1", "Coro6", "Itih3", "Arhgap12", "Chat", "Kcnc2",
-        "Elavl2", "Lgi2", "Nacc2", "Syt17", "Rnf227", "Ngfr", "Slc18a3"
-    )
+  "Accumbens" = c(
+    "Ppp1r1b", "Adora2a", "Rgs9", "Syndig1l", "Ric8b",
+    "Rgs4", "Rgs7bp", "Dgki"
+  ),
+  "Pan.LS" = c(
+    "Dgkg", "Dgkh", "Prkcd", "Glp1r", "Trpc4", "Zic1",
+    "Homer2", "Ptpn3"
+  ),
+  "MS.specific" = c(
+    "Nacc2", "Sgpp2", "Kcnab3", "Ngfr", "Lgi2", "Nrip3",
+    "Lrrc55", "Trpc5", "Tshz3", "Scn1a"
+  ),
+  "Septal.Hip" = c("Grid2ip", "Slc17a7", "Matn2", "Bok", "Egr4"),
+  "IG" = c("Cabp7", "Them6", "Kcnk2"),
+  "TT.IG" = c("Sv2b", "Mtmr12", "Zbtb16", "Cck"),
+  "Ventricle.ependymal" = c("Lrrc74b"),
+  "TNoS" = c("Eomes", "Col9a1", "Eps8", "Sln", "Adgrd1"),
+  "BNST" = c("Tac2", "Glra3", "Tmem145", "Fxyd7", "Rcn1"),
+  "Diag.band" = c(
+    "Ntrk1", "Coro6", "Itih3", "Arhgap12", "Chat", "Kcnc2",
+    "Elavl2", "Lgi2", "Nacc2", "Syt17", "Rnf227", "Ngfr", "Slc18a3"
+  )
 )
 
 markers.curated.2 <- list(
-    "GABA_sub" = c("Sst", "Pvalb", "Cck", "Npy", "Calb1", "Calb2", "Vip", "Nts"),
-    "Peptides" = c("Penk", "Pdyn", "Tac1", "Ghrh"),
-    "PeptideR" = c(
-        "Oxtr", "Crhr1", "Crhr2", "Avpr1a", "Avpr1b", "Avpr2",
-        "Galr1", "Galr2", "Galr3", "Ghrhr", "Nr3c2"
-    ),
-    "SexHormoneR" = c("Ar", "Esr1", "Esr2", "Pgr"),
-    "MetaboSerotoninR" = c(
-        "Htr1a", "Htr1b", "Htr1d", "Htr1f",
-        "Htr2a", "Htr2b", "Htr2c", "Htr4", "Htr5a",
-        "Htr5b", "Htr6", "Htr7"
-    ),
-    "IonoSerotoninR" = c("Htr3a", "Htr3b"),
-    "AdrenergicR" = c(
-        "Adra1a", "Adra1b", "Adra1d", "Adra2a",
-        "Adra2b", "Adra2c", "Adrb1", "Adrb2", "Adrb3"
-    ),
-    "DopamineR" = c("Drd1", "Drd2", "Drd3", "Drd4", "Drd5"),
-    "Other" = c("Ntrk2", "Bdnf")
+  "GABA_sub" = c("Sst", "Pvalb", "Cck", "Npy", "Calb1", "Calb2", "Vip", "Nts"),
+  "Peptides" = c("Penk", "Pdyn", "Tac1", "Ghrh"),
+  "PeptideR" = c(
+    "Oxtr", "Crhr1", "Crhr2", "Avpr1a", "Avpr1b", "Avpr2",
+    "Galr1", "Galr2", "Galr3", "Ghrhr", "Nr3c2"
+  ),
+  "SexHormoneR" = c("Ar", "Esr1", "Esr2", "Pgr"),
+  "MetaboSerotoninR" = c(
+    "Htr1a", "Htr1b", "Htr1d", "Htr1f",
+    "Htr2a", "Htr2b", "Htr2c", "Htr4", "Htr5a",
+    "Htr5b", "Htr6", "Htr7"
+  ),
+  "IonoSerotoninR" = c("Htr3a", "Htr3b"),
+  "AdrenergicR" = c(
+    "Adra1a", "Adra1b", "Adra1d", "Adra2a",
+    "Adra2b", "Adra2c", "Adrb1", "Adrb2", "Adrb3"
+  ),
+  "DopamineR" = c("Drd1", "Drd2", "Drd3", "Drd4", "Drd5"),
+  "Other" = c("Ntrk2", "Bdnf")
 )
 
 
 markers.besnard <- list(
-    "Rostrocaudal.Deep" = c("Cbln2", "Cbln4", "Pax6", "Sema3a"),
-    "Rostrocaudal.Superficial" = c("Col15a1", "Matn2", "Wfs1"),
-    "Rostral.Deep" = c("Drd3", "Galr1", "Igfbp5", "Pou6f2"),
-    "Rostral.Superficial" = c(
-        "Foxp2", "Ndst4", "Gdpd2", "Cdh7",
-        "Crhr2", "Dach2", "Fst", "Lhx2"
-    ),
-    "Caudal.Deep" = c("Asb4", "Otx2", "Pde1c", "Tacr1", "Trpc6"),
-    "Caudal.Superficial" = c("Cd24a", "Igfbp4")
+  "Rostrocaudal.Deep" = c("Cbln2", "Cbln4", "Pax6", "Sema3a"),
+  "Rostrocaudal.Superficial" = c("Col15a1", "Matn2", "Wfs1"),
+  "Rostral.Deep" = c("Drd3", "Galr1", "Igfbp5", "Pou6f2"),
+  "Rostral.Superficial" = c(
+    "Foxp2", "Ndst4", "Gdpd2", "Cdh7",
+    "Crhr2", "Dach2", "Fst", "Lhx2"
+  ),
+  "Caudal.Deep" = c("Asb4", "Otx2", "Pde1c", "Tacr1", "Trpc6"),
+  "Caudal.Superficial" = c("Cd24a", "Igfbp4")
 )
 
 
@@ -406,31 +406,31 @@ pdf(here("snRNAseq_mouse", "plots", paste0("LS-n4_expression_broadMarkers_GLMPCA
 
 # pdf(here("snRNAseq_mouse","plots",paste0("LS-n4_expression_curatedMarkers_GLMPCA-graphClusters_finalAnnotations.pdf")),
 for (i in 1:length(broadMarkers)) {
-
-    # pdf(here("snRNAseq_mouse","plots","supplemental", paste0("LS-n4_expression_", names(markers.curated)[i],"_Markers_finalAnnotations.pdf")),
-    #       height=6, width=14)
-    print(
-        plotExpressionCustom(
-            sce = sce.ls,
-            exprs_values = "logcounts",
-            features = broadMarkers[[i]],
-            features_name = names(broadMarkers)[i],
-            # anno_name = "clusters.glmpca",
-            anno_name = "cellType.final",
-            ncol = 4,
-            point_alpha = 0.4, point_size = 0.9,
-            scales = "free_y", swap_rownames = "gene_name"
-        ) +
-            ggtitle(label = paste0(
-                "mouse LS (n4) clusters: ",
-                names(broadMarkers)[i], " markers from Mathys, et al. (2019) & Tran, Maynard, et al. (2021)"
-            )) +
-            theme(
-                plot.title = element_text(size = 12),
-                axis.text.x = element_text(size = 7)
-            ) +
-            scale_color_manual(values = cell_colors.ls)
-    )
+  
+  # pdf(here("snRNAseq_mouse","plots","supplemental", paste0("LS-n4_expression_", names(markers.curated)[i],"_Markers_finalAnnotations.pdf")),
+  #       height=6, width=14)
+  print(
+    plotExpressionCustom(
+      sce = sce.ls,
+      exprs_values = "logcounts",
+      features = broadMarkers[[i]],
+      features_name = names(broadMarkers)[i],
+      # anno_name = "clusters.glmpca",
+      anno_name = "cellType.final",
+      ncol = 4,
+      point_alpha = 0.4, point_size = 0.9,
+      scales = "free_y", swap_rownames = "gene_name"
+    ) +
+      ggtitle(label = paste0(
+        "mouse LS (n4) clusters: ",
+        names(broadMarkers)[i], " markers from Mathys, et al. (2019) & Tran, Maynard, et al. (2021)"
+      )) +
+      theme(
+        plot.title = element_text(size = 12),
+        axis.text.x = element_text(size = 7)
+      ) +
+      scale_color_manual(values = cell_colors.ls)
+  )
 }
 dev.off()
 
@@ -438,38 +438,38 @@ dev.off()
 # Add'ly temp/for Lionel:
 pdf(here("snRNAseq_mouse", "plots", paste0("temp_interactiveMarkerExplore.pdf")), height = 6, width = 14)
 plotExpressionCustom(
-    sce = sce.ls,
-    exprs_values = "logcounts",
-    # Ependymal cell markers
-    features = c("Rarres2", "Ccdc153", "Tmem212", "S100b", "Acta2", "Foxj1"),
-    features_name = "custom-selected",
-    anno_name = "cellType",
-    ncol = 3, point_alpha = 0.4, point_size = 0.9,
-    scales = "free_y", swap_rownames = "gene_name"
+  sce = sce.ls,
+  exprs_values = "logcounts",
+  # Ependymal cell markers
+  features = c("Rarres2", "Ccdc153", "Tmem212", "S100b", "Acta2", "Foxj1"),
+  features_name = "custom-selected",
+  anno_name = "cellType",
+  ncol = 3, point_alpha = 0.4, point_size = 0.9,
+  scales = "free_y", swap_rownames = "gene_name"
 ) +
-    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
-    ggtitle(label = paste0("Literature-based selection of ependymal markers")) +
-    theme(
-        plot.title = element_text(size = 12),
-        axis.text.x = element_text(size = 7)
-    )
+  scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+  ggtitle(label = paste0("Literature-based selection of ependymal markers")) +
+  theme(
+    plot.title = element_text(size = 12),
+    axis.text.x = element_text(size = 7)
+  )
 #
 plotExpressionCustom(
-    sce = sce.ls,
-    exprs_values = "logcounts",
-    # Ependymal cell markers
-    features = c("Drd3", "Htr4"),
-    features_name = "custom-selected",
-    anno_name = "cellType",
-    ncol = 3, point_alpha = 0.4, point_size = 0.9,
-    scales = "free_y", swap_rownames = "gene_name"
+  sce = sce.ls,
+  exprs_values = "logcounts",
+  # Ependymal cell markers
+  features = c("Drd3", "Htr4"),
+  features_name = "custom-selected",
+  anno_name = "cellType",
+  ncol = 3, point_alpha = 0.4, point_size = 0.9,
+  scales = "free_y", swap_rownames = "gene_name"
 ) +
-    scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
-    ggtitle(label = paste0("Lionel's custom markers of interest")) +
-    theme(
-        plot.title = element_text(size = 12),
-        axis.text.x = element_text(size = 7)
-    )
+  scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+  ggtitle(label = paste0("Lionel's custom markers of interest")) +
+  theme(
+    plot.title = element_text(size = 12),
+    axis.text.x = element_text(size = 7)
+  )
 dev.off()
 
 
@@ -479,7 +479,7 @@ annotationTab.ls <- data.frame(cluster = c(1:35))
 annotationTab.ls$cellType <- NA
 annotationTab.ls$cellType[c(4, 11, 20, 21, 34, 25, 26)] <- paste0("Excit_", c("A", "B", "C", "D", "E", "F", "G"))
 annotationTab.ls$cellType[c(1, 2, 3, 8, 12, 15, 23, 30)] <-
-    paste0("Inhib_", c("A", "B", "C", "D", "E", "F", "G", "H"))
+  paste0("Inhib_", c("A", "B", "C", "D", "E", "F", "G", "H"))
 annotationTab.ls$cellType[c(31)] <- "Neuron.mixed_A"
 
 annotationTab.ls$cellType[c(6, 13)] <- paste0("Astro_", c("A", "B"))
@@ -497,8 +497,8 @@ annotationTab.ls$cellType[32] <- c("drop.doublet")
 
 
 sce.ls$cellType <- annotationTab.ls$cellType[match(
-    sce.ls$clusters.glmpca,
-    annotationTab.ls$cluster
+  sce.ls$clusters.glmpca,
+  annotationTab.ls$cluster
 )]
 sce.ls$cellType <- factor(sce.ls$cellType)
 
@@ -519,7 +519,7 @@ table(sce.ls$cellType)
 
 ## Save
 save(sce.ls, annotationTab.ls,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
 )
 
 
@@ -537,71 +537,109 @@ cell_colors.ls <- cell_colors.ls[-grep("Neuron.mixed", names(cell_colors.ls))]
 
 
 ## re-print reducedDims with these new annotations ===
-pdf(here("snRNAseq_mouse", "plots", "reducedDims_mouseLS-n4_graph-basedClusters_annotated.pdf"))
+##As needed, remove the dropped clusters
+
+#pdf(here("snRNAseq_mouse", "plots", "reducedDims_mouseLS-n4_graph-basedClusters_annotated.pdf"))
+pdf("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/reducedDims_mouseLS-n4_graph-basedClusters_FINALannot_Nov2022.pdf")
+
 # UMAPs, along with some other metrics
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "Sample",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "Sample",
+               point_alpha = 0.3, point_size = 1.5
 ) +
-    ggtitle("UMAP of LS (n=4)")
+  ggtitle("UMAP of LS (n=4)")
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "Sex",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "Sex",
+               point_alpha = 0.3, point_size = 1.5
 ) +
-    ggtitle("UMAP of LS (n=4)")
+  ggtitle("UMAP of LS (n=4)")
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "sum",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "sum",
+               point_alpha = 0.3, point_size = 1.5
 ) +
-    ggtitle("UMAP of LS (n=4)")
+  ggtitle("UMAP of LS (n=4)")
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "doubletScore",
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "doubletScore",
+               point_alpha = 0.3, point_size = 1.5
 ) +
-    ggtitle("UMAP of LS (n=4)")
+  ggtitle("UMAP of LS (n=4)")
+# With text
 plotReducedDim(sce.ls,
-    dimred = "UMAP", colour_by = "cellType.final",
-    text_by = "cellType.final", text_size = 3,
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "UMAP", colour_by = "cellType.final",
+               text_by = "cellType.final",
+               text_size = 3,
+               point_alpha = 0.3, point_size = 1.5
 ) +
-    scale_color_manual(
-        values = cell_colors.ls,
-        labels = paste0(
-            levels(sce.ls$cellType.final), " (",
-            table(sce.ls$cellType.final), ")"
-        )
-    ) +
-    guides(color = guide_legend(ncol = 1)) +
-    ggtitle("UMAP of LS (n=4), colored by annotated graph-based clusters") +
-    labs(colour = "Cell type")
+  scale_color_manual(
+    values = cell_colors.ls,
+    labels = paste0(
+      levels(sce.ls$cellType.final), " (",
+      table(sce.ls$cellType.final), ")"
+    )
+  ) +
+  guides(color = guide_legend(ncol = 1)) +
+  ggtitle("UMAP of LS (n=4), colored by annotated graph-based clusters") +
+  labs(colour = "Cell type")
+# Without text
+plotReducedDim(sce.ls,
+               dimred = "UMAP", colour_by = "cellType.final",
+               text_size = 3,
+               point_alpha = 0.3, point_size = 1.5
+) +
+  scale_color_manual(
+    values = cell_colors.ls,
+    labels = paste0(
+      levels(sce.ls$cellType.final), " (",
+      table(sce.ls$cellType.final), ")"
+    )
+  ) +
+  guides(color = guide_legend(ncol = 1)) +
+  ggtitle("UMAP of LS (n=4), colored by annotated graph-based clusters") +
+  labs(colour = "Cell type")
 
 # TSNE
 plotReducedDim(sce.ls,
-    dimred = "TSNE", colour_by = "cellType.final",
-    text_by = "cellType.final", text_size = 3,
-    point_alpha = 0.3, point_size = 1.5
+               dimred = "TSNE", colour_by = "cellType.final",
+               text_by = "cellType.final", text_size = 3,
+               point_alpha = 0.3, point_size = 1.5
 ) +
-    scale_color_manual(
-        values = cell_colors.ls,
-        labels = paste0(
-            levels(sce.ls$cellType.final), " (",
-            table(sce.ls$cellType.final), ")"
-        )
-    ) +
-    guides(color = guide_legend(ncol = 1)) +
-    ggtitle("TSNE of LS (n=4), colored by annotated graph-based clusters") +
-    labs(colour = "Cell type")
+  scale_color_manual(
+    values = cell_colors.ls,
+    labels = paste0(
+      levels(sce.ls$cellType.final), " (",
+      table(sce.ls$cellType.final), ")"
+    )
+  ) +
+  guides(color = guide_legend(ncol = 1)) +
+  ggtitle("TSNE of LS (n=4), colored by annotated graph-based clusters") +
+  labs(colour = "Cell type")
+
+plotReducedDim(sce.ls,
+               dimred = "TSNE", colour_by = "cellType.final",
+               text_size = 3,
+               point_alpha = 0.3, point_size = 1.5
+) +
+  scale_color_manual(
+    values = cell_colors.ls,
+    labels = paste0(
+      levels(sce.ls$cellType.final), " (",
+      table(sce.ls$cellType.final), ")"
+    )
+  ) +
+  guides(color = guide_legend(ncol = 1)) +
+  ggtitle("TSNE of LS (n=4), colored by annotated graph-based clusters") +
+  labs(colour = "Cell type")
 dev.off()
 
 
 ## Look at some distributions with these annotations
 cellClust.idx <- splitit(sce.ls$cellType)
 sapply(cellClust.idx, function(x) {
-    round(quantile(sce.ls$sum[x]), 2)
+  round(quantile(sce.ls$sum[x]), 2)
 })
 
 sapply(cellClust.idx, function(x) {
-    round(quantile(sce.ls$doubletScore[x]), 2)
+  round(quantile(sce.ls$doubletScore[x]), 2)
 })
 
 
@@ -612,21 +650,21 @@ library(pheatmap)
 
 # Compute cluster modularity ratio (a measure of cluster separation)
 mod.ratio.merged.HC <- pairwiseModularity(
-    graph = snn.gr.glmpca,
-    clusters = sce.ls$cellType.final,
-    as.ratio = TRUE
+  graph = snn.gr.glmpca,
+  clusters = sce.ls$cellType.final,
+  as.ratio = TRUE
 )
 
 # Heatmap
 # pdf(here("snRNAseq_mouse","plots","clusterModRatio_35clusters_LS-n4.pdf"))
 pdf(here("snRNAseq_mouse", "plots", "clusterModRatio_37clusters_LS-n4.pdf"))
 pheatmap(log2(mod.ratio.merged.HC + 1),
-    cluster_rows = FALSE, cluster_cols = FALSE,
-    color = colorRampPalette(c("white", "blue"))(100),
-    main = "Modularity ratio for 37 graph-based clusters in LS (n=4)",
-    fontsize_row = 7.5, fontsize_col = 7.5, angle_col = 90,
-    display_numbers = T, number_format = "%.1f", fontsize_number = 5.5,
-    na_col = "darkgrey"
+         cluster_rows = FALSE, cluster_cols = FALSE,
+         color = colorRampPalette(c("white", "blue"))(100),
+         main = "Modularity ratio for 37 graph-based clusters in LS (n=4)",
+         fontsize_row = 7.5, fontsize_col = 7.5, angle_col = 90,
+         display_numbers = T, number_format = "%.1f", fontsize_number = 5.5,
+         na_col = "darkgrey"
 )
 grid::grid.text(label = "log2(ratio)", x = 0.97, y = 0.64, gp = grid::gpar(fontsize = 7))
 dev.off()
@@ -642,43 +680,43 @@ subclust.Inhib_D <- clusterCells(sce.ls[, sce.ls$cellType == "Inhib_D"], use.dim
 # 23 populations with default k=10 neighbors & walktrap method
 
 subclust.Inhib_D <- clusterCells(sce.ls[, sce.ls$cellType == "Inhib_D"],
-    use.dimred = "GLMPCA_50",
-    BLUSPARAM = NNGraphParam(k = 20)
+                                 use.dimred = "GLMPCA_50",
+                                 BLUSPARAM = NNGraphParam(k = 20)
 )
 # 13 populations
 
 sce.inhibD <- sce.ls[, sce.ls$cellType == "Inhib_D"]
 sce.inhibD$cellType <- droplevels(sce.inhibD$cellType)
 sce.inhibD$cellType.sub <- clusterCells(sce.inhibD,
-    use.dimred = "GLMPCA_50",
-    BLUSPARAM = NNGraphParam(k = 20)
+                                        use.dimred = "GLMPCA_50",
+                                        BLUSPARAM = NNGraphParam(k = 20)
 )
 
 pdf(here("snRNAseq_mouse", "plots", paste0("LS-n4_expression_broadMarkers_Inhib_D-subClusters.pdf")),
     height = 6, width = 14
 )
 for (i in 1:length(broadMarkers)) {
-    print(
-        plotExpressionCustom(
-            sce = sce.inhibD,
-            exprs_values = "logcounts",
-            features = broadMarkers[[i]],
-            features_name = names(broadMarkers)[[i]],
-            # anno_name = "clusters.glmpca",
-            anno_name = "cellType.sub",
-            ncol = 4,
-            point_alpha = 0.4, point_size = 0.9,
-            scales = "free_y", swap_rownames = "gene_name"
-        ) +
-            ggtitle(label = paste0(
-                "mouse LS (n4) subclusters of 'Inhib_D': ",
-                names(broadMarkers)[[i]], " markers"
-            )) +
-            theme(
-                plot.title = element_text(size = 12),
-                axis.text.x = element_text(size = 7)
-            )
-    )
+  print(
+    plotExpressionCustom(
+      sce = sce.inhibD,
+      exprs_values = "logcounts",
+      features = broadMarkers[[i]],
+      features_name = names(broadMarkers)[[i]],
+      # anno_name = "clusters.glmpca",
+      anno_name = "cellType.sub",
+      ncol = 4,
+      point_alpha = 0.4, point_size = 0.9,
+      scales = "free_y", swap_rownames = "gene_name"
+    ) +
+      ggtitle(label = paste0(
+        "mouse LS (n4) subclusters of 'Inhib_D': ",
+        names(broadMarkers)[[i]], " markers"
+      )) +
+      theme(
+        plot.title = element_text(size = 12),
+        axis.text.x = element_text(size = 7)
+      )
+  )
 }
 dev.off()
 
@@ -694,23 +732,23 @@ sce.ls$cellType.final[grep("Endo", sce.ls$cellType.final)] <- "Endo"
 
 ## What if just didn't subset the SCE?
 sce.ls$cellType.final[sce.ls$cellType.final == "Inhib_D"] <-
-    as.character(clusterCells(sce.ls[, sce.ls$cellType.final == "Inhib_D"],
-        use.dimred = "GLMPCA_50",
-        BLUSPARAM = NNGraphParam(k = 20)
-    ))
+  as.character(clusterCells(sce.ls[, sce.ls$cellType.final == "Inhib_D"],
+                            use.dimred = "GLMPCA_50",
+                            BLUSPARAM = NNGraphParam(k = 20)
+  ))
 
 # Then check this
 sce.inhibD <- sce.ls[, sce.ls$cellType == "Inhib_D"]
 
 plotExpressionCustom(
-    sce = sce.inhibD,
-    exprs_values = "logcounts",
-    features = broadMarkers[["excit_neuron"]],
-    features_name = "",
-    anno_name = "cellType.final",
-    ncol = 4,
-    point_alpha = 0.4, point_size = 0.9,
-    scales = "free_y", swap_rownames = "gene_name"
+  sce = sce.inhibD,
+  exprs_values = "logcounts",
+  features = broadMarkers[["excit_neuron"]],
+  features_name = "",
+  anno_name = "cellType.final",
+  ncol = 4,
+  point_alpha = 0.4, point_size = 0.9,
+  scales = "free_y", swap_rownames = "gene_name"
 )
 # this looks right
 #   -> go ahead and re-assign these to new annotations (mostly inhib)
@@ -720,11 +758,11 @@ plotReducedDim(sce.inhibD, "UMAP", colour_by = "cellType.final", point_size = 2.
 # it's quite dispersed
 cell.sub.idx <- splitit(sce.inhibD$cellType.final)
 sapply(cell.sub.idx, function(x) {
-    quantile(sce.inhibD$sum[x])
+  quantile(sce.inhibD$sum[x])
 })
 # total UMI distribution is normal for oligos
 sapply(cell.sub.idx, function(x) {
-    round(quantile(sce.inhibD$doubletScore[x]), 3)
+  round(quantile(sce.inhibD$doubletScore[x]), 3)
 })
 #           1    10    11    12    13      2      3     4      5     6     7     8     9
 # 0%    0.000 0.134 0.022 0.036 0.073  0.007  0.000 0.000  0.000 0.015 0.015 0.061 0.121
@@ -771,16 +809,16 @@ sce.ls$cellType.final <- factor(sce.ls$cellType.final)
 
 # Check
 plotReducedDim(sce.ls, "UMAP",
-    colour_by = "cellType.final", point_size = 1.5,
-    text_by = "cellType.final", text_size = 3
+               colour_by = "cellType.final", point_size = 1.5,
+               text_by = "cellType.final", text_size = 3
 ) +
-    scale_color_manual(
-        values = cell_colors.ls,
-        labels = paste0(
-            levels(sce.ls$cellType.final), " (",
-            table(sce.ls$cellType.final), ")"
-        )
+  scale_color_manual(
+    values = cell_colors.ls,
+    labels = paste0(
+      levels(sce.ls$cellType.final), " (",
+      table(sce.ls$cellType.final), ")"
     )
+  )
 
 
 ## Can go ahead and assign final cell class color (37 levels)
@@ -789,7 +827,7 @@ names(cell_colors.ls) <- levels(sce.ls$cellType.final)
 
 # Save
 save(sce.ls, annotationTab.ls, cell_colors.ls,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
 )
 
 
@@ -810,16 +848,16 @@ sce.ls$cellType.final <- NULL
 
 ## Expand annotationTab.ls to capture summary of data analysis
 annotation.exp <- data.frame(matrix(unlist(rep(
-    annotationTab.ls[which(annotationTab.ls$cellType == "Inhib_D"), ],
-    12
+  annotationTab.ls[which(annotationTab.ls$cellType == "Inhib_D"), ],
+  12
 )),
 ncol = 2, byrow = T
 ))
 colnames(annotation.exp) <- colnames(annotationTab.ls)
 
 annotation.exp$cellType.exp <- c(
-    "drop.likelyDoublet", "Excit_E",
-    paste0("Inhib_", c("I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"))
+  "drop.likelyDoublet", "Excit_E",
+  paste0("Inhib_", c("I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"))
 )
 
 ## And as before:
@@ -875,8 +913,8 @@ annotationTab.ls$cellType.final[grep("Inhib_R", annotationTab.ls$cellType.final)
 
 # Then re-annotate
 sce.ls$cellType.final <- annotationTab.ls$cellType.final[match(
-    sce.ls$cellType.exp,
-    annotationTab.ls$cellType.exp
+  sce.ls$cellType.exp,
+  annotationTab.ls$cellType.exp
 )]
 sce.ls$cellType.final <- factor(sce.ls$cellType.final)
 table(sce.ls$cellType.final)
@@ -888,8 +926,68 @@ names(cell_colors.ls) <- levels(sce.ls$cellType.final)
 
 # Save
 save(sce.ls, annotationTab.ls, cell_colors.ls,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_updated_LS.rda")
 )
+
+
+## 17Nov2022 final final re-annotations:
+sce.ls$cellType.final <- as.character(sce.ls$cellType.final)
+sce.ls$cellType.final[sce.ls$cellType.final=="Ventr_In.B"] <- "Neuroblast"
+sce.ls$cellType.final[sce.ls$cellType.final=="Str_In.L"] <- "LS_In.L"
+sce.ls$cellType.final <- factor(sce.ls$cellType.final)
+
+# Re-assign the colors too
+names(cell_colors.ls)[names(cell_colors.ls)=="Ventr_In.B"] <- "Neuroblast"
+names(cell_colors.ls)[names(cell_colors.ls)=="Str_In.L"] <- "LS_In.L"
+
+save(sce.ls, annotationTab.ls, cell_colors.ls,
+     file="/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/SCE/sce_updated_LS.rda")
+
+
+# Re-compute cluster modularity 
+load("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/SCE/graph_clusters_glmpca_LS-n3.rda", verbose=T)
+mod.ratio.merged.HC <- pairwiseModularity(
+  graph = snn.gr.glmpca,
+  clusters = sce.ls$cellType.final,
+  as.ratio = TRUE
+)
+
+# Heatmap
+pdf("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/clusterModRatio_33clusters_Nov2022.pdf")
+pheatmap(log2(mod.ratio.merged.HC + 1),
+         cluster_rows = FALSE, cluster_cols = FALSE,
+         color = colorRampPalette(c("white", "blue"))(100),
+         main = "Modularity ratio for 37 (including drops) graph-based clusters in LS (n=4)",
+         fontsize_row = 7.5, fontsize_col = 7.5, angle_col = 90,
+         display_numbers = T, number_format = "%.1f", fontsize_number = 5.5,
+         na_col = "darkgrey"
+)
+grid::grid.text(label = "log2(ratio)", x = 0.97, y = 0.64, gp = grid::gpar(fontsize = 7))
+dev.off()
+
+
+
+
+## One more iteration Jan2023 - binned by region-specific(-ish) annotation ===
+# (load SCE containing .rda)
+
+sce.ls$cellType.broad <- factor(ss(as.character(sce.ls$cellType.final), "_", 1))
+
+# Add this to the annotationTab 'summary'
+annotationTab.ls$cellType.broad <- ss(annotationTab.ls$cellType.final, "_", 1)
+
+
+save(sce.ls, annotationTab.ls, cell_colors.ls,
+     file="/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/processed_data/SCE/sce_updated_LS.rda")
+
+
+
+
+
+
+
+
+
 
 
 
@@ -929,32 +1027,32 @@ lobstr::obj_size(sce.ls) / 1024^3
 ## Some add'l metrics for rowData ===
 #    As created/implemented in https://github.com/LieberInstitute/10xPilot_snRNAseq-human/blob/master/shiny_apps/00_clean_functions.R
 rowData(sce.ls)$propNucleiExprs <- apply(
-    assay(sce.hold, "counts"),
-    1,
-    function(x) {
-        round(mean(x != 0), 3)
-    }
+  assay(sce.hold, "counts"),
+  1,
+  function(x) {
+    round(mean(x != 0), 3)
+  }
 )
 
 # The above, by cell type ===
 cellType.idx <- splitit(sce.ls$cellType.final)
 rowdat.sce <- rowData(sce.ls)
 for (i in names(cellType.idx)) {
-    message(Sys.time(), " computing propNucleiExprs for ", i)
-    rowdat.sce[, paste0("propExprsIn.", i)] <- apply(
-        assay(sce.hold, "counts")[, cellType.idx[[i]]],
-        1,
-        function(x) {
-            round(mean(x != 0), 3)
-        }
-    )
+  message(Sys.time(), " computing propNucleiExprs for ", i)
+  rowdat.sce[, paste0("propExprsIn.", i)] <- apply(
+    assay(sce.hold, "counts")[, cellType.idx[[i]]],
+    1,
+    function(x) {
+      round(mean(x != 0), 3)
+    }
+  )
 }
 rowData(sce.ls) <- rowdat.sce
 
 ## Clean up unnecessary info
 keepCols <- setdiff(
-    colnames(colData(sce.ls)),
-    c("high.mito", "sizeFactor", "clusters.glmpca", "cellType", "cellType.exp")
+  colnames(colData(sce.ls)),
+  c("high.mito", "sizeFactor", "clusters.glmpca", "cellType", "cellType.exp")
 )
 colData(sce.ls) <- colData(sce.ls)[, keepCols]
 
@@ -966,10 +1064,52 @@ cell_cols.clean <- cell_colors.ls
 
 ## Save this
 save(sce.ls.small, cell_cols.clean,
-    file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_for_iSEE_LS.rda")
+     file = here("snRNAseq_mouse", "processed_data", "SCE", "sce_for_iSEE_LS.rda")
 )
 
 
+##
+pdf("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/FIX_THIS.pdf",height = 7, width = 10)
+
+plotExpressionCustom(
+  sce = sce.ls,
+  exprs_values = "logcounts",
+  # Ependymal cell markers
+  features = c("Drd3", "Htr4"), #edit this with markers
+  features_name = "custom-selected", 
+  anno_name = "cellType.final",
+  ncol = 3, point_alpha = 0.4, point_size = 0.9,
+  scales = "free_y", swap_rownames = "gene_name"
+) +
+  scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+  ggtitle(label = paste0("Lionel's custom markers of interest")) +
+  theme(
+    plot.title = element_text(size = 12),
+    axis.text.x = element_text(size = 7)
+  )
+dev.off()
+
+
+##modifying script above for data subsetted for neurons or LS only clusters
+pdf("/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse/plots/Monoamine Receptors Example Expression in LS Clusters.pdf",height = 3, width = 6)
+
+plotExpressionCustom(
+  sce = ls.sce.ls,
+  exprs_values = "logcounts",
+  # 
+  features = c("Htr1f", "Htr2c", "Htr4", "Htr7", "Adra1a", "Adra1b"), #edit this with markers
+  features_name = "Region Markers", 
+  anno_name = "cellType.final",
+  ncol = 3, point_alpha = 0.4, point_size = 0.9,
+  scales = "free_y", swap_rownames = "gene_name"
+) +
+  scale_color_manual(values = c(cbPalette, tableau20, tableau10medium)) +
+  ggtitle(label = paste0("Region Markers")) +
+  theme(
+    plot.title = element_text(size = 12),
+    axis.text.x = element_text(size = 7)
+  )
+dev.off()
 
 
 ## Reproducibility information ====
@@ -1104,3 +1244,6 @@ session_info()
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
 #
 # ──────────────────────────────────────────────────────────────────────────────────────────
+
+
+
