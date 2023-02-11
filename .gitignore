@@ -1,17 +1,3 @@
 ## Files/patterns to ignore in the version control
-snRNAseq_mouse/raw_data/FASTQ
-snRNAseq_mouse/processed_data/SCE/
 *.sh.*
-
-# DE results from TrkB experiment
-snRNAseq_mouse/processed_data/tables/TrkBKO_DEgenes_FDR05.csv
-
-# Obsolete
-snRNAseq_mouse/plots/zold_pre24Jun_markers/
-snRNAseq_mouse/plots/zold_pre30Jun_cellType.exp_markers/
-snRNAseq_mouse/processed_data/tables/zold_top40genesLists_LS-n4_33PREfinalCellTypes.csv
-
-# Because additional iterations are making for a large repo - will just post/update in G Drive location
-snRNAseq_mouse/plots/markers
-snRNAseq_mouse/plots/supplemental
 .Rproj.user
