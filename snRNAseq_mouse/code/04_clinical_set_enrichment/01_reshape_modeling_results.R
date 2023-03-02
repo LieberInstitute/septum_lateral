@@ -48,7 +48,7 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
 ## Change column names
-LS_enriched<-markers.ls.t.1vAll.broad$LS$LS_enriched[1:3]
+LS_enriched <- markers.ls.t.1vAll.broad$LS$LS_enriched[1:3]
 colnames(LS_enriched) <- c("t_stat", "p_value", "fdr")
 LS_enriched$ensembl <- rownames(LS_enriched)
 
@@ -58,7 +58,7 @@ genes <- LS_enriched$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
 LS_enriched <- merge(LS_enriched, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
 LS_enriched <- LS_enriched[, c(2:4, 1, 5)]
-LS_enriched<-rename(LS_enriched, gene = mgi_symbol)
+LS_enriched <- rename(LS_enriched, gene = mgi_symbol)
 
 
 #####################################################
@@ -79,20 +79,20 @@ stats_tiss <- stringr::str_match(
 stats_tiss <- paste("_", "LS-", stats_tiss, sep = "")
 
 ## Convert S4Vector object to DataFrame and selecting needed columns
-LS_pairw<-as.data.frame(markers.ls.t.pw.broad$LS) %>% select(matches("stats\\..+"))
+LS_pairw <- as.data.frame(markers.ls.t.pw.broad$LS) %>% select(matches("stats\\..+"))
 
 ## Change column names
-new_names<-paste(c("t_stat", "p_value", "fdr"), rep(stats_tiss,each = 3), sep = "")
-names(LS_pairw)<-new_names
-LS_pairw$ensembl<-rownames(LS_pairw)
+new_names <- paste(c("t_stat", "p_value", "fdr"), rep(stats_tiss, each = 3), sep = "")
+names(LS_pairw) <- new_names
+LS_pairw$ensembl <- rownames(LS_pairw)
 
 ## Add names from mgi data base
 genes <- LS_pairw$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
 LS_pairw <- merge(LS_pairw, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
-l_names<-length(colnames(LS_pairw))
-LS_pairw<-LS_pairw[, c(2:(l_names-1),1,l_names)]
-LS_pairw<-rename(LS_pairw, gene = mgi_symbol)
+l_names <- length(colnames(LS_pairw))
+LS_pairw <- LS_pairw[, c(2:(l_names - 1), 1, l_names)]
+LS_pairw <- rename(LS_pairw, gene = mgi_symbol)
 
 
 ########################################
