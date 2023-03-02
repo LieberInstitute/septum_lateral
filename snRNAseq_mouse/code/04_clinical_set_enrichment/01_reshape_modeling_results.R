@@ -65,8 +65,8 @@ genes <- pairw$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
 pairw <- merge(pairw, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
 l_names<-length(colnames(pairw))
-pairw <- pairw[, c(2:(l_names-1),1,l_names)]
-pairw<-rename(pairw,  gene = mgi_symbol)
+pairw[, c(2:(l_names-1),1,l_names)]
+pairw<-rename(pairw, gene = mgi_symbol)
 
 
 ## Reproducibility information
