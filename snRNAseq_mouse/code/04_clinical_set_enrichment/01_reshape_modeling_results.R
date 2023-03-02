@@ -48,16 +48,17 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
 ## Change column names
-colnames(markers.ls.t.1vAll.broad$LS$LS_enriched)[1:3] <- c("t_stat", "p_value", "fdr")
-markers.ls.t.1vAll.broad$LS$LS_enriched$ensembl <- rownames(markers.ls.t.1vAll.broad$LS$LS_enriched)
+LS_enriched<-markers.ls.t.1vAll.broad$LS$LS_enriched[1:3]
+colnames(LS_enriched) <- c("t_stat", "p_value", "fdr")
+LS_enriched$ensembl <- rownames(LS_enriched)
 
 ## Add names from mgi data base
 mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
-genes <- markers.ls.t.1vAll.broad$LS$LS_enriched$ensembl
+genes <- LS_enriched$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-LS_enriched <- merge(markers.ls.t.1vAll.broad$LS$LS_enriched, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
-LS_enriched <- LS_enriched[, c(2:4, 1, 6)]
-colnames(LS_enriched)[5] <- "gene"
+LS_enriched <- merge(LS_enriched, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
+LS_enriched <- LS_enriched[, c(2:4, 1, 5)]
+LS_enriched<-rename(LS_enriched, gene = mgi_symbol)
 
 
 #####################################################
@@ -99,7 +100,7 @@ LS_pairw<-rename(LS_pairw, gene = mgi_symbol)
 ########################################
 
 modeling_results <- list(
-    "enrichment" = LS_enriched
+    "enrichment" = LS_enriched,
     "pairwise" = LS_pairw
 )
 
