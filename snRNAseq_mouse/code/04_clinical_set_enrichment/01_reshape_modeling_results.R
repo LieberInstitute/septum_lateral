@@ -129,6 +129,20 @@ gene_list <- list(
 )
 
 
+####################################################
+#### Save modeling_results and gene_list to rda ####
+####################################################
+
+save(modeling_results, gene_list, file = here("snRNAseq_mouse",
+        "processed_data",
+        "SCE",
+        "gene_set_enrichment_objects.rda"))
+
+
+#####################################
+#### Reproducibility information ####
+#####################################
+
 ## Reproducibility information
 print("Reproducibility information:")
 Sys.time()
