@@ -55,7 +55,7 @@ markers.ls.t.1vAll.broad$LS$LS_enriched
 
 ## Change column names
 LS_enriched <- markers.ls.t.1vAll.broad$LS$LS_enriched[1:3]
-colnames(LS_enriched) <- c("t_stat", "p_value", "fdr")
+colnames(LS_enriched) <- c("t_stat_LS", "p_value_LS", "fdr_LS")
 LS_enriched$ensembl <- rownames(LS_enriched)
 
 ## Add names from mgi data base
@@ -63,8 +63,11 @@ mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
 genes <- LS_enriched$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
 LS_enriched <- merge(LS_enriched, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
+
+## Convert S4Vector object to DataFrame, select needed columns and rename
+LS_enriched <- as.data.frame(LS_enriched)
 LS_enriched <- LS_enriched[, c(2:4, 1, 5)]
-LS_enriched <- rename(LS_enriched, gene = mgi_symbol)
+LS_enriched <- dplyr::rename(LS_enriched, gene = mgi_symbol)
 
 
 #####################################################
@@ -98,7 +101,7 @@ gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id"
 LS_pairw <- merge(LS_pairw, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
 l_names <- length(colnames(LS_pairw))
 LS_pairw <- LS_pairw[, c(2:(l_names - 1), 1, l_names)]
-LS_pairw <- rename(LS_pairw, gene = mgi_symbol)
+LS_pairw <- dplyr::rename(LS_pairw, gene = mgi_symbol)
 
 
 ########################################
@@ -106,8 +109,8 @@ LS_pairw <- rename(LS_pairw, gene = mgi_symbol)
 ########################################
 
 modeling_results <- list(
-    "enrichment" = LS_enriched,
-    "pairwise" = LS_pairw
+    "enrichment" = as.data.frame(LS_enriched),
+    "pairwise" = as.data.frame(LS_pairw)
 )
 
 
