@@ -5,6 +5,12 @@ library("biomaRt")
 library("dplyr")
 library("purrr")
 library("stringr")
+library("data.table")
+
+
+########################################
+#### Load data for modeling_results ####
+########################################
 
 ## Load markers by Tran et al
 load(
@@ -41,9 +47,9 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 # [1] "logFC"       "log.p.value" "log.FDR"
 
 
-#######################################################
+#####################################################
 #### Reshape markers.ls.t.1vAll.broad (enriched) ####
-#######################################################
+#####################################################
 
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
@@ -66,7 +72,7 @@ LS_enriched <- rename(LS_enriched, gene = mgi_symbol)
 #####################################################
 
 markers.ls.t.pw.broad$LS
-markers.ls.t.pw.broad$LS$Astro
+markers.ls.t.pw.broad$LS$stats.Astro
 
 ## Creat list of name with comparations eg. _LS-Astro, _LS-
 stats_tiss <- stringr::str_match(
@@ -104,6 +110,23 @@ modeling_results <- list(
     "pairwise" = LS_pairw
 )
 
+
+############################
+#### Load gene set data ####
+############################
+
+sigGenes<-fread(file = "/dcl01/lieber/ajaffe/Keri/TrkBKO/tables/sigGenes_DE_FDR05.csv", header = TRUE, sep = ",", data.table = FALSE, stringsAsFactors = FALSE)
+
+
+##############################
+#### Make geneList object ####
+##############################
+
+gene_list <- list(
+    all = sigGenes %>% select(ensemblID) %>% unlist() %>% as.vector(),
+    positive = sigGenes %>% filter(logFC > 0) %>% select(ensemblID) %>% unlist() %>% as.vector(),
+    negative = sigGenes %>% filter(logFC < 0) %>% select(ensemblID) %>% unlist() %>% as.vector()
+)
 
 
 ## Reproducibility information
