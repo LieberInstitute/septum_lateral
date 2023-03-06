@@ -118,7 +118,7 @@ modeling_results <- list(
 #### Load gene set data ####
 ############################
 
-sigGenes<-fread(file = "/dcl01/lieber/ajaffe/Keri/TrkBKO/tables/sigGenes_DE_FDR05.csv", header = TRUE, sep = ",", data.table = FALSE, stringsAsFactors = FALSE)
+sigGenes <- fread(file = "/dcl01/lieber/ajaffe/Keri/TrkBKO/tables/sigGenes_DE_FDR05.csv", header = TRUE, sep = ",", data.table = FALSE, stringsAsFactors = FALSE)
 
 
 ##############################
@@ -142,10 +142,12 @@ gene_list_01 <- list(
 #### Save modeling_results and gene_list to rda ####
 ####################################################
 
-save(modeling_results, gene_list_05, gene_list_01, file = here("snRNAseq_mouse",
-        "processed_data",
-        "SCE",
-        "gene_set_enrichment_objects.rda"))
+save(modeling_results, gene_list_05, gene_list_01, file = here(
+    "snRNAseq_mouse",
+    "processed_data",
+    "SCE",
+    "gene_set_enrichment_objects.rda"
+))
 
 
 #####################################
