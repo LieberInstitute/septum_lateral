@@ -105,3 +105,15 @@ enrichTab_01 <- gene_set_enrichment_modi(gene_list = gene_list_01, modeling_resu
 names(enrichTab_01) # same for both
 # [1] "OR"         "Pval"       "test"       "NumSig"     "SetSize"
 # [6] "ID"         "model_type" "fdr_cut"
+
+
+###########################################################
+#### gene_set_enrichment analysis with pairwise data ####
+###########################################################
+
+prwiseTab_05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_05, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
+prwiseTab_01 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_01, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
+
+names(prwiseTab_01) # same for both
+# [1] "OR"         "Pval"       "test"       "NumSig"     "SetSize"
+# [6] "ID"         "model_type" "fdr_cut"
