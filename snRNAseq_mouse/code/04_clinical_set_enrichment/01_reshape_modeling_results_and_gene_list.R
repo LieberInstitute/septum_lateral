@@ -125,13 +125,13 @@ sigGenes <- fread(file = "/dcl01/lieber/ajaffe/Keri/TrkBKO/tables/sigGenes_DE_FD
 #### Make geneList object ####
 ##############################
 
-gene_list_05 <- list(
+gene_list_FDR05 <- list(
     all = sigGenes %>% dplyr::select(ensemblID) %>% unlist() %>% as.vector(),
     positive = sigGenes %>% filter(logFC > 0) %>% dplyr::select(ensemblID) %>% unlist() %>% as.vector(),
     negative = sigGenes %>% filter(logFC < 0) %>% dplyr::select(ensemblID) %>% unlist() %>% as.vector()
 )
 
-gene_list_01 <- list(
+gene_list_FDR01 <- list(
     all = sigGenes %>% filter(adj.P.Val < 0.01) %>% dplyr::select(ensemblID) %>% unlist() %>% as.vector(),
     positive = sigGenes %>% filter(logFC > 0, adj.P.Val < 0.01) %>% dplyr::select(ensemblID) %>% unlist() %>% as.vector(),
     negative = sigGenes %>% filter(logFC < 0, adj.P.Val < 0.01) %>% dplyr::select(ensemblID) %>% unlist() %>% as.vector()
@@ -142,7 +142,7 @@ gene_list_01 <- list(
 #### Save modeling_results and gene_list to rda ####
 ####################################################
 
-save(modeling_results, gene_list_05, gene_list_01, file = here(
+save(modeling_results, gene_list_FDR05, gene_list_FDR01, file = here(
     "snRNAseq_mouse",
     "processed_data",
     "SCE",

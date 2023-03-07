@@ -10,7 +10,7 @@ library("spatialLIBD")
 #### Load objects for gene_set_enrichment ####
 ##############################################
 
-## Load markers by Tran et al
+## Load gene_set_enrichment_objects.rda
 load(
     here(
         "snRNAseq_mouse",
@@ -22,8 +22,8 @@ load(
 )
 # Loading objects:
 #   modeling_results
-#  gene_list_05
-#  gene_list_01
+#  gene_list_FDR05
+#  gene_list_FDR01
 
 lobstr::obj_size(modeling_results)
 # 19.35 MB
@@ -98,10 +98,10 @@ gene_set_enrichment_modi <- function(gene_list, fdr_cut = 0.1, modeling_results,
 }
 
 ## Running gene_set_enrichment with two sets of DE genes, one with FDR < 0.05 the other with FDR < 0.01
-enrichTab_05 <- gene_set_enrichment_modi(gene_list = gene_list_05, modeling_results = modeling_results, model_type = "enrichment")
-enrichTab_01 <- gene_set_enrichment_modi(gene_list = gene_list_01, modeling_results = modeling_results, model_type = "enrichment")
+enrichTab_FDR05 <- gene_set_enrichment_modi(gene_list = gene_list_05, modeling_results = modeling_results, model_type = "enrichment")
+enrichTab_FDR01 <- gene_set_enrichment_modi(gene_list = gene_list_01, modeling_results = modeling_results, model_type = "enrichment")
 
-names(enrichTab_01) # same for both
+names(enrichTab_FDR01) # same for both
 # [1] "OR"         "Pval"       "test"       "NumSig"     "SetSize"
 # [6] "ID"         "model_type" "fdr_cut"
 
@@ -110,10 +110,10 @@ names(enrichTab_01) # same for both
 #### gene_set_enrichment analysis with pairwise data ######
 ###########################################################
 
-prwiseTab_05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_05, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
-prwiseTab_01 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_01, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
+prwiseTab_FDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_05, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
+prwiseTab_FDR01 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_01, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
 
-names(prwiseTab_01) # same for both
+names(prwiseTab_FDR01) # same for both
 # [1] "OR"         "Pval"       "test"       "NumSig"     "SetSize"
 # [6] "ID"         "model_type" "fdr_cut"
 
@@ -122,7 +122,7 @@ names(prwiseTab_01) # same for both
 #### Save gene_set_enrichment results to rda ######
 ###################################################
 
-save(enrichTab_01, enrichTab_05, prwiseTab_01, prwiseTab_05, file = here(
+save(enrichTab_FDR01, enrichTab_FDR05, prwiseTab_FDR01, prwiseTab_FDR05, file = here(
     "snRNAseq_mouse",
     "processed_data",
     "SCE",
