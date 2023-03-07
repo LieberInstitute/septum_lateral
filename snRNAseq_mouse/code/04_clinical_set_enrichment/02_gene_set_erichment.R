@@ -98,7 +98,6 @@ gene_set_enrichment_modi <- function(gene_list, fdr_cut = 0.1, modeling_results,
 }
 
 ## Running gene_set_enrichment with two sets of DE genes, one with FDR < 0.05 the other with FDR < 0.01
-
 enrichTab_05 <- gene_set_enrichment_modi(gene_list = gene_list_05, modeling_results = modeling_results, model_type = "enrichment")
 enrichTab_01 <- gene_set_enrichment_modi(gene_list = gene_list_01, modeling_results = modeling_results, model_type = "enrichment")
 
@@ -108,7 +107,7 @@ names(enrichTab_01) # same for both
 
 
 ###########################################################
-#### gene_set_enrichment analysis with pairwise data ####
+#### gene_set_enrichment analysis with pairwise data ######
 ###########################################################
 
 prwiseTab_05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_05, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
@@ -117,3 +116,27 @@ prwiseTab_01 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_01, model
 names(prwiseTab_01) # same for both
 # [1] "OR"         "Pval"       "test"       "NumSig"     "SetSize"
 # [6] "ID"         "model_type" "fdr_cut"
+
+
+###################################################
+#### Save gene_set_enrichment results to rda ######
+###################################################
+
+save(enrichTab_01, enrichTab_05, prwiseTab_01, prwiseTab_05, file = here(
+    "snRNAseq_mouse",
+    "processed_data",
+    "SCE",
+    "gene_set_enrichment_result_tables.rda"
+))
+
+
+#####################################
+#### Reproducibility information ####
+#####################################
+
+## Reproducibility information
+print("Reproducibility information:")
+Sys.time()
+proc.time()
+options(width = 120)
+session_info()
