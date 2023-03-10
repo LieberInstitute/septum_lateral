@@ -194,7 +194,7 @@ gene_set_enrichment_plot_mod <- function(
         cluster_rows = FALSE,
         cluster_columns = FALSE,
         cell_fun = function(j, i, x, y, width, height, fill) {
-            grid.text(wide_or[1:17, 1:3], x, y, gp = gpar(fontsize = 10))
+            grid.text(wide_or[i, j], x, y, gp = gpar(fontsize = 10))
         },
         col = cols,
         column_title = plot_name,
