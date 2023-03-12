@@ -187,14 +187,14 @@ gene_set_enrichment_plot_mod <- function(
     wide_or <- make_wide("OR_char")
     wide_p <- make_wide("log10_P_thresh")
 
-    pdf(paste(path_to_plot, plot_name, sep = ""), height = 4, width = 6)
+    pdf(path_to_plot, height = 4, width = 6)
     plot_gs <- Heatmap(wide_p,
         row_title_side = "left",
         rect_gp = gpar(col = "white", lwd = 2),
         cluster_rows = FALSE,
         cluster_columns = FALSE,
         cell_fun = function(j, i, x, y, width, height, fill) {
-            grid.text(wide_or[1:17, 1:3], x, y, gp = gpar(fontsize = 10))
+            grid.text(wide_or[i, j], x, y, gp = gpar(fontsize = 10))
         },
         col = cols,
         column_title = plot_name,
@@ -207,8 +207,9 @@ gene_set_enrichment_plot_mod <- function(
     dev.off()
 }
 
+gene_set_enrichment_plot_mod(enrichment = prwiseTab_FDR05, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_pairwise_FDR05.pdf"), plot_name = "Pairwise FDR < 0.05")
 
-gene_set_enrichment_plot_mod(enrichment = prwiseTab_FDR05, path_to_plot = here("snRNAseq_mouse/", "plots/"), plot_name = "Gene_set_pairwise_FDR05.pdf")
+gene_set_enrichment_plot_mod(enrichment = prwiseTab_FDR01, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_pairwise_FDR01.pdf"), plot_name = "Pairwise FDR < 0.01")
 
 #####################################
 #### Reproducibility information ####
