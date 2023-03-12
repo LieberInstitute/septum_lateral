@@ -53,9 +53,18 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
+## Convert S4Vector object to DataFrame and selecting needed columns
+LS_enriched <- as.data.frame(markers.ls.t.1vAll.broad)
+LS_enriched <- LS_enriched %>%
+    dplyr::select(contains("enriched")) %>%
+    dplyr::select(!contains("non0median"))
+
+## Create new column names
+tiss <- names(markers.ls.t.1vAll.broad)
+new_names <- paste(rep(c("t_stat", "p_value", "fdr"), length(tiss)), rep(tiss, each = 3), sep = "_")
+
 ## Change column names
-LS_enriched <- markers.ls.t.1vAll.broad$LS$LS_enriched[1:3]
-colnames(LS_enriched) <- c("t_stat_LS", "p_value_LS", "fdr_LS")
+names(LS_enriched) <- new_names
 LS_enriched$ensembl <- rownames(LS_enriched)
 
 ## Add names from mgi data base
@@ -63,10 +72,8 @@ mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
 genes <- LS_enriched$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
 LS_enriched <- merge(LS_enriched, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
-
-## Convert S4Vector object to DataFrame, select needed columns and rename
-LS_enriched <- as.data.frame(LS_enriched)
-LS_enriched <- LS_enriched[, c(2:4, 1, 5)]
+l_names <- length(colnames(LS_enriched))
+LS_enriched <- LS_enriched[, c(2:(l_names - 1), 1, l_names)]
 LS_enriched <- dplyr::rename(LS_enriched, gene = mgi_symbol)
 
 
