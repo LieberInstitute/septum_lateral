@@ -46,6 +46,27 @@ kegg <- compareCluster(sigGene,
 )
 
 
+#################################################
+#### Save rda with gene ontology enrichemnts ####
+#################################################
+
+save(go, kegg, file = here(
+    "snRNAseq_mouse",
+    "processed_data",
+    "SCE",
+    "gene_ontology_enrichment_objects.rda"
+))
+
+# bp_out<-rbind(as.data.frame(filter(go, ONTOLOGY == "BP", Cluster == -1)) %>% dplyr::select(!"geneID") %>% head(50), as.data.frame(filter(go, ONTOLOGY == "BP", Cluster == 1)) %>% dplyr::select(!"geneID") %>% head(50))
+# cc_out<-rbind(as.data.frame(filter(go, ONTOLOGY == "CC", Cluster == -1)) %>% dplyr::select(!"geneID") %>% head(50), as.data.frame(filter(go, ONTOLOGY == "CC", Cluster == 1)) %>% dplyr::select(!"geneID") %>% head(50))
+# mf_out<-rbind(as.data.frame(filter(go, ONTOLOGY == "MF", Cluster == -1)) %>% dplyr::select(!"geneID") %>% head(50), as.data.frame(filter(go, ONTOLOGY == "MF", Cluster == 1)) %>% dplyr::select(!"geneID") %>% head(50))
+# kegg_out<-rbind(as.data.frame(filter(kegg, Cluster == -1)) %>% dplyr::select(!"geneID") %>% head(n = 50), as.data.frame(filter(kegg, Cluster == 1)) %>% dplyr::select(!"geneID") %>% head(n = 50))
+# write.csv(bp_out, here("snRNAseq_mouse/processed_data/tables/GOterms-BP_top50.csv"))
+# write.csv(cc_out, here("snRNAseq_mouse/processed_data/tables/GOterms-CC_top50.csv"))
+# write.csv(mf_out, here("snRNAseq_mouse/processed_data/tables/GOterms-MF_top50.csv"))
+# write.csv(kegg_out, here("snRNAseq_mouse/processed_data/tables/KEGGterms_top50.csv"))
+
+
 ############################
 #### Plot BP, CC and MF ####
 ############################
