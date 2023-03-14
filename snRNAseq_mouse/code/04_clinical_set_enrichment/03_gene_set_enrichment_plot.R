@@ -12,6 +12,17 @@ library("circlize")
 #### Load objects for gene_set_enrichment_plot_complex ####
 ###########################################################
 
+## Load gene_set_enrichment_objects.rda which includes the gene list (FDR < 0.05 and FDR < 0.01) and modeling results
+load(
+    here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "SCE",
+        "gene_set_enrichment_objects.rda"
+    ),
+    verbose = TRUE
+)
+
 ## Load gene_set_enrihcment_result_tables.rda. The FDR in the file names refers to the gene set filtering, not the fdr_cut used in gene_set_enrichment which was 0.1.
 load(
     here(
@@ -355,7 +366,7 @@ use_gsepc(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_enrichment_FDR01_complex.pdf"
+        "Gene_set_enrichment_FDR01.pdf"
     )
 )
 
@@ -367,7 +378,7 @@ use_gsepc(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_enrichment_FDR05_complex.pdf"
+        "Gene_set_enrichment_FDR05.pdf"
     )
 )
 
