@@ -264,56 +264,113 @@ prwiseTab_FDR05
 #### Plot using as base gene_set_enrichment_plot from spatialLIBD ####
 ######################################################################
 
-gene_set_enrichment_plot_mod <- function(
-        enrichment,
-        cols = colorRamp2(
-            c(0, 12),
-            c("white", "red")),
-    path_to_plot,
-    plot_name) {
-    enrichment$log10_P_thresh <- round(-log10(enrichment$Pval), 2)
-    enrichment$log10_P_thresh[which(enrichment$log10_P_thresh > 12)] <- 12
-    enrichment$OR_char <- as.character(round(enrichment$OR, 2))
-    enrichment$OR_char[enrichment$log10_P_thresh < 3] <- ""
-    make_wide <- function(var = "OR_char") {
-        res <- reshape(enrichment,
-            idvar = "ID", timevar = "test",
-            direction = "wide", drop = colnames(enrichment)[!colnames(enrichment) %in%
-                c("ID", "test", var)], sep = "_mypattern_"
-        )[, -1, drop = FALSE]
-        colnames(res) <- gsub(".*_mypattern_", "", colnames(res))
-        rownames(res) <- unique(enrichment$ID)
-        res <- res[, levels(as.factor(enrichment$test))]
-        t(res)
-    }
-    wide_or <- make_wide("OR_char")
-    wide_p <- make_wide("log10_P_thresh")
+# gene_set_enrichment_plot_mod <- function(
+#         enrichment,
+#         cols = colorRamp2(
+#             c(0, 12),
+#             c("white", "red")),
+#     path_to_plot,
+#     plot_name) {
+#     enrichment$log10_P_thresh <- round(-log10(enrichment$Pval), 2)
+#     enrichment$log10_P_thresh[which(enrichment$log10_P_thresh > 12)] <- 12
+#     enrichment$OR_char <- as.character(round(enrichment$OR, 2))
+#     enrichment$OR_char[enrichment$log10_P_thresh < 3] <- ""
+#     make_wide <- function(var = "OR_char") {
+#         res <- reshape(enrichment,
+#             idvar = "ID", timevar = "test",
+#             direction = "wide", drop = colnames(enrichment)[!colnames(enrichment) %in%
+#                 c("ID", "test", var)], sep = "_mypattern_"
+#         )[, -1, drop = FALSE]
+#         colnames(res) <- gsub(".*_mypattern_", "", colnames(res))
+#         rownames(res) <- unique(enrichment$ID)
+#         res <- res[, levels(as.factor(enrichment$test))]
+#         t(res)
+#     }
+#     wide_or <- make_wide("OR_char")
+#     wide_p <- make_wide("log10_P_thresh")
+#
+#     pdf(path_to_plot, height = 4, width = 6)
+#     plot_gs <- Heatmap(wide_p,
+#         row_title_side = "left",
+#         rect_gp = gpar(col = "white", lwd = 2),
+#         cluster_rows = FALSE,
+#         cluster_columns = FALSE,
+#         cell_fun = function(j, i, x, y, width, height, fill) {
+#             grid.text(wide_or[i, j], x, y, gp = gpar(fontsize = 10))
+#         },
+#         col = cols,
+#         column_title = plot_name,
+#         heatmap_legend_param = list(
+#             title = "-log10(p-val)",
+#             at = c(0, 2, 4, 6, 8, 10, 12)
+#         )
+#     )
+#     print(plot_gs)
+#     dev.off()
+# }
+#
+# gene_set_enrichment_plot_mod(enrichment = enrichTab_FDR01, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_enrichment_FDR01.pdf"), plot_name = "Enrichment FDR < 0.01")
+# gene_set_enrichment_plot_mod(enrichment = enrichTab_FDR05, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_enrichment_FDR05.pdf"), plot_name = "Enrichment FDR < 0.05")
+#
+# gene_set_enrichment_plot_mod(enrichment = prwiseTab_FDR01, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_pairwise_FDR01.pdf"), plot_name = "Pairwise FDR < 0.01")
+# gene_set_enrichment_plot_mod(enrichment = prwiseTab_FDR05, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_pairwise_FDR05.pdf"), plot_name = "Pairwise FDR < 0.05")
 
-    pdf(path_to_plot, height = 4, width = 6)
-    plot_gs <- Heatmap(wide_p,
-        row_title_side = "left",
-        rect_gp = gpar(col = "white", lwd = 2),
-        cluster_rows = FALSE,
-        cluster_columns = FALSE,
-        cell_fun = function(j, i, x, y, width, height, fill) {
-            grid.text(wide_or[i, j], x, y, gp = gpar(fontsize = 10))
-        },
-        col = cols,
-        column_title = plot_name,
-        heatmap_legend_param = list(
-            title = "-log10(p-val)",
-            at = c(0, 2, 4, 6, 8, 10, 12)
+
+#####################################################
+#### Plot using gene_set_enrichment_plot_complex ####
+#####################################################
+
+source(
+    here(
+        "snRNAseq_mouse",
+        "code",
+        "04_clinical_set_enrichment",
+        "gene_set_enrichment_plot_complex.R"
         )
     )
-    print(plot_gs)
+
+use_gsepc<-function(modeling_results, gene_list, enrichTab, path_to_plot){
+    gene_enrichment_count <- get_gene_enrichment_count(model_results = modeling_results, bayes_anno = NULL)
+    gene_list_count <- get_gene_list_count(gene_list)
+
+    gse_plot<-gene_set_enrichment_plot_complex(
+        enrichment = enrichTab,
+        gene_count_col = gene_list_count,
+        gene_count_row = gene_enrichment_count,
+        anno_title_col = "DE\nGenes",
+        anno_title_row = "Cluster\nGenes"
+        )
+
+    pdf(path_to_plot, height = 4, width = 6)
+    print(gse_plot)
     dev.off()
 }
 
-gene_set_enrichment_plot_mod(enrichment = enrichTab_FDR01, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_enrichment_FDR01.pdf"), plot_name = "Enrichment FDR < 0.01")
-gene_set_enrichment_plot_mod(enrichment = enrichTab_FDR05, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_enrichment_FDR05.pdf"), plot_name = "Enrichment FDR < 0.05")
 
-gene_set_enrichment_plot_mod(enrichment = prwiseTab_FDR01, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_pairwise_FDR01.pdf"), plot_name = "Pairwise FDR < 0.01")
-gene_set_enrichment_plot_mod(enrichment = prwiseTab_FDR05, path_to_plot = here("snRNAseq_mouse/", "plots/", "04_clinical_set_enrichment/", "Gene_set_pairwise_FDR05.pdf"), plot_name = "Pairwise FDR < 0.05")
+use_gsepc(
+    modeling_results = modeling_results,
+    gene_list = gene_list_FDR01,
+    enrichTab = enrichTab_FDR01,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "Gene_set_enrichment_FDR01_complex.pdf"
+    )
+)
+
+use_gsepc(
+    modeling_results = modeling_results,
+    gene_list = gene_list_FDR05,
+    enrichTab = enrichTab_FDR05,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "Gene_set_enrichment_FDR05_complex.pdf"
+    )
+)
+
 
 #####################################
 #### Reproducibility information ####
