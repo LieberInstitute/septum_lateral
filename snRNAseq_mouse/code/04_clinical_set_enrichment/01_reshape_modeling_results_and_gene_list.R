@@ -53,11 +53,32 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
+## Select only significant genes with media != 0
+#LS_enriched <- lapply(markers.ls.t.1vAll.broad, function(x){
+#    x[[2]][x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE,]
+#    }
+#)
+
+## Convert logFDR to FDR and logpvalue to pvalue
+#LS_enriched <- lapply(markers.ls.t.1vAll.broad, function(x){
+#    x[[2]]$log.FDR <- exp(x[[2]]$log.FDR)
+#    (markers.ls.t.1vAll.broad[[2]][2])$log.p.value <- exp(x[[2]]$log.p.value)
+#    }
+#)
+
 ## Convert S4Vector object to DataFrame and selecting needed columns
 LS_enriched <- as.data.frame(markers.ls.t.1vAll.broad)
+#LS_enriched %>% mutate(across(v1:v2, ~ .x + n))
 LS_enriched <- LS_enriched %>%
     dplyr::select(contains("enriched")) %>%
     dplyr::select(!contains("non0median"))
+
+colchang<-c(1:54)[rep(c(FALSE, TRUE, TRUE), 54)[1:54]]
+
+for (i in colchang){
+    LS_enriched[,i]<-exp(LS_enriched[,i])
+}
+
 
 ## Create new column names
 tiss <- names(markers.ls.t.1vAll.broad)
@@ -95,7 +116,13 @@ stats_tiss <- stringr::str_match(
 stats_tiss <- paste("_", "LS-", stats_tiss, sep = "")
 
 ## Convert S4Vector object to DataFrame and selecting needed columns
-LS_pairw <- as.data.frame(markers.ls.t.pw.broad$LS) %>% select(matches("stats\\..+"))
+LS_pairw <- as.data.frame(markers.ls.t.pw.broad$LS) %>% dplyr::select(matches("stats\\..+"))
+
+colchang<-c(1:51)[rep(c(FALSE, TRUE, TRUE), 51)[1:51]]
+
+for (i in colchang){
+    LS_pairw[,i]<-exp(LS_pairw[,i])
+}
 
 ## Change column names
 new_names <- paste(c("t_stat", "p_value", "fdr"), rep(stats_tiss, each = 3), sep = "")
