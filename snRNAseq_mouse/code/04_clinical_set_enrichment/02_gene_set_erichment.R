@@ -26,7 +26,7 @@ load(
 #  gene_list_FDR01
 
 lobstr::obj_size(modeling_results)
-# 32.48 MB
+# 4.24 MB
 lobstr::obj_size(gene_list_FDR05)
 # 360.60 kB
 lobstr::obj_size(gene_list_FDR01)
@@ -37,13 +37,13 @@ class(modeling_results)
 names(modeling_results)
 # [1] "enrichment" "pairwise"
 dim(modeling_results$enrichment)
-# [1] 32180    56
+# [1] 5312   56
 head(names(modeling_results$enrichment), 10)
 # [1] "t_stat_Astro"  "p_value_Astro" "fdr_Astro"     "t_stat_Chol"
 # [5] "p_value_Chol"  "fdr_Chol"      "t_stat_ChP"    "p_value_ChP"
 # [9] "fdr_ChP"       "t_stat_Endo"
 dim(modeling_results$pairwise)
-# [1] 32180    53
+# [1] 2629   53
 head(names(modeling_results$pairwise), 10)
 # [1] "t_stat_LS-Astro"  "p_value_LS-Astro" "fdr_LS-Astro"     "t_stat_LS-Chol"
 # [5] "p_value_LS-Chol"  "fdr_LS-Chol"      "t_stat_LS-ChP"    "p_value_LS-ChP"
