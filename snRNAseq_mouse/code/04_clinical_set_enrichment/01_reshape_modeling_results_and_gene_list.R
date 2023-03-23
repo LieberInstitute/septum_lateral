@@ -53,36 +53,31 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
-## Select only significant genes with media != 0
-#LS_enriched <- lapply(markers.ls.t.1vAll.broad, function(x){
-#    x[[2]][x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE,]
-#    }
-#)
+## Select only significant genes with media != 0 and FDR < 0.05
+LS_enriched_names <- lapply(markers.ls.t.1vAll.broad, function(x) {
+    rownames(x[[2]][x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE, ])
+})
 
-## Convert logFDR to FDR and logpvalue to pvalue
-#LS_enriched <- lapply(markers.ls.t.1vAll.broad, function(x){
-#    x[[2]]$log.FDR <- exp(x[[2]]$log.FDR)
-#    (markers.ls.t.1vAll.broad[[2]][2])$log.p.value <- exp(x[[2]]$log.p.value)
-#    }
-#)
+LS_enriched_names <- unique(unlist(LS_enriched_names))
+LS_enriched_names <- LS_enriched_names[order(LS_enriched_names)]
 
 ## Convert S4Vector object to DataFrame and selecting needed columns
 LS_enriched <- as.data.frame(markers.ls.t.1vAll.broad)
-#LS_enriched %>% mutate(across(v1:v2, ~ .x + n))
+LS_enriched <- LS_enriched[LS_enriched_names, ]
 LS_enriched <- LS_enriched %>%
     dplyr::select(contains("enriched")) %>%
     dplyr::select(!contains("non0median"))
 
-colchang<-c(1:54)[rep(c(FALSE, TRUE, TRUE), 54)[1:54]]
+## Unlog pvalues and FDRs
+colchang <- c(1:dim(LS_enriched)[2])[rep(c(FALSE, TRUE, TRUE))]
 
-for (i in colchang){
-    LS_enriched[,i]<-exp(LS_enriched[,i])
+for (i in colchang) {
+    LS_enriched[, i] <- exp(LS_enriched[, i])
 }
 
-
 ## Create new column names
-tiss <- names(markers.ls.t.1vAll.broad)
-new_names <- paste(rep(c("t_stat", "p_value", "fdr"), length(tiss)), rep(tiss, each = 3), sep = "_")
+cells <- names(markers.ls.t.1vAll.broad)
+new_names <- paste(rep(c("t_stat", "p_value", "fdr"), length(cells)), rep(cells, each = 3), sep = "_")
 
 ## Change column names
 names(LS_enriched) <- new_names
@@ -115,13 +110,16 @@ stats_tiss <- stringr::str_match(
     str_remove("stats\\.")
 stats_tiss <- paste("_", "LS-", stats_tiss, sep = "")
 
-## Convert S4Vector object to DataFrame and selecting needed columns
-LS_pairw <- as.data.frame(markers.ls.t.pw.broad$LS) %>% dplyr::select(matches("stats\\..+"))
+## Convert S4Vector object to DataFrame, select genes with non0median == TRUE
+LS_pairw <- as.data.frame(markers.ls.t.pw.broad$LS) %>%
+    dplyr::filter(non0median == TRUE) %>%
+    dplyr::select(matches("stats\\..+"))
 
-colchang<-c(1:51)[rep(c(FALSE, TRUE, TRUE), 51)[1:51]]
+## Unlog pvalues and FDRs
+colchang <- c(1:dim(LS_pairw)[2])[rep(c(FALSE, TRUE, TRUE))]
 
-for (i in colchang){
-    LS_pairw[,i]<-exp(LS_pairw[,i])
+for (i in colchang) {
+    LS_pairw[, i] <- exp(LS_pairw[, i])
 }
 
 ## Change column names
