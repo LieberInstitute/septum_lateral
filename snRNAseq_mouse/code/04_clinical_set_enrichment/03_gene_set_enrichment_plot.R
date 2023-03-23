@@ -293,7 +293,7 @@ use_gsepc<-function(modeling_results, model_type, gene_list, enrichTab, path_to_
         enrichment = enrichTab,
         gene_count_col = log10(gene_list_count),
         gene_count_row = gene_enrichment_count,
-        anno_title_col = "DE\nGenes",
+        anno_title_col = "DE Genes\n(log10)",
         anno_title_row = "Cluster\nGenes"
         )
 
