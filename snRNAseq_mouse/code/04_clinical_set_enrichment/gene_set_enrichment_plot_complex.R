@@ -216,7 +216,7 @@ get_gene_enrichment_count <- function(
         model_results[, grep("fdr_", colnames(model_results))]
 
     enrich_count <- sapply(seq(along.with = tstats), function(i) {
-        layer <- sum(tstats[, i] > 0 & fdrs[, i] < fdr_cut)
+        layer <- sum(tstats[, i] > 0 & fdrs[, i] < fdr_cut, na.rm = TRUE)
     })
     data.frame(
         row.names = colnames(tstats),
