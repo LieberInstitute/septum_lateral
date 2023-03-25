@@ -65,7 +65,16 @@ LS_enriched_names <- LS_enriched_names[order(LS_enriched_names)]
 LS_enriched <- as.data.frame(markers.ls.t.1vAll.broad)
 LS_enriched <- LS_enriched[LS_enriched_names, ]
 LS_enriched <- LS_enriched %>%
-    dplyr::select(contains("enriched")) %>%
+    dplyr::select(contains("enriched"))
+
+
+vecs <- seq(1, length(names(LS_enriched)), 4)
+for (i in vecs){
+    test_ls <- LS_enriched[,i:(i+3)]
+    LS_enriched[test_ls[,4]==FALSE, i:(i+3)] <- NA
+}
+
+LS_enriched <- LS_enriched %>%
     dplyr::select(!contains("non0median"))
 
 ## Unlog pvalues and FDRs
