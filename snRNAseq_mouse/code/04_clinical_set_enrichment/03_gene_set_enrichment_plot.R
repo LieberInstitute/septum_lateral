@@ -415,7 +415,7 @@ use_gsepc(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_pairwiseTab_glFDR05_ctFDR05.pdf"
+        "Gene_set_pairwise_glFDR05_ctFDR05.pdf"
     )
 )
 
@@ -428,7 +428,7 @@ use_gsepc(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_pairwiseTab_glFDR05_ctFDR1.pdf"
+        "Gene_set_pairwise_glFDR05_ctFDR1.pdf"
     )
 )
 
