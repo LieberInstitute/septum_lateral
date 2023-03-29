@@ -26,7 +26,7 @@ load(
 #  gene_list_FDR01
 
 lobstr::obj_size(modeling_results)
-# 4.24 MB
+# 1.56 MB
 lobstr::obj_size(gene_list_FDR05)
 # 360.60 kB
 lobstr::obj_size(gene_list_FDR01)
@@ -37,7 +37,7 @@ class(modeling_results)
 names(modeling_results)
 # [1] "enrichment" "pairwise"
 dim(modeling_results$enrichment)
-# [1] 5312   56
+# [1] 149   56
 head(names(modeling_results$enrichment), 10)
 # [1] "t_stat_Astro"  "p_value_Astro" "fdr_Astro"     "t_stat_Chol"
 # [5] "p_value_Chol"  "fdr_Chol"      "t_stat_ChP"    "p_value_ChP"
@@ -60,129 +60,256 @@ names(gene_list_FDR01)
 ###########################################################
 
 ## Running gene_set_enrichment with two sets of DE genes, one with FDR < 0.05 the other with FDR < 0.01
-enrichTab_FDR05 <- gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, model_type = "enrichment")
-enrichTab_FDR05
-#             OR         Pval       test NumSig SetSize       ID model_type fdr_cut
-# 1   1.54034364 9.757121e-02      Astro    186    1360      all enrichment     0.1
-# 2   0.10027807 1.000000e+00      Astro     17     602 positive enrichment     0.1
-# 3  16.84447941 5.657800e-09      Astro    169     758 negative enrichment     0.1
-# 4   1.72459518 1.703007e-04       Chol    229    1360      all enrichment     0.1
-# 5   0.16480026 1.000000e+00       Chol     17     602 positive enrichment     0.1
-# 6   4.39771152 1.671269e-16       Chol    212     758 negative enrichment     0.1
-# 7   1.51283336 1.038501e-02        ChP    306    1360      all enrichment     0.1
-# 8   0.25063180 1.000000e+00        ChP     48     602 positive enrichment     0.1
-# 9   5.77654398 8.409755e-13        ChP    258     758 negative enrichment     0.1
-# 10  1.42540773 7.865324e-02       Endo    214    1360      all enrichment     0.1
-# 11  0.16304906 1.000000e+00       Endo     22     602 positive enrichment     0.1
-# 12  5.03239275 1.970301e-07       Endo    192     758 negative enrichment     0.1
-# 13  1.35077159 8.036386e-02  Ependymal    336    1360      all enrichment     0.1
-# 14  0.20157046 1.000000e+00  Ependymal     43     602 positive enrichment     0.1
-# 15  4.24106150 3.375277e-08  Ependymal    293     758 negative enrichment     0.1
-# 16  1.96931716 5.997075e-04        IoC    229    1360      all enrichment     0.1
-# 17  0.07682601 1.000000e+00        IoC      7     602 positive enrichment     0.1
-# 18  4.97365076 2.263235e-11        IoC    222     758 negative enrichment     0.1
-# 19  1.38691482 3.970426e-02         LS    412    1360      all enrichment     0.1
-# 20  0.18608799 1.000000e+00         LS     62     602 positive enrichment     0.1
-# 21  9.27867319 3.089488e-15         LS    350     758 negative enrichment     0.1
-# 22  1.22752839 3.244889e-01      Micro    139    1360      all enrichment     0.1
-# 23  0.15139779 9.999753e-01      Micro     13     602 positive enrichment     0.1
-# 24  3.35896035 2.292910e-03      Micro    126     758 negative enrichment     0.1
-# 25  1.05525613 4.022036e-01         MS    355    1360      all enrichment     0.1
-# 26  0.14581960 1.000000e+00         MS     48     602 positive enrichment     0.1
-# 27  5.17511489 1.343914e-12         MS    307     758 negative enrichment     0.1
-# 28  0.88811319 7.134830e-01      Mural     73    1360      all enrichment     0.1
-# 29  0.18548549 9.999899e-01      Mural     11     602 positive enrichment     0.1
-# 30  2.48116853 7.898352e-03      Mural     62     758 negative enrichment     0.1
-# 31  0.99987793 5.532114e-01 Neuroblast    167    1360      all enrichment     0.1
-# 32  0.12064729 1.000000e+00 Neuroblast     21     602 positive enrichment     0.1
-# 33  5.63102004 1.246862e-06 Neuroblast    146     758 negative enrichment     0.1
-# 34  1.24468966 3.153025e-01      Oligo    161    1360      all enrichment     0.1
-# 35  0.04490009 1.000000e+00      Oligo      9     602 positive enrichment     0.1
-# 36 28.68913790 2.649219e-08      Oligo    152     758 negative enrichment     0.1
-# 37  1.73028203 2.418160e-03        OPC    217    1360      all enrichment     0.1
-# 38  0.10834999 1.000000e+00        OPC     15     602 positive enrichment     0.1
-# 39  8.22328251 1.816495e-16        OPC    202     758 negative enrichment     0.1
-# 40  1.02154597 4.924148e-01       Sept    342    1360      all enrichment     0.1
-# 41  0.16328271 1.000000e+00       Sept     52     602 positive enrichment     0.1
-# 42  4.40843978 3.378711e-09       Sept    290     758 negative enrichment     0.1
-# 43  1.49430181 1.576533e-02        Str    397    1360      all enrichment     0.1
-# 44  0.15289460 1.000000e+00        Str     47     602 positive enrichment     0.1
-# 45 10.26658481 8.285197e-17        Str    350     758 negative enrichment     0.1
-# 46  0.82651614 9.140142e-01       Thal    417    1360      all enrichment     0.1
-# 47  0.11704084 1.000000e+00       Thal     66     602 positive enrichment     0.1
-# 48  7.02626554 8.589305e-17       Thal    351     758 negative enrichment     0.1
-# 49  2.60034046 2.480758e-06       TNoS    258    1360      all enrichment     0.1
-# 50  0.20022890 1.000000e+00       TNoS     25     602 positive enrichment     0.1
-# 51 19.14047243 1.445502e-19       TNoS    233     758 negative enrichment     0.1
-# 52  0.98590003 5.703323e-01   TT.IG.SH    379    1360      all enrichment     0.1
-# 53  0.16775205 1.000000e+00   TT.IG.SH     59     602 positive enrichment     0.1
-# 54  4.11247981 6.808819e-13   TT.IG.SH    320     758 negative enrichment     0.1
+enrichTab_glFDR05_ctFDR05 <- gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, model_type = "enrichment", fdr_cut = 0.05)
+# Warning message:
+# In gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results,  :
+#   Gene list with n < 25 may have insufficent power for enrichment analysis: all ,positive ,negative
+enrichTab_glFDR05_ctFDR05
+#            OR         Pval       test NumSig SetSize       ID model_type fdr_cut
+# 1  1.22407931 0.3694498417      Astro     14      42      all enrichment    0.05
+# 2  0.11737620 0.9990545105      Astro      1      18 positive enrichment    0.05
+# 3  3.40178034 0.0066792454      Astro     13      24 negative enrichment    0.05
+# 4  1.90759114 0.1174129272       Chol     10      42      all enrichment    0.05
+# 5  0.00000000 1.0000000000       Chol      0      18 positive enrichment    0.05
+# 6  5.15700377 0.0013063181       Chol     10      24 negative enrichment    0.05
+# 7  1.46641134 0.2256063147        ChP     13      42      all enrichment    0.05
+# 8  0.15066402 0.9966103492        ChP      1      18 positive enrichment    0.05
+# 9  3.76609333 0.0042405208        ChP     12      24 negative enrichment    0.05
+# 10 1.39335043 0.2635623928       Endo     13      42      all enrichment    0.05
+# 11 0.14515899 0.9971600223       Endo      1      18 positive enrichment    0.05
+# 12 3.59187107 0.0055385174       Endo     12      24 negative enrichment    0.05
+# 13 1.02839719 0.5442373204  Ependymal     14      42      all enrichment    0.05
+# 14 0.10270789 0.9995633441  Ependymal      1      18 positive enrichment    0.05
+# 15 2.89828715 0.0161372168  Ependymal     13      24 negative enrichment    0.05
+# 16 2.06469347 0.0901907483        IoC     10      42      all enrichment    0.05
+# 17 0.00000000 1.0000000000        IoC      0      18 positive enrichment    0.05
+# 18 5.57011539 0.0008701416        IoC     10      24 negative enrichment    0.05
+# 19 0.98620273 0.5869975099         LS     14      42      all enrichment    0.05
+# 20 0.09941449 0.9996419421         LS      1      18 positive enrichment    0.05
+# 21 2.78931852 0.0197038223         LS     13      24 negative enrichment    0.05
+# 22 1.63138784 0.1583996298      Micro     13      42      all enrichment    0.05
+# 23 0.16261617 0.9951960335      Micro      1      18 positive enrichment    0.05
+# 24 4.15757615 0.0023926456      Micro     12      24 negative enrichment    0.05
+# 25 1.17059966 0.4126933028         MS     14      42      all enrichment    0.05
+# 26 0.11346501 0.9992181529         MS      1      18 positive enrichment    0.05
+# 27 3.26463396 0.0084384254         MS     13      24 negative enrichment    0.05
+# 28 1.54072221 0.2014353986      Mural     12      42      all enrichment    0.05
+# 29 0.00000000 1.0000000000      Mural      0      18 positive enrichment    0.05
+# 30 4.61938078 0.0012757529      Mural     12      24 negative enrichment    0.05
+# 31 1.55287890 0.1797139657 Neuroblast     14      42      all enrichment    0.05
+# 32 0.13993582 0.9976247459 Neuroblast      1      18 positive enrichment    0.05
+# 33 4.23836204 0.0017802272 Neuroblast     13      24 negative enrichment    0.05
+# 34 1.84442168 0.1091358017      Oligo     12      42      all enrichment    0.05
+# 35 0.00000000 1.0000000000      Oligo      0      18 positive enrichment    0.05
+# 36 5.49178907 0.0004385825      Oligo     12      24 negative enrichment    0.05
+# 37 1.84442168 0.1091358017        OPC     12      42      all enrichment    0.05
+# 38 0.00000000 1.0000000000        OPC      0      18 positive enrichment    0.05
+# 39 5.49178907 0.0004385825        OPC     12      24 negative enrichment    0.05
+# 40 1.02839719 0.5442373204       Sept     14      42      all enrichment    0.05
+# 41 0.10270789 0.9995633441       Sept      1      18 positive enrichment    0.05
+# 42 2.89828715 0.0161372168       Sept     13      24 negative enrichment    0.05
+# 43 1.17059966 0.4126933028        Str     14      42      all enrichment    0.05
+# 44 0.11346501 0.9992181529        Str      1      18 positive enrichment    0.05
+# 45 3.26463396 0.0084384254        Str     13      24 negative enrichment    0.05
+# 46 1.17059966 0.4126933028       Thal     14      42      all enrichment    0.05
+# 47 0.11346501 0.9992181529       Thal      1      18 positive enrichment    0.05
+# 48 3.26463396 0.0084384254       Thal     13      24 negative enrichment    0.05
+# 49 1.63227890 0.1671593338       TNoS     12      42      all enrichment    0.05
+# 50 0.00000000 1.0000000000       TNoS      0      18 positive enrichment    0.05
+# 51 4.88285312 0.0009097511       TNoS     12      24 negative enrichment    0.05
+# 52 1.28109833 0.3273696551   TT.IG.SH     14      42      all enrichment    0.05
+# 53 0.12146903 0.9988588920   TT.IG.SH      1      18 positive enrichment    0.05
+# 54 3.54761387 0.0052365917   TT.IG.SH     13      24 negative enrichment    0.05
 
-enrichTab_FDR01 <- gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results, model_type = "enrichment")
-enrichTab_FDR01
-#            OR        Pval       test NumSig SetSize       ID model_type fdr_cut
-# 1  0.53479814 0.930268366      Astro     22     254      all enrichment     0.1
-# 2  0.04692113 0.999989938      Astro      2     191 positive enrichment     0.1
-# 3         Inf 0.087419500      Astro     20      63 negative enrichment     0.1
-# 4  0.55119476 0.979142887       Chol     22     254      all enrichment     0.1
-# 5  0.11591987 0.999998834       Chol      4     191 positive enrichment     0.1
-# 6  3.14268956 0.039185888       Chol     18      63 negative enrichment     0.1
-# 7  0.70852545 0.878580607        ChP     37     254      all enrichment     0.1
-# 8  0.22451009 0.999853338        ChP     12     191 positive enrichment     0.1
-# 9         Inf 0.007500901        ChP     25      63 negative enrichment     0.1
-# 10 0.53269456 0.966729901       Endo     34     254      all enrichment     0.1
-# 11 0.12100832 0.999996425       Endo      8     191 positive enrichment     0.1
-# 12        Inf 0.018313137       Endo     26      63 negative enrichment     0.1
-# 13 0.70341168 0.866078547  Ependymal     42     254      all enrichment     0.1
-# 14 0.17903602 0.999871257  Ependymal     11     191 positive enrichment     0.1
-# 15        Inf 0.018058780  Ependymal     31      63 negative enrichment     0.1
-# 16 0.76688622 0.814619341        IoC     28     254      all enrichment     0.1
-# 17 0.06860305 0.999983648        IoC      2     191 positive enrichment     0.1
-# 18 3.35105550 0.057707994        IoC     26      63 negative enrichment     0.1
-# 19 0.93861635 0.654304231         LS     60     254      all enrichment     0.1
-# 20 0.37817319 0.992182707         LS     22     191 positive enrichment     0.1
-# 21 5.49379505 0.035964185         LS     38      63 negative enrichment     0.1
-# 22 0.94531794 0.682025009      Micro     23     254      all enrichment     0.1
-# 23 0.15747098 0.996444503      Micro      4     191 positive enrichment     0.1
-# 24        Inf 0.103712825      Micro     19      63 negative enrichment     0.1
-# 25 0.54384982 0.983629947         MS     48     254      all enrichment     0.1
-# 26 0.17730163 0.999998359         MS     15     191 positive enrichment     0.1
-# 27 6.32318788 0.020427878         MS     33      63 negative enrichment     0.1
-# 28 0.81247130 0.756903392      Mural     15     254      all enrichment     0.1
-# 29 0.31533056 0.982835718      Mural      5     191 positive enrichment     0.1
-# 30 3.40647979 0.195164850      Mural     10      63 negative enrichment     0.1
-# 31 0.70872651 0.841474952 Neuroblast     25     254      all enrichment     0.1
-# 32 0.21933481 0.998254450 Neuroblast      8     191 positive enrichment     0.1
-# 33        Inf 0.062983237 Neuroblast     17      63 negative enrichment     0.1
-# 34 0.66165674 0.847149522      Oligo     18     254      all enrichment     0.1
-# 35 0.07117660 0.999571238      Oligo      2     191 positive enrichment     0.1
-# 36        Inf 0.174352434      Oligo     16      63 negative enrichment     0.1
-# 37 0.77106259 0.818992476        OPC     28     254      all enrichment     0.1
-# 38 0.06526470 0.999996323        OPC      2     191 positive enrichment     0.1
-# 39 4.13445649 0.023030031        OPC     26      63 negative enrichment     0.1
-# 40 0.39012262 0.999180651       Sept     46     254      all enrichment     0.1
-# 41 0.13238321 0.999999928       Sept     14     191 positive enrichment     0.1
-# 42 2.51379623 0.145428873       Sept     32      63 negative enrichment     0.1
-# 43 0.95143399 0.640370331        Str     57     254      all enrichment     0.1
-# 44 0.32899272 0.996083446        Str     18     191 positive enrichment     0.1
-# 45 6.03510501 0.024206103        Str     39      63 negative enrichment     0.1
-# 46 0.52279926 0.990936359       Thal     53     254      all enrichment     0.1
-# 47 0.17288704 0.999999838       Thal     18     191 positive enrichment     0.1
-# 48        Inf 0.002506266       Thal     35      63 negative enrichment     0.1
-# 49 1.06488095 0.552333980       TNoS     28     254      all enrichment     0.1
-# 50 0.22166262 0.997699630       TNoS      6     191 positive enrichment     0.1
-# 51        Inf 0.010324449       TNoS     22      63 negative enrichment     0.1
-# 52 0.51986024 0.995211478   TT.IG.SH     54     254      all enrichment     0.1
-# 53 0.18684794 0.999999936   TT.IG.SH     19     191 positive enrichment     0.1
-# 54 8.23628234 0.005043533   TT.IG.SH     35      63 negative enrichment     0.1
+enrichTab_glFDR05_ctFDR1 <- gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, model_type = "enrichment", fdr_cut = 0.1)
+# Warning message:
+# In gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results,  :
+#   Gene list with n < 25 may have insufficent power for enrichment analysis: all ,positive ,negative
+enrichTab_glFDR05_ctFDR1
+#           OR         Pval       test NumSig SetSize       ID model_type fdr_cut
+# 1  1.1705997 0.4126933028      Astro     14      42      all enrichment     0.1
+# 2  0.1134650 0.9992181529      Astro      1      18 positive enrichment     0.1
+# 3  3.2646340 0.0084384254      Astro     13      24 negative enrichment     0.1
+# 4  2.2610736 0.0491844236       Chol     12      42      all enrichment     0.1
+# 5  0.0000000 1.0000000000       Chol      0      18 positive enrichment     0.1
+# 6  6.6859288 0.0001255451       Chol     12      24 negative enrichment     0.1
+# 7  1.5528789 0.1797139657        ChP     14      42      all enrichment     0.1
+# 8  0.1399358 0.9976247459        ChP      1      18 positive enrichment     0.1
+# 9  4.2383620 0.0017802272        ChP     13      24 negative enrichment     0.1
+# 10 1.5528789 0.1797139657       Endo     14      42      all enrichment     0.1
+# 11 0.1399358 0.9976247459       Endo      1      18 positive enrichment     0.1
+# 12 4.2383620 0.0017802272       Endo     13      24 negative enrichment     0.1
+# 13 1.0283972 0.5442373204  Ependymal     14      42      all enrichment     0.1
+# 14 0.1027079 0.9995633441  Ependymal      1      18 positive enrichment     0.1
+# 15 2.8982871 0.0161372168  Ependymal     13      24 negative enrichment     0.1
+# 16 2.1637840 0.0669201760        IoC     11      42      all enrichment     0.1
+# 17 0.0000000 1.0000000000        IoC      0      18 positive enrichment     0.1
+# 18 6.0960248 0.0003389912        IoC     11      24 negative enrichment     0.1
+# 19 1.1165679 0.4550297780         LS     16      42      all enrichment     0.1
+# 20 0.1915468 0.9978697019         LS      2      18 positive enrichment     0.1
+# 21 2.9513830 0.0141513000         LS     14      24 negative enrichment     0.1
+# 22 1.6313878 0.1583996298      Micro     13      42      all enrichment     0.1
+# 23 0.1626162 0.9951960335      Micro      1      18 positive enrichment     0.1
+# 24 4.1575761 0.0023926456      Micro     12      24 negative enrichment     0.1
+# 25 1.0283972 0.5442373204         MS     14      42      all enrichment     0.1
+# 26 0.1027079 0.9995633441         MS      1      18 positive enrichment     0.1
+# 27 2.8982871 0.0161372168         MS     13      24 negative enrichment     0.1
+# 28 1.6313878 0.1583996298      Mural     13      42      all enrichment     0.1
+# 29 0.1626162 0.9951960335      Mural      1      18 positive enrichment     0.1
+# 30 4.1575761 0.0023926456      Mural     12      24 negative enrichment     0.1
+# 31 1.4073899 0.2486104507 Neuroblast     14      42      all enrichment     0.1
+# 32 0.1302527 0.9983474914 Neuroblast      1      18 positive enrichment     0.1
+# 33 3.8695748 0.0031218604 Neuroblast     13      24 negative enrichment     0.1
+# 34 1.6322789 0.1671593338      Oligo     12      42      all enrichment     0.1
+# 35 0.0000000 1.0000000000      Oligo      0      18 positive enrichment     0.1
+# 36 4.8828531 0.0009097511      Oligo     12      24 negative enrichment     0.1
+# 37 1.6322789 0.1671593338        OPC     12      42      all enrichment     0.1
+# 38 0.0000000 1.0000000000        OPC      0      18 positive enrichment     0.1
+# 39 4.8828531 0.0009097511        OPC     12      24 negative enrichment     0.1
+# 40 1.1165679 0.4550297780       Sept     16      42      all enrichment     0.1
+# 41 0.1915468 0.9978697019       Sept      2      18 positive enrichment     0.1
+# 42 2.9513830 0.0141513000       Sept     14      24 negative enrichment     0.1
+# 43 1.1705997 0.4126933028        Str     14      42      all enrichment     0.1
+# 44 0.1134650 0.9992181529        Str      1      18 positive enrichment     0.1
+# 45 3.2646340 0.0084384254        Str     13      24 negative enrichment     0.1
+# 46 1.0283972 0.5442373204       Thal     14      42      all enrichment     0.1
+# 47 0.1027079 0.9995633441       Thal      1      18 positive enrichment     0.1
+# 48 2.8982871 0.0161372168       Thal     13      24 negative enrichment     0.1
+# 49 1.7252536 0.1296543644       TNoS     13      42      all enrichment     0.1
+# 50 0.1691186 0.9942952897       TNoS      1      18 positive enrichment     0.1
+# 51 4.3785477 0.0017603419       TNoS     12      24 negative enrichment     0.1
+# 52 1.1705997 0.4126933028   TT.IG.SH     14      42      all enrichment     0.1
+# 53 0.1134650 0.9992181529   TT.IG.SH      1      18 positive enrichment     0.1
+# 54 3.2646340 0.0084384254   TT.IG.SH     13      24 negative enrichment     0.1
 
+enrichTab_glFDR01_ctFDR05 <- gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results, model_type = "enrichment", fdr_cut = 0.05)
+# Warning message:
+# In gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results,  :
+#   Gene list with n < 25 may have insufficent power for enrichment analysis: all ,positive ,negative
+enrichTab_glFDR01_ctFDR05
+#           OR      Pval       test NumSig SetSize       ID model_type fdr_cut
+# 1  0.3168288 0.9482450      Astro      1       8      all enrichment    0.05
+# 2  0.0000000 1.0000000      Astro      0       7 positive enrichment    0.05
+# 3        Inf 0.3020134      Astro      1       1 negative enrichment    0.05
+# 4  0.6979478 0.7787950       Chol      1       8      all enrichment    0.05
+# 5  0.0000000 1.0000000       Chol      0       7 positive enrichment    0.05
+# 6        Inf 0.1677852       Chol      1       1 negative enrichment    0.05
+# 7  0.4035145 0.9112833        ChP      1       8      all enrichment    0.05
+# 8  0.0000000 1.0000000        ChP      0       7 positive enrichment    0.05
+# 9        Inf 0.2550336        ChP      1       1 negative enrichment    0.05
+# 10 0.3891796 0.9176773       Endo      1       8      all enrichment    0.05
+# 11 0.0000000 1.0000000       Endo      0       7 positive enrichment    0.05
+# 12       Inf 0.2617450       Endo      1       1 negative enrichment    0.05
+# 13 0.2786209 0.9626091  Ependymal      1       8      all enrichment    0.05
+# 14 0.0000000 1.0000000  Ependymal      0       7 positive enrichment    0.05
+# 15       Inf 0.3288591  Ependymal      1       1 negative enrichment    0.05
+# 16 0.7343107 0.7636698        IoC      1       8      all enrichment    0.05
+# 17 0.0000000 1.0000000        IoC      0       7 positive enrichment    0.05
+# 18       Inf 0.1610738        IoC      1       1 negative enrichment    0.05
+# 19 0.2700412 0.9656004         LS      1       8      all enrichment    0.05
+# 20 0.0000000 1.0000000         LS      0       7 positive enrichment    0.05
+# 21       Inf 0.3355705         LS      1       1 negative enrichment    0.05
+# 22 0.4346089 0.8971797      Micro      1       8      all enrichment    0.05
+# 23 0.0000000 1.0000000      Micro      0       7 positive enrichment    0.05
+# 24       Inf 0.2416107      Micro      1       1 negative enrichment    0.05
+# 25 0.3066418 0.9522262         MS      1       8      all enrichment    0.05
+# 26 0.0000000 1.0000000         MS      0       7 positive enrichment    0.05
+# 27       Inf 0.3087248         MS      1       1 negative enrichment    0.05
+# 28 0.4694621 0.8811520      Mural      1       8      all enrichment    0.05
+# 29 0.0000000 1.0000000      Mural      0       7 positive enrichment    0.05
+# 30       Inf 0.2281879      Mural      1       1 negative enrichment    0.05
+# 31 0.3755773 0.9236644 Neuroblast      1       8      all enrichment    0.05
+# 32 0.0000000 1.0000000 Neuroblast      0       7 positive enrichment    0.05
+# 33       Inf 0.2684564 Neuroblast      1       1 negative enrichment    0.05
+# 34 0.5304896 0.8530143      Oligo      1       8      all enrichment    0.05
+# 35 0.0000000 1.0000000      Oligo      0       7 positive enrichment    0.05
+# 36       Inf 0.2080537      Oligo      1       1 negative enrichment    0.05
+# 37 0.5304896 0.8530143        OPC      1       8      all enrichment    0.05
+# 38 0.0000000 1.0000000        OPC      0       7 positive enrichment    0.05
+# 39       Inf 0.2080537        OPC      1       1 negative enrichment    0.05
+# 40 0.2786209 0.9626091       Sept      1       8      all enrichment    0.05
+# 41 0.0000000 1.0000000       Sept      0       7 positive enrichment    0.05
+# 42       Inf 0.3288591       Sept      1       1 negative enrichment    0.05
+# 43 0.3066418 0.9522262        Str      1       8      all enrichment    0.05
+# 44 0.0000000 1.0000000        Str      0       7 positive enrichment    0.05
+# 45       Inf 0.3087248        Str      1       1 negative enrichment    0.05
+# 46 0.3066418 0.9522262       Thal      1       8      all enrichment    0.05
+# 47 0.0000000 1.0000000       Thal      0       7 positive enrichment    0.05
+# 48       Inf 0.3087248       Thal      1       1 negative enrichment    0.05
+# 49 0.4885179 0.8723484       TNoS      1       8      all enrichment    0.05
+# 50 0.0000000 1.0000000       TNoS      0       7 positive enrichment    0.05
+# 51       Inf 0.2214765       TNoS      1       1 negative enrichment    0.05
+# 52 0.3274883 0.9439766   TT.IG.SH      1       8      all enrichment    0.05
+# 53 0.0000000 1.0000000   TT.IG.SH      0       7 positive enrichment    0.05
+# 54       Inf 0.2953020   TT.IG.SH      1       1 negative enrichment    0.05
+
+enrichTab_glFDR01_ctFDR1 <- gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results, model_type = "enrichment", fdr_cut = 0.1)
+# Warning message:
+# In gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results,  :
+#   Gene list with n < 25 may have insufficent power for enrichment analysis: all ,positive ,negative
+enrichTab_glFDR01_ctFDR1
+#           OR      Pval       test NumSig SetSize       ID model_type fdr_cut
+# 1  0.3066418 0.9522262      Astro      1       8      all enrichment     0.1
+# 2  0.0000000 1.0000000      Astro      0       7 positive enrichment     0.1
+# 3        Inf 0.3087248      Astro      1       1 negative enrichment     0.1
+# 4  0.6049531 0.8192122       Chol      1       8      all enrichment     0.1
+# 5  0.0000000 1.0000000       Chol      0       7 positive enrichment     0.1
+# 6        Inf 0.1879195       Chol      1       1 negative enrichment     0.1
+# 7  0.3755773 0.9236644        ChP      1       8      all enrichment     0.1
+# 8  0.0000000 1.0000000        ChP      0       7 positive enrichment     0.1
+# 9        Inf 0.2684564        ChP      1       1 negative enrichment     0.1
+# 10 0.3755773 0.9236644       Endo      1       8      all enrichment     0.1
+# 11 0.0000000 1.0000000       Endo      0       7 positive enrichment     0.1
+# 12       Inf 0.2684564       Endo      1       1 negative enrichment     0.1
+# 13 0.2786209 0.9626091  Ependymal      1       8      all enrichment     0.1
+# 14 0.0000000 1.0000000  Ependymal      0       7 positive enrichment     0.1
+# 15       Inf 0.3288591  Ependymal      1       1 negative enrichment     0.1
+# 16 0.6644808 0.7930663        IoC      1       8      all enrichment     0.1
+# 17 0.0000000 1.0000000        IoC      0       7 positive enrichment     0.1
+# 18       Inf 0.1744966        IoC      1       1 negative enrichment     0.1
+# 19 0.5724902 0.8556800         LS      2       8      all enrichment     0.1
+# 20 0.2817702 0.9605895         LS      1       7 positive enrichment     0.1
+# 21       Inf 0.3624161         LS      1       1 negative enrichment     0.1
+# 22 0.4346089 0.8971797      Micro      1       8      all enrichment     0.1
+# 23 0.0000000 1.0000000      Micro      0       7 positive enrichment     0.1
+# 24       Inf 0.2416107      Micro      1       1 negative enrichment     0.1
+# 25 0.2786209 0.9626091         MS      1       8      all enrichment     0.1
+# 26 0.0000000 1.0000000         MS      0       7 positive enrichment     0.1
+# 27       Inf 0.3288591         MS      1       1 negative enrichment     0.1
+# 28 0.4346089 0.8971797      Mural      1       8      all enrichment     0.1
+# 29 0.0000000 1.0000000      Mural      0       7 positive enrichment     0.1
+# 30       Inf 0.2416107      Mural      1       1 negative enrichment     0.1
+# 31 0.3503625 0.9345065 Neuroblast      1       8      all enrichment     0.1
+# 32 0.0000000 1.0000000 Neuroblast      0       7 positive enrichment     0.1
+# 33       Inf 0.2818792 Neuroblast      1       1 negative enrichment     0.1
+# 34 0.4885179 0.8723484      Oligo      1       8      all enrichment     0.1
+# 35 0.0000000 1.0000000      Oligo      0       7 positive enrichment     0.1
+# 36       Inf 0.2214765      Oligo      1       1 negative enrichment     0.1
+# 37 0.4885179 0.8723484        OPC      1       8      all enrichment     0.1
+# 38 0.0000000 1.0000000        OPC      0       7 positive enrichment     0.1
+# 39       Inf 0.2214765        OPC      1       1 negative enrichment     0.1
+# 40 0.5724902 0.8556800       Sept      2       8      all enrichment     0.1
+# 41 0.2817702 0.9605895       Sept      1       7 positive enrichment     0.1
+# 42       Inf 0.3624161       Sept      1       1 negative enrichment     0.1
+# 43 0.3066418 0.9522262        Str      1       8      all enrichment     0.1
+# 44 0.0000000 1.0000000        Str      0       7 positive enrichment     0.1
+# 45       Inf 0.3087248        Str      1       1 negative enrichment     0.1
+# 46 0.2786209 0.9626091       Thal      1       8      all enrichment     0.1
+# 47 0.0000000 1.0000000       Thal      0       7 positive enrichment     0.1
+# 48       Inf 0.3288591       Thal      1       1 negative enrichment     0.1
+# 49 0.4515242 0.8894196       TNoS      1       8      all enrichment     0.1
+# 50 0.0000000 1.0000000       TNoS      0       7 positive enrichment     0.1
+# 51       Inf 0.2348993       TNoS      1       1 negative enrichment     0.1
+# 52 0.3066418 0.9522262   TT.IG.SH      1       8      all enrichment     0.1
+# 53 0.0000000 1.0000000   TT.IG.SH      0       7 positive enrichment     0.1
+# 54       Inf 0.3087248   TT.IG.SH      1       1 negative enrichment     0.1
 
 ###########################################################
 #### gene_set_enrichment analysis with pairwise data ######
 ###########################################################
 
-prwiseTab_FDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
-prwiseTab_FDR05
+prwiseTab_glFDR05_ctFDR1 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
+prwiseTab_glFDR05_ctFDR1
 #           OR         Pval          test NumSig SetSize       ID model_type fdr_cut
 # 1  1.6408988 1.043270e-05      LS-Astro    549     655      all   pairwise     0.1
 # 2  0.1703484 1.000000e+00      LS-Astro     33      84 positive   pairwise     0.1
@@ -236,8 +363,66 @@ prwiseTab_FDR05
 # 50 1.2168030 2.189068e-01   LS-TT.IG.SH     42      84 positive   pairwise     0.1
 # 51 0.6339620 9.999991e-01   LS-TT.IG.SH    209     571 negative   pairwise     0.1
 
-prwiseTab_FDR01 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
-prwiseTab_FDR01
+prwiseTab_glFDR05_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
+prwiseTab_glFDR05_ctFDR05
+#           OR         Pval          test NumSig SetSize       ID model_type fdr_cut
+# 1  1.6720379 4.083137e-06      LS-Astro    547     655      all   pairwise    0.05
+# 2  0.1773023 1.000000e+00      LS-Astro     33      84 positive   pairwise    0.05
+# 3  3.2146725 1.282344e-18      LS-Astro    514     571 negative   pairwise    0.05
+# 4  2.0339727 1.273491e-12       LS-Chol    226     655      all   pairwise    0.05
+# 5  0.3702909 9.994959e-01       LS-Chol      9      84 positive   pairwise    0.05
+# 6  2.4258728 1.232848e-17       LS-Chol    217     571 negative   pairwise    0.05
+# 7  3.3463961 2.852401e-39        LS-ChP    384     655      all   pairwise    0.05
+# 8  0.3918667 9.999086e-01        LS-ChP     16      84 positive   pairwise    0.05
+# 9  4.3710952 5.291124e-52        LS-ChP    368     571 negative   pairwise    0.05
+# 10 1.9286251 2.134752e-11       LS-Endo    494     655      all   pairwise    0.05
+# 11 0.1593333 1.000000e+00       LS-Endo     20      84 positive   pairwise    0.05
+# 12 3.2749406 7.405669e-27       LS-Endo    474     571 negative   pairwise    0.05
+# 13 2.2301360 1.962634e-16  LS-Ependymal    494     655      all   pairwise    0.05
+# 14 0.3605583 9.999985e-01  LS-Ependymal     32      84 positive   pairwise    0.05
+# 15 3.1839315 3.384533e-27  LS-Ependymal    462     571 negative   pairwise    0.05
+# 16 1.0679374 2.488543e-01        LS-IoC    368     655      all   pairwise    0.05
+# 17 0.8140377 8.509758e-01        LS-IoC     42      84 positive   pairwise    0.05
+# 18 1.1165255 1.338501e-01        LS-IoC    326     571 negative   pairwise    0.05
+# 19 2.1609781 4.026090e-15      LS-Micro    497     655      all   pairwise    0.05
+# 20 0.2067753 1.000000e+00      LS-Micro     23      84 positive   pairwise    0.05
+# 21 3.5415652 1.280173e-30      LS-Micro    474     571 negative   pairwise    0.05
+# 22 1.4101003 6.600753e-04         LS-MS    176     655      all   pairwise    0.05
+# 23 0.7550295 8.679032e-01         LS-MS     15      84 positive   pairwise    0.05
+# 24 1.5175599 8.509076e-05         LS-MS    161     571 negative   pairwise    0.05
+# 25 1.9750288 1.224594e-11      LS-Mural    508     655      all   pairwise    0.05
+# 26 0.1636968 1.000000e+00      LS-Mural     22      84 positive   pairwise    0.05
+# 27 3.4885322 9.811314e-28      LS-Mural    486     571 negative   pairwise    0.05
+# 28 2.0333014 1.212110e-13 LS-Neuroblast    478     655      all   pairwise    0.05
+# 29 0.3428660 9.999994e-01 LS-Neuroblast     30      84 positive   pairwise    0.05
+# 30 2.8409374 1.793606e-23 LS-Neuroblast    448     571 negative   pairwise    0.05
+# 31 1.6993031 5.160260e-06      LS-Oligo    559     655      all   pairwise    0.05
+# 32 0.2446743 1.000000e+00      LS-Oligo     42      84 positive   pairwise    0.05
+# 33 2.9748566 1.505499e-15      LS-Oligo    517     571 negative   pairwise    0.05
+# 34 1.7302799 7.224640e-09        LS-OPC    468     655      all   pairwise    0.05
+# 35 0.2320416 1.000000e+00        LS-OPC     24      84 positive   pairwise    0.05
+# 36 2.5441555 3.562047e-19        LS-OPC    444     571 negative   pairwise    0.05
+# 37 1.3000827 3.240659e-03       LS-Sept    243     655      all   pairwise    0.05
+# 38 0.5527004 9.924084e-01       LS-Sept     18      84 positive   pairwise    0.05
+# 39 1.4604157 7.626810e-05       LS-Sept    225     571 negative   pairwise    0.05
+# 40 0.6060305 1.000000e+00        LS-Str    310     655      all   pairwise    0.05
+# 41 1.0742956 4.198723e-01        LS-Str     49      84 positive   pairwise    0.05
+# 42 0.5691716 1.000000e+00        LS-Str    261     571 negative   pairwise    0.05
+# 43 1.1555048 7.697660e-02       LS-Thal    206     655      all   pairwise    0.05
+# 44 0.8039214 8.357082e-01       LS-Thal     21      84 positive   pairwise    0.05
+# 45 1.2153616 3.182957e-02       LS-Thal    185     571 negative   pairwise    0.05
+# 46 1.2984920 2.189601e-03       LS-TNoS    339     655      all   pairwise    0.05
+# 47 0.4698648 9.996086e-01       LS-TNoS     25      84 positive   pairwise    0.05
+# 48 1.5169831 6.822972e-06       LS-TNoS    314     571 negative   pairwise    0.05
+# 49 0.7300100 9.997195e-01   LS-TT.IG.SH    237     655      all   pairwise    0.05
+# 50 1.1534992 2.970611e-01   LS-TT.IG.SH     38      84 positive   pairwise    0.05
+# 51 0.6870400 9.999522e-01   LS-TT.IG.SH    199     571 negative   pairwise    0.05
+
+prwiseTab_glFDR01_ctFDR1 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results, fdr_cut = 0.1, model_type = "pairwise", reverse = FALSE)
+# Warning message:
+# In spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01,  :
+#   Gene list with n < 25 may have insufficent power for enrichment analysis: all ,positive ,negative
+prwiseTab_glFDR01_ctFDR1
 #            OR         Pval          test NumSig SetSize       ID model_type fdr_cut
 # 1  1.09675227 4.481858e-01      LS-Astro     54      68      all   pairwise     0.1
 # 2  0.15240225 9.999749e-01      LS-Astro      6      17 positive   pairwise     0.1
@@ -291,16 +476,81 @@ prwiseTab_FDR01
 # 50 0.65796536 8.587166e-01   LS-TT.IG.SH      6      17 positive   pairwise     0.1
 # 51 1.26324800 2.457745e-01   LS-TT.IG.SH     26      51 negative   pairwise     0.1
 
+prwiseTab_glFDR01_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
+# Warning message:
+# In spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01,  :
+#   Gene list with n < 25 may have insufficent power for enrichment analysis: all ,positive ,negative
+prwiseTab_glFDR01_ctFDR05
+#            OR         Pval          test NumSig SetSize       ID model_type fdr_cut
+# 1  1.13933250 3.975817e-01      LS-Astro     54      68      all   pairwise    0.05
+# 2  0.15825973 9.999657e-01      LS-Astro      6      17 positive   pairwise    0.05
+# 3  4.79908272 1.166629e-03      LS-Astro     48      51 negative   pairwise    0.05
+# 4  2.26723044 1.153739e-03       LS-Chol     28      68      all   pairwise    0.05
+# 5  0.00000000 1.000000e+00       LS-Chol      0      17 positive   pairwise    0.05
+# 6  3.97569804 1.675261e-06       LS-Chol     28      51 negative   pairwise    0.05
+# 7  3.02533872 7.434545e-06        LS-ChP     43      68      all   pairwise    0.05
+# 8  0.10584738 9.996169e-01        LS-ChP      1      17 positive   pairwise    0.05
+# 9  8.27747150 2.391434e-11        LS-ChP     42      51 negative   pairwise    0.05
+# 10 1.40680841 1.292798e-01       LS-Endo     49      68      all   pairwise    0.05
+# 11 0.11446212 9.999913e-01       LS-Endo      3      17 positive   pairwise    0.05
+# 12 5.08488523 3.075951e-05       LS-Endo     46      51 negative   pairwise    0.05
+# 13 2.00078247 8.605933e-03  LS-Ependymal     52      68      all   pairwise    0.05
+# 14 0.32821953 9.939744e-01  LS-Ependymal      6      17 positive   pairwise    0.05
+# 15 5.70412655 6.291871e-06  LS-Ependymal     46      51 negative   pairwise    0.05
+# 16 0.76732328 8.854943e-01        LS-IoC     33      68      all   pairwise    0.05
+# 17 0.17398535 9.997218e-01        LS-IoC      3      17 positive   pairwise    0.05
+# 18 1.17408288 3.398001e-01        LS-IoC     30      51 negative   pairwise    0.05
+# 19 1.21236673 2.741420e-01      LS-Micro     46      68      all   pairwise    0.05
+# 20 0.07589712 9.999989e-01      LS-Micro      2      17 positive   pairwise    0.05
+# 21 3.69718541 2.403801e-04      LS-Micro     44      51 negative   pairwise    0.05
+# 22 1.70075241 3.314542e-02         LS-MS     22      68      all   pairwise    0.05
+# 23 0.46518818 9.188591e-01         LS-MS      2      17 positive   pairwise    0.05
+# 24 2.30295000 4.241741e-03         LS-MS     20      51 negative   pairwise    0.05
+# 25 1.18172669 3.161229e-01      LS-Mural     48      68      all   pairwise    0.05
+# 26 0.10364280 9.999965e-01      LS-Mural      3      17 positive   pairwise    0.05
+# 27 3.74635776 4.385622e-04      LS-Mural     45      51 negative   pairwise    0.05
+# 28 1.34592566 1.560135e-01 LS-Neuroblast     46      68      all   pairwise    0.05
+# 29 0.13538691 9.999620e-01 LS-Neuroblast      3      17 positive   pairwise    0.05
+# 30 3.50047807 2.463002e-04 LS-Neuroblast     43      51 negative   pairwise    0.05
+# 31 0.77365681 8.544023e-01      LS-Oligo     51      68      all   pairwise    0.05
+# 32 0.13932599 9.999882e-01      LS-Oligo      6      17 positive   pairwise    0.05
+# 33 1.96819034 7.423731e-02      LS-Oligo     45      51 negative   pairwise    0.05
+# 34 0.86525656 7.615912e-01        LS-OPC     40      68      all   pairwise    0.05
+# 35 0.12874977 9.999753e-01        LS-OPC      3      17 positive   pairwise    0.05
+# 36 1.62049720 7.949879e-02        LS-OPC     37      51 negative   pairwise    0.05
+# 37 0.91870802 6.693420e-01       LS-Sept     21      68      all   pairwise    0.05
+# 38 0.00000000 1.000000e+00       LS-Sept      0      17 positive   pairwise    0.05
+# 39 1.45327769 1.246151e-01       LS-Sept     21      51 negative   pairwise    0.05
+# 40 0.56088459 9.932597e-01        LS-Str     29      68      all   pairwise    0.05
+# 41 0.53387669 9.371493e-01        LS-Str      7      17 positive   pairwise    0.05
+# 42 0.57465873 9.820413e-01        LS-Str     22      51 negative   pairwise    0.05
+# 43 0.80496628 8.156985e-01       LS-Thal     17      68      all   pairwise    0.05
+# 44 0.51843543 9.124611e-01       LS-Thal      3      17 positive   pairwise    0.05
+# 45 0.91708341 6.595054e-01       LS-Thal     14      51 negative   pairwise    0.05
+# 46 1.86062792 8.809218e-03       LS-TNoS     42      68      all   pairwise    0.05
+# 47 0.14989251 9.996684e-01       LS-TNoS      2      17 positive   pairwise    0.05
+# 48 4.22635273 3.287026e-06       LS-TNoS     40      51 negative   pairwise    0.05
+# 49 1.16929317 3.034623e-01   LS-TT.IG.SH     31      68      all   pairwise    0.05
+# 50 0.75693409 7.848540e-01   LS-TT.IG.SH      6      17 positive   pairwise    0.05
+# 51 1.34419309 1.821273e-01   LS-TT.IG.SH     25      51 negative   pairwise    0.05
 
 ###################################################
 #### Save gene_set_enrichment results to rda ######
 ###################################################
 
-save(enrichTab_FDR01, enrichTab_FDR05, prwiseTab_FDR01, prwiseTab_FDR05, file = here(
+save(enrichTab_glFDR01_ctFDR05, enrichTab_glFDR01_ctFDR1, enrichTab_glFDR05_ctFDR05, enrichTab_glFDR05_ctFDR1, file = here(
     "snRNAseq_mouse",
     "processed_data",
     "SCE",
-    "gene_set_enrichment_result_tables.rda"
+    "gene_set_enrichment_1vsAll_result_tables.rda"
+))
+
+save(prwiseTab_glFDR01_ctFDR05, prwiseTab_glFDR01_ctFDR1, prwiseTab_glFDR05_ctFDR05, prwiseTab_glFDR05_ctFDR1,
+file = here(
+    "snRNAseq_mouse",
+    "processed_data",
+    "SCE",
+    "gene_set_enrichment_1vs1_result_tables.rda"
 ))
 
 
