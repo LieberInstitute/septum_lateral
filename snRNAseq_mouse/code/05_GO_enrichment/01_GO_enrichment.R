@@ -85,7 +85,7 @@ plot_go <- function(ont, title_p, path, filename) {
         ylab("") +
         ggtitle(title_p)
 
-    ggsave(filename = filename, path = path, dotplot_1, height = 6, width = 7)
+    ggsave(filename = filename, path = path, dotplot_1, height = 6, width = 5)
 }
 
 plot_go(ont = "BP", title_p = "Biological Process", filename = "GOenrichment_BP.pdf", path = here("snRNAseq_mouse", "plots/", "05_GO_enrichment/"))
@@ -114,7 +114,7 @@ dotplot_1 <- ggplot(kegg, aes(Cluster, Description)) +
     ylab("") +
     ggtitle("KEGG")
 
-ggsave(filename = "KEGGenrichment.pdf", path = here("snRNAseq_mouse", "plots/", "05_GO_enrichment/"), dotplot_1, height = 6, width = 7)
+ggsave(filename = "KEGGenrichment.pdf", path = here("snRNAseq_mouse", "plots/", "05_GO_enrichment/"), dotplot_1, height = 6, width = 5)
 
 
 #####################################
