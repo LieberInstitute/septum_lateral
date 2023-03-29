@@ -29,23 +29,38 @@ load(
         "snRNAseq_mouse",
         "processed_data",
         "SCE",
-        "gene_set_enrichment_result_tables.rda"
+        "gene_set_enrichment_1vsAll_result_tables.rda"
     ),
     verbose = TRUE
 )
 # Loading objects:
-#  enrichTab_FDR01
-#  enrichTab_FDR05
-#  prwiseTab_FDR01
-#  prwiseTab_FDR05
+# enrichTab_glFDR01_ctFDR05
+# enrichTab_glFDR01_ctFDR1
+# enrichTab_glFDR05_ctFDR05
+# enrichTab_glFDR05_ctFDR1
 
-lobstr::obj_size(enrichTab_FDR01)
+load(
+    here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "SCE",
+        "gene_set_enrichment_1vs1_result_tables.rda"
+    ),
+    verbose = TRUE
+)
+# Loading objects:
+# prwiseTab_glFDR01_ctFDR05
+# prwiseTab_glFDR01_ctFDR1
+# prwiseTab_glFDR05_ctFDR05
+# prwiseTab_glFDR05_ctFDR1
+
+lobstr::obj_size(enrichTab_glFDR05_ctFDR05)
 # 5.88 kB
-lobstr::obj_size(enrichTab_FDR05)
+lobstr::obj_size(enrichTab_glFDR05_ctFDR1)
 # 5.88 kB
-lobstr::obj_size(prwiseTab_FDR01)
+lobstr::obj_size(prwiseTab_glFDR05_ctFDR05)
 # 5.70 kB
-lobstr::obj_size(prwiseTab_FDR05)
+lobstr::obj_size(prwiseTab_glFDR05_ctFDR1)
 # 5.70 kB
 
 enrichTab_FDR01
@@ -271,9 +286,9 @@ prwiseTab_FDR05
 # 51 0.6339620 9.999991e-01   LS-TT.IG.SH    209     571 negative   pairwise     0.1
 
 
-################################################################
-#### Plot enrichment using gene_set_enrichment_plot_complex ####
-################################################################
+######################################################################################
+#### Create function to plot using functions in gene_set_enrichment_plot_complexR ####
+######################################################################################
 
 source(
     here(
@@ -302,16 +317,21 @@ use_gsepc<-function(modeling_results, model_type, gene_list, enrichTab, path_to_
     dev.off()
 }
 
+
+################################################################
+#### Plot enrichment using gene_set_enrichment_plot_complex ####
+################################################################
+
 use_gsepc(
     modeling_results = modeling_results,
     model_type = "enrichment",
-    gene_list = gene_list_FDR01,
-    enrichTab = enrichTab_FDR01,
+    gene_list = gene_list_FDR05,
+    enrichTab = enrichTab_glFDR05_ctFDR05,
     path_to_plot = here(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_enrichment_FDR01.pdf"
+        "Gene_set_enrichment_glFDR05_ctFDR05.pdf"
     )
 )
 
@@ -319,14 +339,41 @@ use_gsepc(
     modeling_results = modeling_results,
     model_type = "enrichment",
     gene_list = gene_list_FDR05,
-    enrichTab = enrichTab_FDR05,
+    enrichTab = enrichTab_glFDR05_ctFDR1,
     path_to_plot = here(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_enrichment_FDR05.pdf"
+        "Gene_set_enrichment_glFDR05_ctFDR1.pdf"
     )
 )
+
+use_gsepc(
+    modeling_results = modeling_results,
+    model_type = "enrichment",
+    gene_list = gene_list_FDR05,
+    enrichTab = enrichTab_glFDR01_ctFDR05,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "Gene_set_enrichment_glFDR01_ctFDR05.pdf"
+    )
+)
+
+use_gsepc(
+    modeling_results = modeling_results,
+    model_type = "enrichment",
+    gene_list = gene_list_FDR05,
+    enrichTab = enrichTab_glFDR01_ctFDR1,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "Gene_set_enrichment_glFDR01_ctFDR1.pdf"
+    )
+)
+
 
 
 ##############################################################
@@ -337,12 +384,25 @@ use_gsepc(
     modeling_results = modeling_results,
     model_type = "pairwise",
     gene_list = gene_list_FDR01,
-    enrichTab = prwiseTab_FDR01,
+    enrichTab = prwiseTab_glFDR01_ctFDR05,
     path_to_plot = here(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_pairwise_FDR01.pdf"
+        "Gene_set_pairwise_glFDR01_ctFDR05.pdf"
+    )
+)
+
+use_gsepc(
+    modeling_results = modeling_results,
+    model_type = "pairwise",
+    gene_list = gene_list_FDR01,
+    enrichTab = prwiseTab_glFDR01_ctFDR1,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "Gene_set_pairwise_glFDR01_ctFDR1.pdf"
     )
 )
 
@@ -350,14 +410,28 @@ use_gsepc(
     modeling_results = modeling_results,
     model_type = "pairwise",
     gene_list = gene_list_FDR05,
-    enrichTab = prwiseTab_FDR05,
+    enrichTab = prwiseTab_glFDR05_ctFDR05,
     path_to_plot = here(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "Gene_set_pairwise_FDR05.pdf"
+        "Gene_set_pairwiseTab_glFDR05_ctFDR05.pdf"
     )
 )
+
+use_gsepc(
+    modeling_results = modeling_results,
+    model_type = "pairwise",
+    gene_list = gene_list_FDR05,
+    enrichTab = prwiseTab_glFDR05_ctFDR1,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "Gene_set_pairwiseTab_glFDR05_ctFDR1.pdf"
+    )
+)
+
 
 
 #####################################
