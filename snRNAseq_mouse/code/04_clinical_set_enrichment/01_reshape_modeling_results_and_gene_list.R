@@ -53,28 +53,37 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
-## Select only significant genes with media != 0 and FDR < 0.05
+## Select only significant genes with media != 0
 LS_enriched_names <- lapply(markers.ls.t.1vAll.broad, function(x) {
-    rownames(x[[2]][x[[2]]$log.FDR < log(0.05) & x[[2]]$non0median == TRUE, ])
+    rownames(x[[2]][x[[2]]$non0median == TRUE, ])
 })
 
-LS_enriched_names <- unique(unlist(LS_enriched_names))
+lengths(LS_enriched_names)
+# Astro       Chol        ChP       Endo  Ependymal        IoC         LS
+#   699       1948       2567       1312       2115       1202       2635
+# Micro         MS      Mural Neuroblast      Oligo        OPC       Sept
+#   673       2949        542        947        534       1340       2233
+#   Str       Thal       TNoS   TT.IG.SH
+#  2436       3029       1558       3268
+
+## Select genes that have media !=0 for all the cell types
+length(unique(unlist(LS_enriched_names)))
+# [1] 5436
+table(table(unlist(LS_enriched_names)))
+#    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16
+# 1447  641  388  287  247  299  263  292  292  229  202  140  149  132  104   84
+#   17   18
+#   89  151
+LS_enriched_names <- names(table(unlist(LS_enriched_names))[table(unlist(LS_enriched_names)) == 18])
+length(LS_enriched_names)
+# [1] 151
 LS_enriched_names <- LS_enriched_names[order(LS_enriched_names)]
 
 ## Convert S4Vector object to DataFrame and selecting needed columns
 LS_enriched <- as.data.frame(markers.ls.t.1vAll.broad)
 LS_enriched <- LS_enriched[LS_enriched_names, ]
 LS_enriched <- LS_enriched %>%
-    dplyr::select(contains("enriched"))
-
-
-vecs <- seq(1, length(names(LS_enriched)), 4)
-for (i in vecs){
-    test_ls <- LS_enriched[,i:(i+3)]
-    LS_enriched[test_ls[,4]==FALSE, i:(i+3)] <- NA
-}
-
-LS_enriched <- LS_enriched %>%
+    dplyr::select(contains("enriched")) %>%
     dplyr::select(!contains("non0median"))
 
 ## Unlog pvalues and FDRs
