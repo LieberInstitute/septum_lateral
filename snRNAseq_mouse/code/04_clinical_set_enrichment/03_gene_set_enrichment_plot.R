@@ -74,21 +74,21 @@ source(
         "code",
         "04_clinical_set_enrichment",
         "gene_set_enrichment_plot_complex.R"
-        )
     )
+)
 
 
-use_gsepc<-function(modeling_results, model_type, gene_list, enrichTab, path_to_plot){
+use_gsepc <- function(modeling_results, model_type, gene_list, enrichTab, path_to_plot) {
     gene_enrichment_count <- get_gene_enrichment_count(model_results = modeling_results, model_type = model_type, bayes_anno = NULL)
     gene_list_count <- get_gene_list_count(gene_list)
 
-    gse_plot<-gene_set_enrichment_plot_complex(
+    gse_plot <- gene_set_enrichment_plot_complex(
         enrichment = enrichTab,
         gene_count_col = log10(gene_list_count),
         gene_count_row = gene_enrichment_count,
         anno_title_col = "DE Genes\n(log10)",
         anno_title_row = "Cluster\nGenes"
-        )
+    )
 
     pdf(path_to_plot, height = 4, width = 6)
     print(gse_plot)
@@ -153,7 +153,6 @@ use_gsepc(
 )
 
 
-
 ##############################################################
 #### Plot pairwise using gene_set_enrichment_plot_complex ####
 ##############################################################
@@ -209,7 +208,6 @@ use_gsepc(
         "Gene_set_pairwise_glFDR05_ctFDR1.pdf"
     )
 )
-
 
 
 #####################################
