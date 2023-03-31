@@ -53,62 +53,78 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
-## Select only significant genes with media != 0
-LS_enriched_names <- lapply(markers.ls.t.1vAll.broad, function(x) {
+## Select genes with non0median == TRUE
+non0med_genes <- lapply(markers.ls.t.1vAll.broad, function(x) {
     rownames(x[[2]][x[[2]]$non0median == TRUE, ])
 })
 
-lengths(LS_enriched_names)
-# Astro       Chol        ChP       Endo  Ependymal        IoC         LS
-#   699       1948       2567       1312       2115       1202       2635
-# Micro         MS      Mural Neuroblast      Oligo        OPC       Sept
-#   673       2949        542        947        534       1340       2233
-#   Str       Thal       TNoS   TT.IG.SH
-#  2436       3029       1558       3268
+non0med_genes <- unique(unlist(non0med_genes))
+non0med_genes <- non0med_genes[order(non0med_genes)]
 
-## Select genes that have media !=0 for all the cell types
-length(unique(unlist(LS_enriched_names)))
-# [1] 5436
-table(table(unlist(LS_enriched_names)))
-#    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16
-# 1447  641  388  287  247  299  263  292  292  229  202  140  149  132  104   84
-#   17   18
-#   89  151
-LS_enriched_names <- names(table(unlist(LS_enriched_names))[table(unlist(LS_enriched_names)) == 18])
-length(LS_enriched_names)
-# [1] 151
-LS_enriched_names <- LS_enriched_names[order(LS_enriched_names)]
+## Change pvalues. fdrs and t-stats for genes non0median == FALSE
+markers.ls.t.1vAll.broad_modified <- lapply(markers.ls.t.1vAll.broad, function(celltype) {
+    enriched <- celltype[[2]][non0med_genes, ]
+    enriched$std.logFC[!enriched$non0median] <- 0
+    enriched$log.p.value[!enriched$non0median] <- log(1)
+    enriched$log.FDR[!enriched$non0median] <- log(1)
+    return(enriched)
+})
 
-## Convert S4Vector object to DataFrame and selecting needed columns
-LS_enriched <- as.data.frame(markers.ls.t.1vAll.broad)
-LS_enriched <- LS_enriched[LS_enriched_names, ]
-LS_enriched <- LS_enriched %>%
-    dplyr::select(contains("enriched")) %>%
-    dplyr::select(!contains("non0median"))
-
-## Unlog pvalues and FDRs
-colchang <- c(1:dim(LS_enriched)[2])[rep(c(FALSE, TRUE, TRUE))]
-
-for (i in colchang) {
-    LS_enriched[, i] <- exp(LS_enriched[, i])
-}
-
-## Create new column names
-cells <- names(markers.ls.t.1vAll.broad)
-new_names <- paste(rep(c("t_stat", "p_value", "fdr"), length(cells)), rep(cells, each = 3), sep = "_")
+## Unlog p-values and FDRs
+markers.ls.t.1vAll.broad_modified <- lapply(markers.ls.t.1vAll.broad_modified, function(enriched) {
+    res <- enriched
+    res$FDR <- exp(enriched$log.FDR)
+    res$p.value <- exp(enriched$log.p.value)
+    res <- res[, c("std.logFC", "p.value", "FDR")]
+    return(res)
+})
 
 ## Change column names
-names(LS_enriched) <- new_names
-LS_enriched$ensembl <- rownames(LS_enriched)
+i <- 0
+markers.ls.t.1vAll.broad_modified <- lapply(markers.ls.t.1vAll.broad_modified, function(res) {
+    i <<- i + 1
+    colnames(res) <- paste0(c("t_stat_", "p_value_", "fdr_"), names(markers.ls.t.1vAll.broad_modified)[i])
+    res$ensembl <- rownames(res)
+    return(res)
+})
+
+## Convert to data.frame
+modeling_result_enrichment <-
+    as.data.frame(Reduce(
+        function(...) {
+            merge(..., by = "ensembl")
+        },
+        markers.ls.t.1vAll.broad_modified
+    ))
+
+colSums(modeling_result_enrichment[, grep("fdr_", colnames(modeling_result_enrichment))] < 0.05)
+#      fdr_Astro       fdr_Chol        fdr_ChP       fdr_Endo  fdr_Ependymal
+#            488            700           1392            890           1439
+#        fdr_IoC         fdr_LS      fdr_Micro         fdr_MS      fdr_Mural
+#            607           1925            453           1757            253
+# fdr_Neuroblast      fdr_Oligo        fdr_OPC       fdr_Sept        fdr_Str
+#            602            388            633           1503           1592
+#       fdr_Thal       fdr_TNoS   fdr_TT.IG.SH
+#           1900            841           1790
+
+colSums(modeling_result_enrichment[, grep("fdr_", colnames(modeling_result_enrichment))] < 0.1)
+#      fdr_Astro       fdr_Chol        fdr_ChP       fdr_Endo  fdr_Ependymal
+#            491            765           1496            908           1463
+#        fdr_IoC         fdr_LS      fdr_Micro         fdr_MS      fdr_Mural
+#            630           1945            466           1833            269
+# fdr_Neuroblast      fdr_Oligo        fdr_OPC       fdr_Sept        fdr_Str
+#            613            389            653           1547           1609
+#       fdr_Thal       fdr_TNoS   fdr_TT.IG.SH
+#           1978            872           1843
 
 ## Add names from mgi data base
 mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
-genes <- LS_enriched$ensembl
+genes <- modeling_result_enrichment$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-LS_enriched <- merge(LS_enriched, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
-l_names <- length(colnames(LS_enriched))
-LS_enriched <- LS_enriched[, c(2:(l_names - 1), 1, l_names)]
-LS_enriched <- dplyr::rename(LS_enriched, gene = mgi_symbol)
+modeling_result_enrichment <- merge(modeling_result_enrichment, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
+l_names <- length(colnames(modeling_result_enrichment))
+modeling_result_enrichment <- modeling_result_enrichment[, c(2:(l_names - 1), 1, l_names)]
+modeling_result_enrichment <- dplyr::rename(modeling_result_enrichment, gene = mgi_symbol)
 
 
 #####################################################
@@ -129,29 +145,29 @@ stats_tiss <- stringr::str_match(
 stats_tiss <- paste("_", "LS-", stats_tiss, sep = "")
 
 ## Convert S4Vector object to DataFrame, select genes with non0median == TRUE
-LS_pairw <- as.data.frame(markers.ls.t.pw.broad$LS) %>%
+modeling_result_pairwise <- as.data.frame(markers.ls.t.pw.broad$LS) %>%
     dplyr::filter(non0median == TRUE) %>%
     dplyr::select(matches("stats\\..+"))
 
 ## Unlog pvalues and FDRs
-colchang <- c(1:dim(LS_pairw)[2])[rep(c(FALSE, TRUE, TRUE))]
+colchang <- c(1:dim(modeling_result_pairwise)[2])[rep(c(FALSE, TRUE, TRUE))]
 
 for (i in colchang) {
-    LS_pairw[, i] <- exp(LS_pairw[, i])
+    modeling_result_pairwise[, i] <- exp(modeling_result_pairwise[, i])
 }
 
 ## Change column names
 new_names <- paste(c("t_stat", "p_value", "fdr"), rep(stats_tiss, each = 3), sep = "")
-names(LS_pairw) <- new_names
-LS_pairw$ensembl <- rownames(LS_pairw)
+names(modeling_result_pairwise) <- new_names
+modeling_result_pairwise$ensembl <- rownames(modeling_result_pairwise)
 
 ## Add names from mgi data base
-genes <- LS_pairw$ensembl
+genes <- modeling_result_pairwise$ensembl
 gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-LS_pairw <- merge(LS_pairw, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
-l_names <- length(colnames(LS_pairw))
-LS_pairw <- LS_pairw[, c(2:(l_names - 1), 1, l_names)]
-LS_pairw <- dplyr::rename(LS_pairw, gene = mgi_symbol)
+modeling_result_pairwise <- merge(modeling_result_pairwise, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
+l_names <- length(colnames(modeling_result_pairwise))
+modeling_result_pairwise <- modeling_result_pairwise[, c(2:(l_names - 1), 1, l_names)]
+modeling_result_pairwise <- dplyr::rename(modeling_result_pairwise, gene = mgi_symbol)
 
 
 ########################################
@@ -159,8 +175,8 @@ LS_pairw <- dplyr::rename(LS_pairw, gene = mgi_symbol)
 ########################################
 
 modeling_results <- list(
-    "enrichment" = as.data.frame(LS_enriched),
-    "pairwise" = as.data.frame(LS_pairw)
+    "enrichment" = as.data.frame(modeling_result_enrichment),
+    "pairwise" = as.data.frame(modeling_result_pairwise)
 )
 
 
