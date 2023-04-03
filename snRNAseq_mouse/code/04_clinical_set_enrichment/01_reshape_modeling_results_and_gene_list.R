@@ -80,13 +80,11 @@ markers.ls.t.1vAll.broad_modified <- lapply(markers.ls.t.1vAll.broad_modified, f
 })
 
 ## Change column names
-i <- 0
-markers.ls.t.1vAll.broad_modified <- lapply(markers.ls.t.1vAll.broad_modified, function(res) {
-    i <<- i + 1
-    colnames(res) <- paste0(c("t_stat_", "p_value_", "fdr_"), names(markers.ls.t.1vAll.broad_modified)[i])
+markers.ls.t.1vAll.broad_modified <- mapply(function(res, names_ct) {
+    colnames(res) <- paste0(c("t_stat_", "p_value_", "fdr_"), names_ct)
     res$ensembl <- rownames(res)
     return(res)
-})
+}, markers.ls.t.1vAll.broad_modified, names(markers.ls.t.1vAll.broad_modified))
 
 ## Convert to data.frame
 modeling_result_enrichment <-
