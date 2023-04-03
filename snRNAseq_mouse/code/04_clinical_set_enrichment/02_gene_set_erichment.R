@@ -21,7 +21,7 @@ load(
     verbose = TRUE
 )
 # Loading objects:
-#   modeling_results
+#  modeling_results
 #  gene_list_FDR05
 #  gene_list_FDR01
 
@@ -53,6 +53,12 @@ class(gene_list_FDR01)
 # [1] "list"
 names(gene_list_FDR01)
 # [1] "all"      "positive" "negative"
+lengths(gene_list_FDR01)
+#  all positive negative
+# 1186     1089       97
+lengths(gene_list_FDR05)
+#  all positive negative
+# 3750     2402     1348
 
 
 ###########################################################
