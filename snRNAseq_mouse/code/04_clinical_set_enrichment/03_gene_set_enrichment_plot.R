@@ -129,7 +129,7 @@ use_gsepc(
 use_gsepc(
     modeling_results = modeling_results,
     model_type = "enrichment",
-    gene_list = gene_list_FDR05,
+    gene_list = gene_list_FDR01,
     enrichTab = enrichTab_glFDR01_ctFDR05,
     path_to_plot = here(
         "snRNAseq_mouse",
@@ -142,7 +142,7 @@ use_gsepc(
 use_gsepc(
     modeling_results = modeling_results,
     model_type = "enrichment",
-    gene_list = gene_list_FDR05,
+    gene_list = gene_list_FDR01,
     enrichTab = enrichTab_glFDR01_ctFDR1,
     path_to_plot = here(
         "snRNAseq_mouse",
