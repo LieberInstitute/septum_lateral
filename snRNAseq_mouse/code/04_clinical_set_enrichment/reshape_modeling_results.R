@@ -49,7 +49,7 @@ reshape_1vsAll <- function(OnevsAll) {
     mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
     genes <- modeling_result_enrichment$ensembl
     gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-    modeling_result_enrichment <- merge(modeling_result_enrichment, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
+    modeling_result_enrichment <- merge(modeling_result_enrichment, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id", all.x = TRUE)
     l_names <- length(colnames(modeling_result_enrichment))
     modeling_result_enrichment <- modeling_result_enrichment[, c(2:(l_names - 1), 1, l_names)]
     modeling_result_enrichment <- dplyr::rename(modeling_result_enrichment, gene = mgi_symbol)
