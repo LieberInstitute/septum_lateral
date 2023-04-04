@@ -1,4 +1,3 @@
-## Call libraries
 library("here")
 library("sessioninfo")
 library("biomaRt")
@@ -7,6 +6,7 @@ library("purrr")
 library("stringr")
 library("data.table")
 
+#################################### BROAD ####################################
 
 ########################################
 #### Load data for modeling_results ####
@@ -23,9 +23,9 @@ load(
     verbose = TRUE
 )
 # Loading objects:
-#     markers.ls.t.pw.broad
-#     markers.ls.t.1vAll.broad
-#     medianNon0.ls.broad
+#   markers.ls.t.pw.broad
+#   markers.ls.t.1vAll.broad
+#   medianNon0.ls.broad
 
 lobstr::obj_size(markers.ls.t.pw.broad)
 # 423.75 MB
@@ -176,6 +176,47 @@ modeling_results <- list(
     "enrichment" = as.data.frame(modeling_result_enrichment),
     "pairwise" = as.data.frame(modeling_result_pairwise)
 )
+
+###############################################################################
+
+
+
+################################# LS and Sept #################################
+
+########################################
+#### Load data for modeling_results ####
+########################################
+
+## Load markers by Tran et al
+load(
+    here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "SCE",
+        "markers-stats_LS-n4_findMarkers_33cellTypes.rda"
+    ),
+    verbose = TRUE
+)
+# Loading objects:
+#   markers.ls.t.pw
+#   markers.ls.t.1vAll
+#   medianNon0.ls
+
+lobstr::obj_size(markers.ls.t.pw)
+# 1.22 GB
+lobstr::obj_size(markers.ls.t.1vAll)
+# 134.29 MB
+
+class(markers.ls.t.1vAll[[1]])
+# [1] "SimpleList"
+# attr(,"package")
+# [1] "S4Vectors"
+names(markers.ls.t.1vAll$LS_In.R)
+# [1] "0" "1"
+class(markers.ls.t.pw)
+# [1] "SimpleList"
+# attr(,"package")
+# [1] "S4Vectors"
 
 
 ############################
