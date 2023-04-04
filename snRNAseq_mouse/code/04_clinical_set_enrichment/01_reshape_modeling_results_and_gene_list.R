@@ -219,6 +219,48 @@ class(markers.ls.t.pw)
 # [1] "S4Vectors"
 
 
+#############################################################################
+#### Edit markers.ls.t.1vAll to match markers.ls.t.1vAll.broad structure ####
+#############################################################################
+
+# Do some reorganizing
+markers.ls.t.1vAll <- lapply(markers.ls.t.1vAll, function(x) {
+    # Basically take the 'stats.[1 or 0]' since is redundant with the 'summary'-level stats
+    lapply(x, function(y) {
+        y[, 4]
+    })
+})
+
+# Re-name std.lfc column and the entries; add non-0-median info
+for (i in names(markers.ls.t.1vAll)) {
+    colnames(markers.ls.t.1vAll[[i]][["0"]])[1] <- "std.logFC"
+    colnames(markers.ls.t.1vAll[[i]][["1"]])[1] <- "std.logFC"
+    # Add non0median Boolean - might be informative for both sets of stats
+    markers.ls.t.1vAll[[i]][["0"]] <- cbind(
+        markers.ls.t.1vAll[[i]][["0"]],
+        medianNon0.ls[[i]][match(
+            rownames(markers.ls.t.1vAll[[i]][["0"]]),
+            names(medianNon0.ls[[i]])
+        )]
+    )
+    colnames(markers.ls.t.1vAll[[i]][["0"]])[4] <- "non0median"
+
+    # "1" aka 'enriched'
+    markers.ls.t.1vAll[[i]][["1"]] <- cbind(
+        markers.ls.t.1vAll[[i]][["1"]],
+        medianNon0.ls[[i]][match(
+            rownames(markers.ls.t.1vAll[[i]][["1"]]),
+            names(medianNon0.ls[[i]])
+        )]
+    )
+    colnames(markers.ls.t.1vAll[[i]][["1"]])[4] <- "non0median"
+
+    # Then re-name the entries to more interpretable, because we'll keeping both contrasts
+    names(markers.ls.t.1vAll[[i]]) <- paste0(i, c("_depleted", "_enriched"))
+}
+
+
+
 ############################
 #### Load gene set data ####
 ############################
