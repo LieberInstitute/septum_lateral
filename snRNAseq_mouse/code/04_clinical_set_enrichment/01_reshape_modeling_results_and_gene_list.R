@@ -242,6 +242,81 @@ colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))]
 # fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
 #        1772           692          1400           831          1607
 
+#####################################################
+#### Reshape markers.ls.t.pw.broad$LS (pairwise) ####
+#####################################################
+
+markers.ls.t.pw
+
+markers.ls.t.1vs1_subset <- markers.ls.t.pw[grep("LS|Sept", names(markers.ls.t.pw))]
+
+non0med_genes <- lapply(markers.ls.t.1vs1_subset, function(x) {
+    rownames(x[x$non0median == TRUE, ])
+})
+
+non0med_genes <- unique(unlist(non0med_genes))
+non0med_genes <- non0med_genes[order(non0med_genes)]
+
+## Select only LS and Sept stats for each LS and Sept
+OnevsOne_modified <- lapply(markers.ls.t.1vs1_subset, function(celltype) {
+    enriched <- celltype[non0med_genes, grep("LS|Sept", names(celltype))]
+    return(enriched)
+})
+
+## Change columns names
+OnevsOne_modified <- mapply(function(res, names_ct) {
+    names(res) <- gsub(names(res), pattern = "stats\\.", replacement = "-")
+    names(res) <- paste0(names_ct, names(res))
+    res$ensembl <- rownames(res)
+    return(res)
+    }, OnevsOne_modified, names(OnevsOne_modified))
+
+modeling_result_enrichment <-
+    as.data.frame(Reduce(
+        function(...) {
+            merge(..., by = "ensembl")
+        },
+        OnevsAll_modified
+    ))
+
+
+
+
+## Creat list of name with comparations eg. _LS-Astro, _LS-
+stats_tiss <- stringr::str_match(
+    string = names(markers.ls.t.pw.broad$LS),
+    pattern = "stats\\..+"
+) %>%
+    na.exclude() %>%
+    as.vector() %>%
+    str_remove("stats\\.")
+stats_tiss <- paste("_", "LS-", stats_tiss, sep = "")
+
+## Convert S4Vector object to DataFrame, select genes with non0median == TRUE
+modeling_result_pairwise <- as.data.frame(markers.ls.t.1vs1_subset) %>%
+    dplyr::filter(non0median == TRUE) %>%
+    dplyr::select(matches("stats\\..+"))
+
+## Unlog pvalues and FDRs
+colchang <- c(1:dim(modeling_result_pairwise)[2])[rep(c(FALSE, TRUE, TRUE))]
+
+for (i in colchang) {
+    modeling_result_pairwise[, i] <- exp(modeling_result_pairwise[, i])
+}
+
+## Change column names
+new_names <- paste(c("t_stat", "p_value", "fdr"), rep(stats_tiss, each = 3), sep = "")
+names(modeling_result_pairwise) <- new_names
+modeling_result_pairwise$ensembl <- rownames(modeling_result_pairwise)
+
+## Add names from mgi data base
+genes <- modeling_result_pairwise$ensembl
+gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
+modeling_result_pairwise <- merge(modeling_result_pairwise, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
+l_names <- length(colnames(modeling_result_pairwise))
+modeling_result_pairwise <- modeling_result_pairwise[, c(2:(l_names - 1), 1, l_names)]
+modeling_result_pairwise <- dplyr::rename(modeling_result_pairwise, gene = mgi_symbol)
+
 
 ############################
 #### Load gene set data ####
