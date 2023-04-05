@@ -6,6 +6,15 @@ library("purrr")
 library("stringr")
 library("data.table")
 
+source(
+    here(
+        "snRNAseq_mouse",
+        "code",
+        "04_clinical_set_enrichment",
+        "reshape_modeling_results.R"
+    )
+)
+
 #################################### BROAD ####################################
 
 ########################################
@@ -53,49 +62,9 @@ names(markers.ls.t.pw.broad$LS$stats.Astro)
 
 markers.ls.t.1vAll.broad$LS$LS_enriched
 
-## Select genes with non0median == TRUE
-non0med_genes <- lapply(markers.ls.t.1vAll.broad, function(x) {
-    rownames(x[[2]][x[[2]]$non0median == TRUE, ])
-})
+modeling_result_broad_1vsAll <- reshape_1vsAll(OnevsAll = markers.ls.t.1vAll.broad)
 
-non0med_genes <- unique(unlist(non0med_genes))
-non0med_genes <- non0med_genes[order(non0med_genes)]
-
-## Change pvalues. fdrs and t-stats for genes non0median == FALSE
-markers.ls.t.1vAll.broad_modified <- lapply(markers.ls.t.1vAll.broad, function(celltype) {
-    enriched <- celltype[[2]][non0med_genes, ]
-    enriched$std.logFC[!enriched$non0median] <- 0
-    enriched$log.p.value[!enriched$non0median] <- log(1)
-    enriched$log.FDR[!enriched$non0median] <- log(1)
-    return(enriched)
-})
-
-## Unlog p-values and FDRs
-markers.ls.t.1vAll.broad_modified <- lapply(markers.ls.t.1vAll.broad_modified, function(enriched) {
-    res <- enriched
-    res$FDR <- exp(enriched$log.FDR)
-    res$p.value <- exp(enriched$log.p.value)
-    res <- res[, c("std.logFC", "p.value", "FDR")]
-    return(res)
-})
-
-## Change column names
-markers.ls.t.1vAll.broad_modified <- mapply(function(res, names_ct) {
-    colnames(res) <- paste0(c("t_stat_", "p_value_", "fdr_"), names_ct)
-    res$ensembl <- rownames(res)
-    return(res)
-}, markers.ls.t.1vAll.broad_modified, names(markers.ls.t.1vAll.broad_modified))
-
-## Convert to data.frame
-modeling_result_enrichment <-
-    as.data.frame(Reduce(
-        function(...) {
-            merge(..., by = "ensembl")
-        },
-        markers.ls.t.1vAll.broad_modified
-    ))
-
-colSums(modeling_result_enrichment[, grep("fdr_", colnames(modeling_result_enrichment))] < 0.05)
+colSums(modeling_result_broad_1vsAll[, grep("fdr_", colnames(modeling_result_broad_1vsAll))] < 0.05)
 #      fdr_Astro       fdr_Chol        fdr_ChP       fdr_Endo  fdr_Ependymal
 #            488            700           1392            890           1439
 #        fdr_IoC         fdr_LS      fdr_Micro         fdr_MS      fdr_Mural
@@ -105,7 +74,7 @@ colSums(modeling_result_enrichment[, grep("fdr_", colnames(modeling_result_enric
 #       fdr_Thal       fdr_TNoS   fdr_TT.IG.SH
 #           1900            841           1790
 
-colSums(modeling_result_enrichment[, grep("fdr_", colnames(modeling_result_enrichment))] < 0.1)
+colSums(modeling_result_broad_1vsAll[, grep("fdr_", colnames(modeling_result_broad_1vsAll))] < 0.1)
 #      fdr_Astro       fdr_Chol        fdr_ChP       fdr_Endo  fdr_Ependymal
 #            491            765           1496            908           1463
 #        fdr_IoC         fdr_LS      fdr_Micro         fdr_MS      fdr_Mural
@@ -114,15 +83,6 @@ colSums(modeling_result_enrichment[, grep("fdr_", colnames(modeling_result_enric
 #            613            389            653           1547           1609
 #       fdr_Thal       fdr_TNoS   fdr_TT.IG.SH
 #           1978            872           1843
-
-## Add names from mgi data base
-mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
-genes <- modeling_result_enrichment$ensembl
-gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-modeling_result_enrichment <- merge(modeling_result_enrichment, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
-l_names <- length(colnames(modeling_result_enrichment))
-modeling_result_enrichment <- modeling_result_enrichment[, c(2:(l_names - 1), 1, l_names)]
-modeling_result_enrichment <- dplyr::rename(modeling_result_enrichment, gene = mgi_symbol)
 
 
 #####################################################
@@ -259,6 +219,28 @@ for (i in names(markers.ls.t.1vAll)) {
     names(markers.ls.t.1vAll[[i]]) <- paste0(i, c("_depleted", "_enriched"))
 }
 
+
+###############################################
+#### Reshape markers.ls.t.1vAll (enriched) ####
+###############################################
+
+markers.ls.t.1vAll$LS_In.C$LS_In.C_enriched
+
+markers.ls.t.1vAll_subset <- markers.ls.t.1vAll[grep("LS|Sept", names(markers.ls.t.1vAll))]
+
+modeling_result_1vsAll <- reshape_1vsAll(OnevsAll = markers.ls.t.1vAll_subset)
+
+colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))] < 0.05)
+# fdr_LS_In.C   fdr_LS_In.D   fdr_LS_In.M   fdr_LS_In.N   fdr_LS_In.O
+#        1235          1720          1114           474           623
+# fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
+#        1631           594          1275           788          1574
+
+colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))] < 0.1)
+# fdr_LS_In.C   fdr_LS_In.D   fdr_LS_In.M   fdr_LS_In.N   fdr_LS_In.O
+#        1357          1761          1193           534           694
+# fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
+#        1772           692          1400           831          1607
 
 
 ############################
