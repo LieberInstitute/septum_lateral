@@ -1,4 +1,3 @@
-## Call libraries
 library("here")
 library("sessioninfo")
 library("dplyr")
@@ -21,33 +20,55 @@ load(
     verbose = TRUE
 )
 # Loading objects:
-#  modeling_results
-#  gene_list_FDR05
-#  gene_list_FDR01
+#   modeling_results_broad
+#   modeling_results
+#   gene_list_FDR05
+#   gene_list_FDR01
 
+lobstr::obj_size(modeling_results_broad)
+# 4.31 MB
 lobstr::obj_size(modeling_results)
-# 4.30 MB
+# 11.88 MB
 lobstr::obj_size(gene_list_FDR05)
 # 360.60 kB
 lobstr::obj_size(gene_list_FDR01)
 # 114.46 kB
+
+class(modeling_results_broad)
+# [1] "list"
+names(modeling_results_broad)
+# [1] "enrichment" "pairwise"
+dim(modeling_results_broad$enrichment)
+# [1] 5436   56
+head(names(modeling_results_broad$enrichment), 10)
+# [1] "t_stat_Astro"  "p_value_Astro" "fdr_Astro"     "t_stat_Chol"
+# [5] "p_value_Chol"  "fdr_Chol"      "t_stat_ChP"    "p_value_ChP"
+# [9] "fdr_ChP"       "t_stat_Endo"
+dim(modeling_results_broad$pairwise)
+# [1] 2635   53
+head(names(modeling_results_broad$pairwise), 10)
+# [1] "t_stat_LS-Astro"  "p_value_LS-Astro" "fdr_LS-Astro"     "t_stat_LS-Chol"
+# [5] "p_value_LS-Chol"  "fdr_LS-Chol"      "t_stat_LS-ChP"    "p_value_LS-ChP"
+# [9] "fdr_LS-ChP"       "t_stat_LS-Endo"
 
 class(modeling_results)
 # [1] "list"
 names(modeling_results)
 # [1] "enrichment" "pairwise"
 dim(modeling_results$enrichment)
-# [1] 5427   56
+# [1] 4609   32
 head(names(modeling_results$enrichment), 10)
-# [1] "t_stat_Astro"  "p_value_Astro" "fdr_Astro"     "t_stat_Chol"
-# [5] "p_value_Chol"  "fdr_Chol"      "t_stat_ChP"    "p_value_ChP"
-# [9] "fdr_ChP"       "t_stat_Endo"
+# [1] "t_stat_LS_In.C"  "p_value_LS_In.C" "fdr_LS_In.C"     "t_stat_LS_In.D"
+# [5] "p_value_LS_In.D" "fdr_LS_In.D"     "t_stat_LS_In.M"  "p_value_LS_In.M"
+# [9] "fdr_LS_In.M"     "t_stat_LS_In.N
 dim(modeling_results$pairwise)
-# [1] 2629   53
+# [1] 4609  272
 head(names(modeling_results$pairwise), 10)
-# [1] "t_stat_LS-Astro"  "p_value_LS-Astro" "fdr_LS-Astro"     "t_stat_LS-Chol"
-# [5] "p_value_LS-Chol"  "fdr_LS-Chol"      "t_stat_LS-ChP"    "p_value_LS-ChP"
-# [9] "fdr_LS-ChP"       "t_stat_LS-Endo"
+# [1] "t_stat_LS_In.C-LS_In.D"  "p_value_LS_In.C-LS_In.D"
+# [3] "fdr_LS_In.C-LS_In.D"     "t_stat_LS_In.C-LS_In.M"
+# [5] "p_value_LS_In.C-LS_In.M" "fdr_LS_In.C-LS_In.M"
+# [7] "t_stat_LS_In.C-LS_In.N"  "p_value_LS_In.C-LS_In.N"
+# [9] "fdr_LS_In.C-LS_In.N"     "t_stat_LS_In.C-LS_In.O"
 
 class(gene_list_FDR01)
 # [1] "list"
@@ -61,9 +82,9 @@ lengths(gene_list_FDR05)
 # 3750     2402     1348
 
 
-###########################################################
-#### gene_set_enrichment analysis with enrichment data ####
-###########################################################
+#############################################################
+#### gene_set_enrichment analysis with 1vsAll broad data ####
+#############################################################
 
 ## Running gene_set_enrichment with two sets of DE genes, one with FDR < 0.05 the other with FDR < 0.01
 enrichTab_glFDR05_ctFDR05 <- gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, model_type = "enrichment", fdr_cut = 0.05)
