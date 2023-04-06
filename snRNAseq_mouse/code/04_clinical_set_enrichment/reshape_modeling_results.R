@@ -37,7 +37,7 @@ reshape_1vsAll <- function(OnevsAll) {
     }, OnevsAll_modified, names(OnevsAll_modified))
 
     ## Convert to data.frame
-    modeling_result_enrichment <-
+    OnevsAll_modified <-
         as.data.frame(Reduce(
             function(...) {
                 merge(..., by = "ensembl")
@@ -46,13 +46,20 @@ reshape_1vsAll <- function(OnevsAll) {
         ))
 
     ## Add names from mgi data base
-    mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
-    genes <- modeling_result_enrichment$ensembl
-    gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-    modeling_result_enrichment <- merge(modeling_result_enrichment, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id", all.x = TRUE)
-    l_names <- length(colnames(modeling_result_enrichment))
-    modeling_result_enrichment <- modeling_result_enrichment[, c(2:(l_names - 1), 1, l_names)]
-    modeling_result_enrichment <- dplyr::rename(modeling_result_enrichment, gene = mgi_symbol)
+    modeling_result_enrichment <- add_gene_names(OnevsAll_modified)
 
     return(modeling_result_enrichment)
+}
+
+
+add_gene_names<-function(reshaped_df){
+    mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
+    genes <- reshaped_df$ensembl
+    gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
+    reshaped_df <- merge(reshaped_df, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id", all.x = TRUE)
+    l_names <- length(colnames(reshaped_df))
+    reshaped_df <- reshaped_df[, c(2:(l_names - 1), 1, l_names)]
+    reshaped_df <- dplyr::rename(reshaped_df, gene = mgi_symbol)
+
+    return(reshaped_df)
 }
