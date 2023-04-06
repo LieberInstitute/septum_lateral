@@ -92,41 +92,29 @@ colSums(modeling_result_broad_1vsAll[, grep("fdr_", colnames(modeling_result_bro
 markers.ls.t.pw.broad$LS
 markers.ls.t.pw.broad$LS$stats.Astro
 
-## Creat list of name with comparations eg. _LS-Astro, _LS-
-stats_tiss <- stringr::str_match(
-    string = names(markers.ls.t.pw.broad$LS),
-    pattern = "stats\\..+"
-) %>%
-    na.exclude() %>%
-    as.vector() %>%
-    str_remove("stats\\.")
-stats_tiss <- paste("_", "LS-", stats_tiss, sep = "")
-
 ## Convert S4Vector object to DataFrame, select genes with non0median == TRUE
-modeling_result_pairwise <- as.data.frame(markers.ls.t.pw.broad$LS) %>%
+OnevsOne_broad_modified <- as.data.frame(markers.ls.t.pw.broad$LS) %>%
     dplyr::filter(non0median == TRUE) %>%
     dplyr::select(matches("stats\\..+"))
 
 ## Unlog pvalues and FDRs
-colchang <- c(1:dim(modeling_result_pairwise)[2])[rep(c(FALSE, TRUE, TRUE))]
-
-for (i in colchang) {
-    modeling_result_pairwise[, i] <- exp(modeling_result_pairwise[, i])
-}
+OnevsOne_broad_modified <- OnevsOne_broad_modified %>% mutate_at(vars(contains('FDR')), exp)
+OnevsOne_broad_modified <- OnevsOne_broad_modified %>% mutate_at(vars(contains('value')), exp)
 
 ## Change column names
-new_names <- paste(c("t_stat", "p_value", "fdr"), rep(stats_tiss, each = 3), sep = "")
-names(modeling_result_pairwise) <- new_names
-modeling_result_pairwise$ensembl <- rownames(modeling_result_pairwise)
+names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "stats\\.", replacement = "LS-")
+names(OnevsOne_broad_modified) <- sapply(
+    lapply(strsplit(names(OnevsOne_broad_modified), "\\.log"),
+        rev),
+    paste, collapse = "_"
+    )
+names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "FC", replacement = "t_stat")
+names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "\\.p\\.value", replacement = "p_value")
+names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "\\.FDR", replacement = "fdr")
+OnevsOne_broad_modified$ensembl <- rownames(OnevsOne_broad_modified)
+rownames(OnevsOne_broad_modified) <- NULL
 
-## Add names from mgi data base
-genes <- modeling_result_pairwise$ensembl
-gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-modeling_result_pairwise <- merge(modeling_result_pairwise, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id")
-l_names <- length(colnames(modeling_result_pairwise))
-modeling_result_pairwise <- modeling_result_pairwise[, c(2:(l_names - 1), 1, l_names)]
-modeling_result_pairwise <- dplyr::rename(modeling_result_pairwise, gene = mgi_symbol)
-
+modeling_result_broad_1vs1 <- add_gene_names(OnevsOne_broad_modified)
 
 ########################################
 #### Create modeling_results object ####
@@ -250,6 +238,7 @@ markers.ls.t.pw
 
 markers.ls.t.1vs1_subset <- markers.ls.t.pw[grep("LS|Sept", names(markers.ls.t.pw))]
 
+## Select genes with non0median == TRUE
 non0med_genes <- lapply(markers.ls.t.1vs1_subset, function(x) {
     rownames(x[x$non0median == TRUE, ])
 })
@@ -297,21 +286,13 @@ names(OnevsOne_modified) <- sapply(
     paste, collapse = "_"
     )
 names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "FC", replacement = "t_stat")
-names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\.p\\.value", replacement = "p_value_")
-names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\.FDR", replacement = "fdr_")
+names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\.p\\.value", replacement = "p_value")
+names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\.FDR", replacement = "fdr")
 OnevsOne_modified$ensembl <- rownames(OnevsOne_modified)
 rownames(OnevsOne_modified) <- NULL
 
-modeling_result_1vs1 <- OnevsOne_modified
-
 ## Add names from mgi data base
-mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
-genes <- modeling_result_1vs1$ensembl
-gene_list <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "mgi_symbol"), values = genes, mart = mart)
-modeling_result_1vs1 <- merge(modeling_result_1vs1, gene_list, by.x = "ensembl", by.y = "ensembl_gene_id", all.x = TRUE)
-l_names <- length(colnames(modeling_result_1vs1))
-modeling_result_1vs1 <- modeling_result_1vs1[, c(2:(l_names - 1), 1, l_names)]
-modeling_result_1vs1 <- dplyr::rename(modeling_result_1vs1, gene = mgi_symbol)
+modeling_result_1vs1 <- add_gene_names(OnevsOne_modified)
 
 
 ############################
