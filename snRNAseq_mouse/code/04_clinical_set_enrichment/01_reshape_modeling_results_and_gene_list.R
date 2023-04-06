@@ -15,6 +15,8 @@ source(
     )
 )
 
+
+
 #################################### BROAD ####################################
 
 ########################################
@@ -116,9 +118,10 @@ rownames(OnevsOne_broad_modified) <- NULL
 
 modeling_result_broad_1vs1 <- add_gene_names(OnevsOne_broad_modified)
 
-########################################
-#### Create modeling_results object ####
-########################################
+
+##############################################
+#### Create modeling_results_broad object ####
+##############################################
 
 modeling_results_broad <- list(
     "enrichment" = as.data.frame(modeling_result_broad_1vsAll),
@@ -230,6 +233,7 @@ colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))]
 # fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
 #        1772           692          1400           831          1607
 
+
 ###################################################################
 #### Reshape markers.ls.t.pw for LS and Sept cell types (1vs1) ####
 ###################################################################
@@ -295,6 +299,21 @@ rownames(OnevsOne_modified) <- NULL
 modeling_result_1vs1 <- add_gene_names(OnevsOne_modified)
 
 
+########################################
+#### Create modeling_results object ####
+########################################
+
+modeling_results <- list(
+    "enrichment" = as.data.frame(modeling_result_1vsAll),
+    "pairwise" = as.data.frame(modeling_result_1vs1)
+)
+
+###############################################################################
+
+
+
+################################# Gene lists ##################################
+
 ############################
 #### Load gene set data ####
 ############################
@@ -318,12 +337,15 @@ gene_list_FDR01 <- list(
     negative = sigGenes %>% filter(logFC < 0, adj.P.Val < 0.01) %>% dplyr::select(ensemblID) %>% unlist() %>% as.vector()
 )
 
+###############################################################################
+
+
 
 ####################################################
 #### Save modeling_results and gene_list to rda ####
 ####################################################
 
-save(modeling_results, gene_list_FDR05, gene_list_FDR01, file = here(
+save(modeling_results_broad, modeling_results, gene_list_FDR05, gene_list_FDR01, file = here(
     "snRNAseq_mouse",
     "processed_data",
     "SCE",
