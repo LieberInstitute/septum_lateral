@@ -242,9 +242,9 @@ colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))]
 # fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
 #        1772           692          1400           831          1607
 
-#####################################################
-#### Reshape markers.ls.t.pw.broad$LS (pairwise) ####
-#####################################################
+###################################################################
+#### Reshape markers.ls.t.pw for LS and Sept cell types (1vs1) ####
+###################################################################
 
 markers.ls.t.pw
 
@@ -259,25 +259,43 @@ non0med_genes <- non0med_genes[order(non0med_genes)]
 
 ## Select only LS and Sept stats for each LS and Sept
 OnevsOne_modified <- lapply(markers.ls.t.1vs1_subset, function(celltype) {
-    enriched <- celltype[non0med_genes, grep("LS|Sept", names(celltype))]
+    enriched <- celltype[non0med_genes, grep("LS|Sept|median", names(celltype))]
     return(enriched)
 })
 
+## Un log pvalues and FDR
+OnevsOne_modified <- lapply(OnevsOne_modified, function(enriched) {
+    enriched <- as.data.frame(enriched)
+    enriched <- enriched %>% mutate_at(vars(contains('FDR')), exp)
+    enriched <- enriched %>% mutate_at(vars(contains('value')), exp)
+    return(enriched)
+})
+
+
+
 ## Change columns names
 OnevsOne_modified <- mapply(function(res, names_ct) {
-    names(res) <- gsub(names(res), pattern = "stats\\.", replacement = "-")
+    names(res) <- gsub(names(res), pattern = "stats\\.", replacement = "__")
     names(res) <- paste0(names_ct, names(res))
     res$ensembl <- rownames(res)
     return(res)
     }, OnevsOne_modified, names(OnevsOne_modified))
 
-modeling_result_enrichment <-
+## Convert to data frame
+OnevsOne_modified <-
     as.data.frame(Reduce(
         function(...) {
-            merge(..., by = "ensembl")
+            merge(..., by = "ensembl", optional = TRUE)
         },
-        OnevsAll_modified
+        OnevsOne_modified
     ))
+
+##
+
+
+
+## Change column names
+names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\_\\_", replacement = "-")
 
 
 
