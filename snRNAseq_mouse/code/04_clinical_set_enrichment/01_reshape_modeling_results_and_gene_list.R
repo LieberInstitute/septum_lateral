@@ -120,9 +120,9 @@ modeling_result_broad_1vs1 <- add_gene_names(OnevsOne_broad_modified)
 #### Create modeling_results object ####
 ########################################
 
-modeling_results <- list(
-    "enrichment" = as.data.frame(modeling_result_enrichment),
-    "pairwise" = as.data.frame(modeling_result_pairwise)
+modeling_results_broad <- list(
+    "enrichment" = as.data.frame(modeling_result_broad_1vsAll),
+    "pairwise" = as.data.frame(modeling_result_broad_1vs1)
 )
 
 ###############################################################################
