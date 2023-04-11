@@ -5,6 +5,7 @@ library("dplyr")
 library("purrr")
 library("stringr")
 library("data.table")
+library("cgwtools")
 
 source(
     here(
@@ -159,11 +160,11 @@ gene_list_FDR01 <- list(
 
 ################# Save modeling_results and gene_list to rda ##################
 
-save(modeling_results_broad, gene_list_FDR05, gene_list_FDR01, file = here(
+resave(modeling_results_broad, gene_list_FDR05, gene_list_FDR01, file = here(
     "snRNAseq_mouse",
     "processed_data",
     "SCE",
-    "gene_set_enrichment_objects_broad.rda"
+    "gene_set_enrichment_objects.rda"
 ))
 
 ###############################################################################
