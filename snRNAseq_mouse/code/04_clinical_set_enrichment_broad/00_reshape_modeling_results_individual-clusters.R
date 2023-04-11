@@ -10,7 +10,7 @@ source(
     here(
         "snRNAseq_mouse",
         "code",
-        "04_clinical_set_enrichment",
+        "04_clinical_set_enrichment_broad",
         "reshape_modeling_results.R"
     )
 )
@@ -100,7 +100,7 @@ for (i in names(markers.ls.t.1vAll)) {
 
 markers.ls.t.1vAll$LS_In.C$LS_In.C_enriched
 
-markers.ls.t.1vAll_subset <- markers.ls.t.1vAll[grep("LS|Sept", names(markers.ls.t.1vAll))]
+markers.ls.t.1vAll_subset <- markers.ls.t.1vAll[grep("LS|Sept|MS|TNoS|TT\\.IG\\.SH", names(markers.ls.t.1vAll))]
 
 modeling_result_1vsAll <- reshape_1vsAll(OnevsAll = markers.ls.t.1vAll_subset)
 
@@ -110,11 +110,29 @@ colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))]
 # fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
 #        1631           594          1275           788          1574
 
+#   fdr_LS_In.C       fdr_LS_In.D       fdr_LS_In.M       fdr_LS_In.N
+#          1235              1720              1114               474
+#   fdr_LS_In.O       fdr_LS_In.P       fdr_LS_In.Q       fdr_LS_In.R
+#           623              1631               594              1275
+#   fdr_MS_In.J       fdr_MS_In.K     fdr_Sept_In.G     fdr_Sept_In.I
+#          1244              1592               788              1574
+# fdr_TNoS_Ex.A fdr_TT.IG.SH_Ex.C fdr_TT.IG.SH_Ex.E fdr_TT.IG.SH_Ex.F
+#           848              1325               594              1729
+
 colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))] < 0.1)
 # fdr_LS_In.C   fdr_LS_In.D   fdr_LS_In.M   fdr_LS_In.N   fdr_LS_In.O
 #        1357          1761          1193           534           694
 # fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
 #        1772           692          1400           831          1607
+
+#   fdr_LS_In.C       fdr_LS_In.D       fdr_LS_In.M       fdr_LS_In.N
+#          1357              1761              1193               534
+#   fdr_LS_In.O       fdr_LS_In.P       fdr_LS_In.Q       fdr_LS_In.R
+#           694              1772               692              1400
+#   fdr_MS_In.J       fdr_MS_In.K     fdr_Sept_In.G     fdr_Sept_In.I
+#          1416              1677               831              1607
+# fdr_TNoS_Ex.A fdr_TT.IG.SH_Ex.C fdr_TT.IG.SH_Ex.E fdr_TT.IG.SH_Ex.F
+#           886              1431               656              1803
 
 ###############################################################################
 
@@ -124,7 +142,7 @@ colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))]
 
 markers.ls.t.pw
 
-markers.ls.t.1vs1_subset <- markers.ls.t.pw[grep("LS|Sept", names(markers.ls.t.pw))]
+markers.ls.t.1vs1_subset <- markers.ls.t.pw[grep("LS|Sept|MS|TNoS|TT\\.IG\\.SH", names(markers.ls.t.pw))]
 
 ## Select genes with non0median == TRUE
 non0med_genes <- lapply(markers.ls.t.1vs1_subset, function(x) {
@@ -136,7 +154,7 @@ non0med_genes <- non0med_genes[order(non0med_genes)]
 
 ## Select only LS and Sept stats for each LS and Sept
 OnevsOne_modified <- lapply(markers.ls.t.1vs1_subset, function(celltype) {
-    enriched <- celltype[non0med_genes, grep("LS|Sept|median", names(celltype))]
+    enriched <- celltype[non0med_genes, grep("LS|Sept|MS|TNoS|TT\\.IG\\.SH|median", names(celltype))]
     return(enriched)
 })
 
@@ -146,7 +164,7 @@ OnevsOne_modified <- lapply(OnevsOne_modified, function(enriched) {
     enriched[enriched$non0median == FALSE, grep("FC", names(enriched))] <- 0
     enriched[enriched$non0median == FALSE, grep("value", names(enriched))] <- log(1)
     enriched[enriched$non0median == FALSE, grep("FDR", names(enriched))] <- log(1)
-    enriched <- enriched %>% select(-non0median)
+    enriched <- enriched %>% dplyr::select(-non0median)
     return(enriched)
 })
 
