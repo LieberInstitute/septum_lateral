@@ -10,7 +10,7 @@ source(
     here(
         "snRNAseq_mouse",
         "code",
-        "04_clinical_set_enrichment",
+        "04_clinical_set_enrichment_broad",
         "reshape_modeling_results.R"
     )
 )
