@@ -174,7 +174,7 @@ use_gsepc(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "GSEA-1vsAll_SeptLS-glFDR05_ctFDR05.pdf"
+        "GSEA-1vsAll_8clusts-glFDR05_ctFDR05.pdf"
     )
 )
 
@@ -187,7 +187,7 @@ use_gsepc(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "GSEA-1vsAll_SeptLS-glFDR01_ctFDR05.pdf"
+        "GSEA-1vsAll_8clusts-glFDR01_ctFDR05.pdf"
     )
 )
 
