@@ -52,8 +52,10 @@ load(
     verbose = TRUE
 )
 # Loading objects:
-#   prwiseTab_broad_glFDR01_ctFDR05
-#   prwiseTab_broad_glFDR05_ctFDR05
+#   prwiseTab_LS_ct_broad_glFDR01_ctFDR05
+#   prwiseTab_LS_ct_broad_glFDR05_ctFDR05
+#   prwiseTab_ct_LS_broad_glFDR01_ctFDR05
+#   prwiseTab_ct_LS_broad_glFDR05_ctFDR05
 #   prwiseTab_glFDR01_ctFDR05
 #   prwiseTab_glFDR05_ctFDR05
 
@@ -104,7 +106,7 @@ use_gsepc <- function(modeling_results, model_type, gene_list, enrichTab, path_t
 
 ############################# Plots for broad data ############################
 
-## 1vsAll
+#### 1vsAll ####
 use_gsepc(
     modeling_results = modeling_results_broad,
     model_type = "enrichment",
@@ -131,17 +133,18 @@ use_gsepc(
     )
 )
 
-## 1vs1
+#### 1vs1 ####
+modeling_results_broad$pairwise <- modeling_results_broad$'pairwise_LS-ct'
 use_gsepc(
     modeling_results = modeling_results_broad,
     model_type = "pairwise",
     gene_list = gene_list_FDR05,
-    enrichTab = prwiseTab_broad_glFDR05_ctFDR05,
+    enrichTab = prwiseTab_LS_ct_broad_glFDR05_ctFDR05,
     path_to_plot = here(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "GSEA-1vs1_broad-glFDR05_ctFDR05.pdf"
+        "GSEA-1vs1_broad_LS_ct-glFDR05_ctFDR05.pdf"
     )
 )
 
@@ -149,12 +152,39 @@ use_gsepc(
     modeling_results = modeling_results_broad,
     model_type = "pairwise",
     gene_list = gene_list_FDR01,
-    enrichTab = prwiseTab_broad_glFDR01_ctFDR05,
+    enrichTab = prwiseTab_LS_ct_broad_glFDR01_ctFDR05,
     path_to_plot = here(
         "snRNAseq_mouse",
         "plots",
         "04_clinical_set_enrichment",
-        "GSEA-1vs1_broad-glFDR01_ctFDR05.pdf"
+        "GSEA-1vs1_broad_LS_ct-glFDR01_ctFDR05.pdf"
+    )
+)
+
+modeling_results_broad$pairwise <- modeling_results_broad$'pairwise_ct-LS'
+use_gsepc(
+    modeling_results = modeling_results_broad,
+    model_type = "pairwise",
+    gene_list = gene_list_FDR05,
+    enrichTab =  prwiseTab_ct_LS_broad_glFDR05_ctFDR05,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "GSEA-1vs1_broad_ct_LS-glFDR05_ctFDR05.pdf"
+    )
+)
+
+use_gsepc(
+    modeling_results = modeling_results_broad,
+    model_type = "pairwise",
+    gene_list = gene_list_FDR01,
+    enrichTab = prwiseTab_ct_LS_broad_glFDR01_ctFDR05,
+    path_to_plot = here(
+        "snRNAseq_mouse",
+        "plots",
+        "04_clinical_set_enrichment",
+        "GSEA-1vs1_broad_ct_LS-glFDR01_ctFDR05.pdf"
     )
 )
 
