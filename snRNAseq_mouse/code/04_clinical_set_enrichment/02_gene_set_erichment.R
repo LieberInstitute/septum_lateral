@@ -209,8 +209,10 @@ enrichTab_broad_glFDR01_ctFDR05
 
 ############# gene_set_enrichment analysis with 1vs1 broad data ###############
 
-prwiseTab_broad_glFDR05_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results_broad, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
-prwiseTab_broad_glFDR05_ctFDR05
+modeling_results_broad$pairwise <- modeling_results_broad$'pairwise_LS-ct'
+
+prwiseTab_LS_ct_broad_glFDR05_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results_broad, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
+prwiseTab_LS_ct_broad_glFDR05_ctFDR05
 #           OR         Pval          test NumSig SetSize       ID model_type fdr_cut
 # 1  1.6785369 3.420903e-06      LS-Astro    548     656      all   pairwise    0.05
 # 2  0.1775944 1.000000e+00      LS-Astro     33      84 positive   pairwise    0.05
@@ -264,11 +266,11 @@ prwiseTab_broad_glFDR05_ctFDR05
 # 50 1.1525774 2.982904e-01   LS-TT.IG.SH     38      84 positive   pairwise    0.05
 # 51 0.6841056 9.999607e-01   LS-TT.IG.SH    199     572 negative   pairwise    0.05
 
-prwiseTab_broad_glFDR01_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results_broad, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
+prwiseTab_LS_ct_broad_glFDR01_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results_broad, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
 # Warning message:
 # In spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01,  :
 #   Gene list with n < 25 may have insufficent power for enrichment analysis: all ,positive ,negative
-prwiseTab_broad_glFDR01_ctFDR05
+prwiseTab_LS_ct_broad_glFDR01_ctFDR05
 #            OR         Pval          test NumSig SetSize       ID model_type fdr_cut
 # 1  1.14092543 3.957399e-01      LS-Astro     54      68      all   pairwise    0.05
 # 2  0.15848535 9.999653e-01      LS-Astro      6      17 positive   pairwise    0.05
@@ -321,6 +323,119 @@ prwiseTab_broad_glFDR01_ctFDR05
 # 49 1.16836602 3.045756e-01   LS-TT.IG.SH     31      68      all   pairwise    0.05
 # 50 0.75635595 7.853078e-01   LS-TT.IG.SH      6      17 positive   pairwise    0.05
 # 51 1.34312875 1.828590e-01   LS-TT.IG.SH     25      51 negative   pairwise    0.05
+
+
+modeling_results_broad$pairwise <- modeling_results_broad$'pairwise_ct-LS'
+
+prwiseTab_ct_LS_broad_glFDR05_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results_broad, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
+prwiseTab_ct_LS_broad_glFDR05_ctFDR05
+#           OR         Pval          test NumSig SetSize       ID model_type fdr_cut
+# 1  1.2366735 2.836170e-02      Astro-LS    135    1383      all   pairwise    0.05
+# 2  2.6008860 1.155442e-13      Astro-LS    104     605 positive   pairwise    0.05
+# 3  0.4080870 1.000000e+00      Astro-LS     31     778 negative   pairwise    0.05
+# 4  0.9376364 7.307271e-01       Chol-LS    110    1383      all   pairwise    0.05
+# 5  0.4843298 9.999684e-01       Chol-LS     27     605 positive   pairwise    0.05
+# 6  1.3880134 7.467919e-03       Chol-LS     83     778 negative   pairwise    0.05
+# 7  0.8210546 9.966265e-01        ChP-LS    302    1383      all   pairwise    0.05
+# 8  1.8659468 1.875212e-11        ChP-LS    217     605 positive   pairwise    0.05
+# 9  0.3359293 1.000000e+00        ChP-LS     85     778 negative   pairwise    0.05
+# 10 1.4391333 4.333630e-06       Endo-LS    281    1383      all   pairwise    0.05
+# 11 3.2681800 1.077878e-32       Endo-LS    211     605 positive   pairwise    0.05
+# 12 0.4621250 1.000000e+00       Endo-LS     70     778 negative   pairwise    0.05
+# 13 0.7610177 9.999167e-01  Ependymal-LS    301    1383      all   pairwise    0.05
+# 14 1.8410198 3.310315e-11  Ependymal-LS    223     605 positive   pairwise    0.05
+# 15 0.2854387 1.000000e+00  Ependymal-LS     78     778 negative   pairwise    0.05
+# 16 1.3389502 3.596622e-03        IoC-LS    145    1383      all   pairwise    0.05
+# 17 0.5390196 9.998236e-01        IoC-LS     31     605 positive   pairwise    0.05
+# 18 2.0680889 1.444708e-09        IoC-LS    114     778 negative   pairwise    0.05
+# 19 2.2399606 3.700237e-15      Micro-LS    190    1383      all   pairwise    0.05
+# 20 6.1383385 3.458968e-54      Micro-LS    170     605 positive   pairwise    0.05
+# 21 0.2536136 1.000000e+00      Micro-LS     20     778 negative   pairwise    0.05
+# 22 1.1301099 9.646736e-02         MS-LS    195    1383      all   pairwise    0.05
+# 23 0.3073806 1.000000e+00         MS-LS     29     605 positive   pairwise    0.05
+# 24 2.0552247 1.875723e-12         MS-LS    166     778 negative   pairwise    0.05
+# 25 1.5421628 8.353388e-04      Mural-LS     92    1383      all   pairwise    0.05
+# 26 3.1431560 2.814878e-13      Mural-LS     72     605 positive   pairwise    0.05
+# 27 0.4633215 9.998944e-01      Mural-LS     20     778 negative   pairwise    0.05
+# 28 0.6924054 9.996007e-01 Neuroblast-LS    103    1383      all   pairwise    0.05
+# 29 0.8262016 9.058688e-01 Neuroblast-LS     50     605 positive   pairwise    0.05
+# 30 0.6483822 9.989786e-01 Neuroblast-LS     53     778 negative   pairwise    0.05
+# 31 1.6614799 7.250853e-06      Oligo-LS    132    1383      all   pairwise    0.05
+# 32 3.9605396 3.260983e-25      Oligo-LS    112     605 positive   pairwise    0.05
+# 33 0.3208398 1.000000e+00      Oligo-LS     20     778 negative   pairwise    0.05
+# 34 1.0880881 2.082749e-01        OPC-LS    160    1383      all   pairwise    0.05
+# 35 1.5896940 1.514745e-04        OPC-LS     94     605 positive   pairwise    0.05
+# 36 0.7235699 9.938430e-01        OPC-LS     66     778 negative   pairwise    0.05
+# 37 1.1158278 1.809432e-01       Sept-LS    117    1383      all   pairwise    0.05
+# 38 0.3919631 9.999991e-01       Sept-LS     21     605 positive   pairwise    0.05
+# 39 1.8397793 1.438079e-06       Sept-LS     96     778 negative   pairwise    0.05
+# 40 1.7166759 1.754274e-11        Str-LS    299    1383      all   pairwise    0.05
+# 41 0.2607547 1.000000e+00        Str-LS     31     605 positive   pairwise    0.05
+# 42 3.6081765 5.374774e-45        Str-LS    268     778 negative   pairwise    0.05
+# 43 1.4039647 1.118778e-05       Thal-LS    295    1383      all   pairwise    0.05
+# 44 0.3393501 1.000000e+00       Thal-LS     44     605 positive   pairwise    0.05
+# 45 2.6926299 5.437591e-28       Thal-LS    251     778 negative   pairwise    0.05
+# 46 1.0115469 4.778049e-01       TNoS-LS    120    1383      all   pairwise    0.05
+# 47 0.5430901 9.997892e-01       TNoS-LS     31     605 positive   pairwise    0.05
+# 48 1.4582757 1.994894e-03       TNoS-LS     89     778 negative   pairwise    0.05
+# 49 1.4988115 1.964167e-07   TT.IG.SH-LS    303    1383      all   pairwise    0.05
+# 50 0.2656862 1.000000e+00   TT.IG.SH-LS     35     605 positive   pairwise    0.05
+# 51 3.1053385 1.219563e-36   TT.IG.SH-LS    268     778 negative   pairwise    0.05
+
+prwiseTab_ct_LS_broad_glFDR01_ctFDR05 <- spatialLIBD::gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results_broad, fdr_cut = 0.05, model_type = "pairwise", reverse = FALSE)
+prwiseTab_ct_LS_broad_glFDR01_ctFDR05
+#            OR         Pval          test NumSig SetSize       ID model_type fdr_cut
+# 1   1.0591726 4.324529e-01      Astro-LS     23     258      all   pairwise    0.05
+# 2   1.3407440 1.341664e-01      Astro-LS     21     192 positive   pairwise    0.05
+# 3   0.3343983 9.800004e-01      Astro-LS      2      66 negative   pairwise    0.05
+# 4   0.3863778 9.995568e-01       Chol-LS      9     258      all   pairwise    0.05
+# 5   0.2278091 9.999515e-01       Chol-LS      4     192 positive   pairwise    0.05
+# 6   0.9027500 6.521156e-01       Chol-LS      5      66 negative   pairwise    0.05
+# 7   0.8896118 7.989676e-01        ChP-LS     58     258      all   pairwise    0.05
+# 8   1.2155715 1.343096e-01        ChP-LS     54     192 positive   pairwise    0.05
+# 9   0.1965960 9.999852e-01        ChP-LS      4      66 negative   pairwise    0.05
+# 10  2.3261115 1.002929e-08       Endo-LS     78     258      all   pairwise    0.05
+# 11  3.3970519 4.746356e-14       Endo-LS     74     192 positive   pairwise    0.05
+# 12  0.3261162 9.968726e-01       Endo-LS      4      66 negative   pairwise    0.05
+# 13  0.6913568 9.926936e-01  Ependymal-LS     50     258      all   pairwise    0.05
+# 14  0.9179458 7.168672e-01  Ependymal-LS     46     192 positive   pairwise    0.05
+# 15  0.1862045 9.999930e-01  Ependymal-LS      4      66 negative   pairwise    0.05
+# 16  1.0333397 4.755168e-01        IoC-LS     23     258      all   pairwise    0.05
+# 17  0.5701177 9.756354e-01        IoC-LS     10     192 positive   pairwise    0.05
+# 18  2.6299429 3.744903e-03        IoC-LS     13      66 negative   pairwise    0.05
+# 19  8.6547323 5.880038e-45      Micro-LS    101     258      all   pairwise    0.05
+# 20 14.7695725 4.951622e-59      Micro-LS    100     192 positive   pairwise    0.05
+# 21  0.1650259 9.971458e-01      Micro-LS      1      66 negative   pairwise    0.05
+# 22  0.5475514 9.977842e-01         MS-LS     20     258      all   pairwise    0.05
+# 23  0.2084043 9.999997e-01         MS-LS      6     192 positive   pairwise    0.05
+# 24  1.8107675 4.241741e-02         MS-LS     14      66 negative   pairwise    0.05
+# 25  2.0471840 2.110131e-03      Mural-LS     24     258      all   pairwise    0.05
+# 26  2.5952609 1.931483e-04      Mural-LS     22     192 positive   pairwise    0.05
+# 27  0.5926215 8.489833e-01      Mural-LS      2      66 negative   pairwise    0.05
+# 28  0.7340579 9.214306e-01 Neuroblast-LS     19     258      all   pairwise    0.05
+# 29  0.7866806 8.431622e-01 Neuroblast-LS     15     192 positive   pairwise    0.05
+# 30  0.6005045 8.929055e-01 Neuroblast-LS      4      66 negative   pairwise    0.05
+# 31  1.5552777 3.023449e-02      Oligo-LS     26     258      all   pairwise    0.05
+# 32  2.0992844 1.349224e-03      Oligo-LS     25     192 positive   pairwise    0.05
+# 33  0.2061365 9.912088e-01      Oligo-LS      1      66 negative   pairwise    0.05
+# 34  0.9077740 7.063797e-01        OPC-LS     26     258      all   pairwise    0.05
+# 35  0.9441894 6.297706e-01        OPC-LS     20     192 positive   pairwise    0.05
+# 36  0.8117649 7.439865e-01        OPC-LS      6      66 negative   pairwise    0.05
+# 37  0.8745140 7.383614e-01       Sept-LS     18     258      all   pairwise    0.05
+# 38  0.4346426 9.949135e-01       Sept-LS      7     192 positive   pairwise    0.05
+# 39  2.3811902 1.282305e-02       Sept-LS     11      66 negative   pairwise    0.05
+# 40  0.7439150 9.518216e-01        Str-LS     32     258      all   pairwise    0.05
+# 41  0.1372808 1.000000e+00        Str-LS      5     192 positive   pairwise    0.05
+# 42  3.7694079 7.926208e-07        Str-LS     27      66 negative   pairwise    0.05
+# 43  0.9132051 7.257208e-01       Thal-LS     42     258      all   pairwise    0.05
+# 44  0.1983375 1.000000e+00       Thal-LS      8     192 positive   pairwise    0.05
+# 45  5.1573936 2.429621e-10       Thal-LS     34      66 negative   pairwise    0.05
+# 46  0.6439004 9.661009e-01       TNoS-LS     15     258      all   pairwise    0.05
+# 47  0.5127461 9.879961e-01       TNoS-LS      9     192 positive   pairwise    0.05
+# 48  1.0623479 5.078197e-01       TNoS-LS      6      66 negative   pairwise    0.05
+# 49  0.4986322 9.998606e-01   TT.IG.SH-LS     25     258      all   pairwise    0.05
+# 50  0.0727878 1.000000e+00   TT.IG.SH-LS      3     192 positive   pairwise    0.05
+# 51  2.4179742 1.144005e-03   TT.IG.SH-LS     22      66 negative   pairwise    0.05
 
 ###############################################################################
 
@@ -461,8 +576,10 @@ save(enrichTab_broad_glFDR01_ctFDR05,
     )
 )
 
-save(prwiseTab_broad_glFDR01_ctFDR05,
-    prwiseTab_broad_glFDR05_ctFDR05,
+save(prwiseTab_LS_ct_broad_glFDR01_ctFDR05,
+    prwiseTab_LS_ct_broad_glFDR05_ctFDR05,
+    prwiseTab_ct_LS_broad_glFDR01_ctFDR05,
+    prwiseTab_ct_LS_broad_glFDR05_ctFDR05,
     prwiseTab_glFDR01_ctFDR05,
     prwiseTab_glFDR05_ctFDR05,
     file = here(
