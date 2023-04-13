@@ -89,7 +89,10 @@ volcano_plot <- EnhancedVolcano(outGenes_plot,
     ylim(c(0, 8)) +
     coord_flip()
 
-pdf("~/volcano.pdf", height = 10, width = 14)
+pdf(here("snRNAseq_mouse",
+        "plots",
+        "06_DE_plotting/",
+        "volcano_plot_flip_TrkB-KD.pdf"), height = 10, width = 14)
 print(volcano_plot)
 dev.off()
 
