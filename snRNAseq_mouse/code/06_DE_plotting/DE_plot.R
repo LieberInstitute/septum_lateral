@@ -50,23 +50,46 @@ outGenes <- fread(
 
 outGenes_plot <- outGenes %>%
     select(logFC, P.Value, adj.P.Val, ensemblID, Symbol)
-rownames(outGenes_plot) <- outGenes_plot$ensemblID
+
+rownames(outGenes_plot) <- uniquifyFeatureNames(
+    outGenes_plot$ensemblID,
+    outGenes_plot$Symbol
+)
+
+###############################################################################
+
+
+
+################################ Volcano plot #################################
+
+genes2plot <- topgenes(genes = sigGenes, p_value_thresh = 0.01, top = 25)
 
 volcano_plot <- EnhancedVolcano(outGenes_plot,
-    lab = rownames(outGenes_plot),
     x = "logFC",
     y = "P.Value",
     pCutoff = 1e-02,
     FCcutoff = 0,
-    legendPosition = "right",
-    legendLabels = c(
-        "Not sig.", "Not sig.", "FDR < 0.05",
-        "FDR < 0.05"
-    ),
-    col = c("grey30", "grey30", "royalblue", "red2")
-)
+    selectLab = genes2plot$Symbol,
+    lab = rownames(outGenes_plot),
+    labSize = 6.0,
+    labCol = "black",
+    labFace = "bold",
+    boxedLabels = TRUE,
+    colAlpha = 4 / 5,
+    col = c("#a8b6cc", "#a8b6cc", "#1f449c", "#1f449c"),
+     legendLabels = c(
+            "Not sig.", "Not sig.", "FDR < 0.05",
+            "FDR < 0.05"
+        ),
+     caption = paste0("total = ", nrow(outGenes_plot), " genes"),
+    title = "",
+    subtitle = "",
+    legendPosition = "right"
+) +
+    ylim(c(0, 8)) +
+    coord_flip()
 
-pdf("~/volcano.pdf", height = 10, width = 12)
+pdf("~/volcano.pdf", height = 10, width = 14)
 print(volcano_plot)
 dev.off()
 
