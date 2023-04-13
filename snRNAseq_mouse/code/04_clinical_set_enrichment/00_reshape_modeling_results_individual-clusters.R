@@ -158,47 +158,7 @@ OnevsOne_modified <- lapply(markers.ls.t.1vs1_subset, function(celltype) {
     return(enriched)
 })
 
-## Change pvalues. fdrs and t-stats for genes non0median == FALSE
-OnevsOne_modified <- lapply(OnevsOne_modified, function(enriched) {
-    enriched <- as.data.frame(enriched)
-    enriched[enriched$non0median == FALSE, grep("FC", names(enriched))] <- 0
-    enriched[enriched$non0median == FALSE, grep("value", names(enriched))] <- log(1)
-    enriched[enriched$non0median == FALSE, grep("FDR", names(enriched))] <- log(1)
-    enriched <- enriched %>% dplyr::select(-non0median)
-    return(enriched)
-})
-
-## Un log pvalues and FDR
-OnevsOne_modified <- lapply(OnevsOne_modified, function(enriched) {
-    enriched <- enriched %>% mutate_at(vars(contains('FDR')), exp)
-    enriched <- enriched %>% mutate_at(vars(contains('value')), exp)
-    return(enriched)
-})
-
-## Change column names
-OnevsOne_modified <- lapply(OnevsOne_modified, function(enriched) {
-    names(enriched) <- gsub(names(enriched), pattern = "stats\\.", replacement = "__")
-    return(enriched)
-})
-
-## Convert to data frame
-OnevsOne_modified <- as.data.frame(OnevsOne_modified)
-
-## Change column names
-names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\.\\_\\_", replacement = "-")
-names(OnevsOne_modified) <- sapply(
-    lapply(strsplit(names(OnevsOne_modified), "\\.log"),
-        rev),
-    paste, collapse = "_"
-    )
-names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "FC", replacement = "t_stat")
-names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\.p\\.value", replacement = "p_value")
-names(OnevsOne_modified) <- gsub(names(OnevsOne_modified), pattern = "\\.FDR", replacement = "fdr")
-OnevsOne_modified$ensembl <- rownames(OnevsOne_modified)
-rownames(OnevsOne_modified) <- NULL
-
-## Add names from mgi data base
-modeling_result_1vs1 <- add_gene_names(OnevsOne_modified)
+modeling_result_1vs1 <- reshape_1vs1(OnevsOne_modified)
 
 ###############################################################################
 
