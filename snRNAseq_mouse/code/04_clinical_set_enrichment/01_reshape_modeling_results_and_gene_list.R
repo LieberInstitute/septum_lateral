@@ -16,6 +16,52 @@ source(
     )
 )
 
+change_vals <- function(OnevsOne_broad_modified, div_val) {
+    if (div_val == "positive") {
+        lapply(OnevsOne_broad_modified, function(enriched) {
+            enriched <- as.data.frame(enriched)
+            enriched[(enriched[, 1] < 0), 2:3] <- log(1)
+            return(enriched)
+        })
+    } else {
+        lapply(OnevsOne_broad_modified, function(enriched) {
+            enriched <- as.data.frame(enriched)
+            enriched[(enriched[, 1] > 0), 2:3] <- log(1)
+            return(enriched)
+        })
+    }
+}
+
+unlog <- function(OnevsOne_broad_modified) {
+    OnevsOne_broad_modified <- lapply(OnevsOne_broad_modified, function(enriched) {
+        enriched <- enriched %>% mutate_at(vars(contains("FDR")), exp)
+        enriched <- enriched %>% mutate_at(vars(contains("value")), exp)
+        return(enriched)
+    })
+    OnevsOne_broad_modified <- as.data.frame(OnevsOne_broad_modified)
+}
+
+change_colnames <- function(OnevsOne_broad_modified) {
+    names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = ".+stats\\.", replacement = "LS-")
+    names(OnevsOne_broad_modified) <- sapply(
+        lapply(
+            strsplit(names(OnevsOne_broad_modified), "\\.log"),
+            rev
+        ),
+        paste,
+        collapse = "_"
+    )
+    names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "FC", replacement = "t_stat")
+    names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "\\.p\\.value", replacement = "p_value")
+    names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "\\.FDR", replacement = "fdr")
+    OnevsOne_broad_modified$ensembl <- rownames(OnevsOne_broad_modified)
+    rownames(OnevsOne_broad_modified) <- NULL
+
+    OnevsOne_broad_modified <- add_gene_names(OnevsOne_broad_modified)
+
+    return(OnevsOne_broad_modified)
+}
+
 
 
 ####################### Load data for modeling_results ########################
@@ -92,30 +138,27 @@ colSums(modeling_result_broad_1vsAll[, grep("fdr_", colnames(modeling_result_bro
 
 markers.ls.t.pw.broad$LS
 markers.ls.t.pw.broad$LS$stats.Astro
+cell_clust <- names(markers.ls.t.pw.broad)[-which(names(markers.ls.t.pw.broad) == "LS")]
 
 ## Convert S4Vector object to DataFrame, select genes with non0median == TRUE
 OnevsOne_broad_modified <- as.data.frame(markers.ls.t.pw.broad$LS) %>%
     dplyr::filter(non0median == TRUE) %>%
     dplyr::select(matches("stats\\..+"))
 
-## Unlog pvalues and FDRs
-OnevsOne_broad_modified <- OnevsOne_broad_modified %>% mutate_at(vars(contains('FDR')), exp)
-OnevsOne_broad_modified <- OnevsOne_broad_modified %>% mutate_at(vars(contains('value')), exp)
+OnevsOne_broad_modified <- split.default(OnevsOne_broad_modified, gl(dim(OnevsOne_broad_modified)[2] / 3, 3))
+names(OnevsOne_broad_modified) <- cell_clust
+
+## Separate by negative and positive logFC
+OnevsOne_broad_modified_pos <- change_vals(OnevsOne_broad_modified = OnevsOne_broad_modified, div_val = "positive")
+OnevsOne_broad_modified_neg <- change_vals(OnevsOne_broad_modified = OnevsOne_broad_modified, div_val = "negative")
+
+## Un log pvalues and FDR
+OnevsOne_broad_modified_pos <- unlog(OnevsOne_broad_modified_pos)
+OnevsOne_broad_modified_neg <- unlog(OnevsOne_broad_modified_neg)
 
 ## Change column names
-names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "stats\\.", replacement = "LS-")
-names(OnevsOne_broad_modified) <- sapply(
-    lapply(strsplit(names(OnevsOne_broad_modified), "\\.log"),
-        rev),
-    paste, collapse = "_"
-    )
-names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "FC", replacement = "t_stat")
-names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "\\.p\\.value", replacement = "p_value")
-names(OnevsOne_broad_modified) <- gsub(names(OnevsOne_broad_modified), pattern = "\\.FDR", replacement = "fdr")
-OnevsOne_broad_modified$ensembl <- rownames(OnevsOne_broad_modified)
-rownames(OnevsOne_broad_modified) <- NULL
-
-modeling_result_broad_1vs1 <- add_gene_names(OnevsOne_broad_modified)
+modeling_result_broad_1vs1_pos <- change_colnames(OnevsOne_broad_modified_pos)
+modeling_result_broad_1vs1_neg <- change_colnames(OnevsOne_broad_modified_neg)
 
 ###############################################################################
 
@@ -125,7 +168,8 @@ modeling_result_broad_1vs1 <- add_gene_names(OnevsOne_broad_modified)
 
 modeling_results_broad <- list(
     "enrichment" = as.data.frame(modeling_result_broad_1vsAll),
-    "pairwise" = as.data.frame(modeling_result_broad_1vs1)
+    "pairwise_pos" = as.data.frame(modeling_result_broad_1vs1_pos),
+    "pairwise_neg" = as.data.frame(modeling_result_broad_1vs1_neg)
 )
 
 ###############################################################################
