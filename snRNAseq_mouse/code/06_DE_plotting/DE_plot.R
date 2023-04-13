@@ -6,7 +6,23 @@ library("ggplot2")
 library("EnhancedVolcano")
 library("tibble")
 library("tidyr")
+library("scater")
 
+topgenes <- function(genes, p_value_thresh, top) {
+    upgene_df <- genes %>%
+        filter(adj.P.Val < p_value_thresh, logFC > 0) %>%
+        arrange(desc(abs(logFC))) %>%
+        head(top) %>%
+        dplyr::select(ensemblID, Symbol, EntrezID, logFC)
+    downgene_df <- genes %>%
+        filter(adj.P.Val < p_value_thresh, logFC < 0) %>%
+        arrange(desc(abs(logFC))) %>%
+        head(top) %>%
+        dplyr::select(ensemblID, Symbol, EntrezID, logFC)
+    gene_df <- rbind(upgene_df, downgene_df)
+
+    return(gene_df)
+}
 
 ################################ Load DE data #################################
 
