@@ -23,13 +23,16 @@ extract_sig_genes <- function(list_tiss, list_set, modeling_results) {
 create_df <- function(list_tiss, csv_name) {
     list_tiss <- Map(cbind, list_tiss, new_clumn = names(list_tiss))
     list_tiss <- bind_rows(list_tiss)
+    colnames(list_tiss)[3] <- "cell_type"
 
     write.csv(
-        x = list_tiss,
-        file = csv_name,
-        quote = FALSE,
-        row.names = FALSE
-    )
+         x = list_tiss,
+         file = csv_name,
+         quote = FALSE,
+         row.names = FALSE
+     )
+
+    return(list_tiss)
 }
 
 
@@ -128,7 +131,7 @@ unlist(lapply(list_genes_pos, function(list_genes) {
 
 ############################### Create data frame #############################
 
-create_df(
+broad_list_genes_neg <- create_df(
     list_tiss = broad_list_genes_neg,
     csv_name = here(
         "snRNAseq_mouse",
@@ -137,21 +140,21 @@ create_df(
         "GSEAgenes_glFDR01-negative_broad.csv"
     )
 )
-create_df(list_tiss = broad_list_genes_pos, csv_name = here(
+broad_list_genes_pos <- create_df(list_tiss = broad_list_genes_pos, csv_name = here(
         "snRNAseq_mouse",
         "processed_data",
         "tables",
         "GSEAgenes_glFDR01-positive_broad.csv"
     )
 )
-create_df(list_tiss = list_genes_neg, csv_name = here(
+list_genes_neg <- create_df(list_tiss = list_genes_neg, csv_name = here(
         "snRNAseq_mouse",
         "processed_data",
         "tables",
         "GSEAgenes_glFDR01-negative_8clusts.csv"
     )
 )
-create_df(list_tiss = list_genes_pos, csv_name = here(
+list_genes_pos <- create_df(list_tiss = list_genes_pos, csv_name = here(
         "snRNAseq_mouse",
         "processed_data",
         "tables",
@@ -179,6 +182,27 @@ save(broad_list_genes_neg,
 
 ###############################################################################
 
+unique(list_genes_neg$cell_type)
+#  [1] "LS_In.C"       "LS_In.D"       "LS_In.M"       "LS_In.N"
+#  [5] "LS_In.O"       "LS_In.P"       "LS_In.Q"       "LS_In.R"
+#  [9] "MS_In.J"       "MS_In.K"       "Sept_In.G"     "Sept_In.I"
+# [13] "TNoS_Ex.A"     "TT.IG.SH_Ex.C" "TT.IG.SH_Ex.E" "TT.IG.SH_Ex.F"
+
+group_1 <- c("LS_In.D", "LS_In.O")
+group_2 <- c("LS_In.C", "LS_In.M", "LS_In.N", "LS_In.P", "LS_In.Q", "LS_In.R")
+group_1 <- list_genes_neg %>%
+    filter(cell_type %in% group_1) %>%
+    select(ensembl) %>%
+    unique() %>%
+    as.vector()
+group_2 <- list_genes_neg %>%
+    filter(!cell_type %in% group_2) %>%
+    select(ensembl) %>%
+    unique() %>%
+    as.vector()
+
+setdiff(group_1, group_2)
+setdiff(group_2, group_1)
 
 
 ######################### Reproducibility information #########################
