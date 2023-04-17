@@ -20,6 +20,18 @@ extract_sig_genes <- function(list_tiss, list_set, modeling_results) {
     })
 }
 
+create_df <- function(list_tiss, csv_name) {
+    list_tiss <- Map(cbind, list_tiss, new_clumn = names(list_tiss))
+    list_tiss <- bind_rows(list_tiss)
+
+    write.csv(
+        x = list_tiss,
+        file = csv_name,
+        quote = FALSE,
+        row.names = FALSE
+    )
+}
+
 
 
 ############### Load objects with inputs from gene_set_enrichment #############
@@ -61,6 +73,121 @@ names(list_genes_neg) <- ct_clus_names
 list_genes_pos <- extract_sig_genes(list_tiss = list_sep, list_set = "positive", modeling_results = modeling_results$enrichment)
 names(list_genes_pos) <- ct_clus_names
 
+###############################################################################
 
 
 
+########################## Confirm results are right ##########################
+
+unlist(lapply(broad_list_genes_neg, function(list_genes) {
+    dim(list_genes)[1]
+}))
+# Astro       Chol        ChP       Endo  Ependymal        IoC         LS
+#     3         17          4          3          4         24         43
+# Micro         MS      Mural Neuroblast      Oligo        OPC       Sept
+#     1         35          2         11          2         12         38
+#   Str       Thal       TNoS   TT.IG.SH
+#    47         49         25         40
+
+unlist(lapply(broad_list_genes_pos, function(list_genes) {
+    dim(list_genes)[1]
+}))
+# Astro       Chol        ChP       Endo  Ependymal        IoC         LS
+#    21          5         42         70         39          3          4
+# Micro         MS      Mural Neuroblast      Oligo        OPC       Sept
+#    97          6         18         10         24         15          2
+#   Str       Thal       TNoS   TT.IG.SH
+#     3          8          3          8
+
+unlist(lapply(list_genes_neg, function(list_genes) {
+    dim(list_genes)[1]
+}))
+#       LS_In.C       LS_In.D       LS_In.M       LS_In.N       LS_In.O
+#            30            44            28            17            31
+#       LS_In.P       LS_In.Q       LS_In.R       MS_In.J       MS_In.K
+#            36            21            32            27            37
+#     Sept_In.G     Sept_In.I     TNoS_Ex.A TT.IG.SH_Ex.C TT.IG.SH_Ex.E
+#            24            40            25            34            21
+# TT.IG.SH_Ex.F
+#            39
+unlist(lapply(list_genes_pos, function(list_genes) {
+    dim(list_genes)[1]
+}))
+#       LS_In.C       LS_In.D       LS_In.M       LS_In.N       LS_In.O
+#            10             2             3             1             1
+#       LS_In.P       LS_In.Q       LS_In.R       MS_In.J       MS_In.K
+#             6             1             3             1             5
+#     Sept_In.G     Sept_In.I     TNoS_Ex.A TT.IG.SH_Ex.C TT.IG.SH_Ex.E
+#             4             2             3             7             3
+# TT.IG.SH_Ex.F
+#             3
+
+###############################################################################
+
+
+
+############################### Create data frame #############################
+
+create_df(
+    list_tiss = broad_list_genes_neg,
+    csv_name = here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "tables",
+        "GSEAgenes_glFDR01-negative_broad.csv"
+    )
+)
+create_df(list_tiss = broad_list_genes_pos, csv_name = here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "tables",
+        "GSEAgenes_glFDR01-positive_broad.csv"
+    )
+)
+create_df(list_tiss = list_genes_neg, csv_name = here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "tables",
+        "GSEAgenes_glFDR01-negative_8clusts.csv"
+    )
+)
+create_df(list_tiss = list_genes_pos, csv_name = here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "tables",
+        "GSEAgenes_glFDR01-positive_8clusts.csv"
+    )
+)
+
+###############################################################################
+
+
+
+############################### Save genes in rda #############################
+
+save(broad_list_genes_neg,
+    broad_list_genes_pos,
+    list_genes_neg,
+    list_genes_pos,
+    file = here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "SCE",
+        "enrichment_genes_glFDR01.rda"
+    )
+)
+
+###############################################################################
+
+
+
+######################### Reproducibility information #########################
+
+## Reproducibility information
+print("Reproducibility information:")
+Sys.time()
+proc.time()
+options(width = 120)
+session_info()
+
+###############################################################################
