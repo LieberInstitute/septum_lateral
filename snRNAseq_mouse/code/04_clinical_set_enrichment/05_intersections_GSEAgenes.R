@@ -238,6 +238,37 @@ broad_list_genes_pos %>%
 # 97 ENSMUSG00000098112     Bin2     Micro
 
 
+## In.O vs all neuronal clusters (without O and D) and In.D vs all neuronal clusters (without O and D) ##
+group_1 <- c("LS_In.O")
+group_2 <- c("LS_In.D")
+
+group_1 <- list_genes_neg %>%
+    filter(cell_type %in% group_1) %>%
+    select(ensembl) %>%
+    unique() %>%
+    as.vector()
+group_2 <- list_genes_neg %>%
+    filter(cell_type %in% group_2) %>%
+    select(ensembl) %>%
+    unique() %>%
+    as.vector()
+group_3 <- list_genes_neg %>%
+    filter(!cell_type %in% group_1) %>%
+    filter(!cell_type %in% group_2) %>%
+    select(ensembl) %>%
+    unique() %>%
+    as.vector()
+
+genes_un <- setdiff(setdiff(group_1$ensembl, group_2$ensembl),group_3)  ## Genes unique for LS-InO
+list_genes_neg %>%
+    filter(cell_type == "LS_In.O", ensembl %in% genes_un)
+#              ensembl   gene cell_type
+# 1 ENSMUSG00000009394   Syn2   LS_In.O
+# 2 ENSMUSG00000022883  Robo1   LS_In.O
+# 3 ENSMUSG00000027419  Pcsk2   LS_In.O
+# 4 ENSMUSG00000029405  G3bp2   LS_In.O
+# 5 ENSMUSG00000040536 Necab1   LS_In.O
+
 ###############################################################################
 
 
