@@ -100,39 +100,33 @@ for (i in names(markers.ls.t.1vAll)) {
 
 markers.ls.t.1vAll$LS_In.C$LS_In.C_enriched
 
-markers.ls.t.1vAll_subset <- markers.ls.t.1vAll[grep("LS|Sept|MS|TNoS|TT\\.IG\\.SH", names(markers.ls.t.1vAll))]
+markers.ls.t.1vAll_subset <- markers.ls.t.1vAll[grep("LS|Sept|MS|TNoS|TT\\.IG\\.SH|Chol", names(markers.ls.t.1vAll))]
 
 modeling_result_1vsAll <- reshape_1vsAll(OnevsAll = markers.ls.t.1vAll_subset)
 
 colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))] < 0.05)
-# fdr_LS_In.C   fdr_LS_In.D   fdr_LS_In.M   fdr_LS_In.N   fdr_LS_In.O
-#        1235          1720          1114           474           623
-# fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
-#        1631           594          1275           788          1574
-
-#   fdr_LS_In.C       fdr_LS_In.D       fdr_LS_In.M       fdr_LS_In.N
-#          1235              1720              1114               474
-#   fdr_LS_In.O       fdr_LS_In.P       fdr_LS_In.Q       fdr_LS_In.R
-#           623              1631               594              1275
-#   fdr_MS_In.J       fdr_MS_In.K     fdr_Sept_In.G     fdr_Sept_In.I
-#          1244              1592               788              1574
-# fdr_TNoS_Ex.A fdr_TT.IG.SH_Ex.C fdr_TT.IG.SH_Ex.E fdr_TT.IG.SH_Ex.F
-#           848              1325               594              1729
+#     fdr_Chol_Ex.D       fdr_LS_In.C       fdr_LS_In.D       fdr_LS_In.M
+#               711              1235              1720              1114
+#       fdr_LS_In.N       fdr_LS_In.O       fdr_LS_In.P       fdr_LS_In.Q
+#               474               623              1631               594
+#       fdr_LS_In.R       fdr_MS_In.J       fdr_MS_In.K     fdr_Sept_In.G
+#              1275              1244              1592               788
+#     fdr_Sept_In.I     fdr_TNoS_Ex.A fdr_TT.IG.SH_Ex.C fdr_TT.IG.SH_Ex.E
+#              1574               848              1325               594
+# fdr_TT.IG.SH_Ex.F
+#              1729
 
 colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))] < 0.1)
-# fdr_LS_In.C   fdr_LS_In.D   fdr_LS_In.M   fdr_LS_In.N   fdr_LS_In.O
-#        1357          1761          1193           534           694
-# fdr_LS_In.P   fdr_LS_In.Q   fdr_LS_In.R fdr_Sept_In.G fdr_Sept_In.I
-#        1772           692          1400           831          1607
-
-#   fdr_LS_In.C       fdr_LS_In.D       fdr_LS_In.M       fdr_LS_In.N
-#          1357              1761              1193               534
-#   fdr_LS_In.O       fdr_LS_In.P       fdr_LS_In.Q       fdr_LS_In.R
-#           694              1772               692              1400
-#   fdr_MS_In.J       fdr_MS_In.K     fdr_Sept_In.G     fdr_Sept_In.I
-#          1416              1677               831              1607
-# fdr_TNoS_Ex.A fdr_TT.IG.SH_Ex.C fdr_TT.IG.SH_Ex.E fdr_TT.IG.SH_Ex.F
-#           886              1431               656              1803
+#     fdr_Chol_Ex.D       fdr_LS_In.C       fdr_LS_In.D       fdr_LS_In.M
+#               780              1357              1761              1193
+#       fdr_LS_In.N       fdr_LS_In.O       fdr_LS_In.P       fdr_LS_In.Q
+#               534               694              1772               692
+#       fdr_LS_In.R       fdr_MS_In.J       fdr_MS_In.K     fdr_Sept_In.G
+#              1400              1416              1677               831
+#     fdr_Sept_In.I     fdr_TNoS_Ex.A fdr_TT.IG.SH_Ex.C fdr_TT.IG.SH_Ex.E
+#              1607               886              1431               656
+# fdr_TT.IG.SH_Ex.F
+#              1803
 
 ###############################################################################
 
@@ -142,7 +136,7 @@ colSums(modeling_result_1vsAll[, grep("fdr_", colnames(modeling_result_1vsAll))]
 
 markers.ls.t.pw
 
-markers.ls.t.1vs1_subset <- markers.ls.t.pw[grep("LS|Sept|MS|TNoS|TT\\.IG\\.SH", names(markers.ls.t.pw))]
+markers.ls.t.1vs1_subset <- markers.ls.t.pw[grep("LS|Sept|MS|TNoS|TT\\.IG\\.SH|Chol", names(markers.ls.t.pw))]
 
 ## Select genes with non0median == TRUE
 non0med_genes <- lapply(markers.ls.t.1vs1_subset, function(x) {
