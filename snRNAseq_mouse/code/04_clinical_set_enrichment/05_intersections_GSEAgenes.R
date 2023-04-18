@@ -269,6 +269,29 @@ list_genes_neg %>%
 # 4 ENSMUSG00000029405  G3bp2   LS_In.O
 # 5 ENSMUSG00000040536 Necab1   LS_In.O
 
+genes_un <- setdiff(setdiff(group_2$ensembl, group_1$ensembl), group_3) ## Genes unique for LS-InD
+list_genes_neg %>%
+    filter(cell_type == "LS_In.D", ensembl %in% genes_un)
+#               ensembl    gene cell_type
+# 1  ENSMUSG00000005034  Prkacb   LS_In.D
+# 2  ENSMUSG00000019943  Atp2b1   LS_In.D
+# 3  ENSMUSG00000021373    Cap2   LS_In.D
+# 4  ENSMUSG00000021448    Shc3   LS_In.D
+# 5  ENSMUSG00000022285   Ywhaz   LS_In.D
+# 6  ENSMUSG00000023236    Scg5   LS_In.D
+# 7  ENSMUSG00000026585  Kifap3   LS_In.D
+# 8  ENSMUSG00000027546   Atp9a   LS_In.D
+# 9  ENSMUSG00000029053   Prkcz   LS_In.D
+# 10 ENSMUSG00000029516     Cit   LS_In.D
+# 11 ENSMUSG00000031099 Smarca1   LS_In.D
+# 12 ENSMUSG00000034958   Atcay   LS_In.D
+# 13 ENSMUSG00000035566  Pcdh17   LS_In.D
+# 14 ENSMUSG00000036667   Tcaf1   LS_In.D
+# 15 ENSMUSG00000037492   Zmat4   LS_In.D
+# 16 ENSMUSG00000040037   Negr1   LS_In.D
+# 17 ENSMUSG00000041852   Tcf20   LS_In.D
+# 18 ENSMUSG00000046178   Nxph1   LS_In.D
+
 ###############################################################################
 
 
