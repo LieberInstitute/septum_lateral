@@ -66,8 +66,8 @@ broad_list_genes_pos <- extract_sig_genes(list_tiss = broad_list_sep, list_set =
 names(broad_list_genes_pos) <- ct_names
 
 ## Select genes by tissue type from not-broad data
-list_sep <- split.default(modeling_results$enrichment[, 1:48], rep(1:16, each = 3))
-ct_clus_names <- gsub(names(modeling_results$enrichment)[-(49:50)], pattern = "._[a-z]+_", replacement = "")
+list_sep <- split.default(modeling_results$enrichment[, 1:51], rep(1:17, each = 3))
+ct_clus_names <- gsub(names(modeling_results$enrichment)[-(52:53)], pattern = "._[a-z]+_", replacement = "")
 ct_clus_names <- unique(gsub(ct_clus_names, pattern = "fdr\\_", replacement = ""))
 
 list_genes_neg <- extract_sig_genes(list_tiss = list_sep, list_set = "negative", modeling_results = modeling_results$enrichment)
@@ -105,25 +105,26 @@ unlist(lapply(broad_list_genes_pos, function(list_genes) {
 unlist(lapply(list_genes_neg, function(list_genes) {
     dim(list_genes)[1]
 }))
-#       LS_In.C       LS_In.D       LS_In.M       LS_In.N       LS_In.O
-#            30            44            28            17            31
-#       LS_In.P       LS_In.Q       LS_In.R       MS_In.J       MS_In.K
-#            36            21            32            27            37
-#     Sept_In.G     Sept_In.I     TNoS_Ex.A TT.IG.SH_Ex.C TT.IG.SH_Ex.E
-#            24            40            25            34            21
-# TT.IG.SH_Ex.F
-#            39
+#     Chol_Ex.D       LS_In.C       LS_In.D       LS_In.M       LS_In.N
+#            18            30            44            28            17
+#       LS_In.O       LS_In.P       LS_In.Q       LS_In.R       MS_In.J
+#            31            36            21            32            27
+#       MS_In.K     Sept_In.G     Sept_In.I     TNoS_Ex.A TT.IG.SH_Ex.C
+#            37            24            40            25            34
+# TT.IG.SH_Ex.E TT.IG.SH_Ex.F
+#            21            39
+
 unlist(lapply(list_genes_pos, function(list_genes) {
     dim(list_genes)[1]
 }))
-#       LS_In.C       LS_In.D       LS_In.M       LS_In.N       LS_In.O
-#            10             2             3             1             1
-#       LS_In.P       LS_In.Q       LS_In.R       MS_In.J       MS_In.K
-#             6             1             3             1             5
-#     Sept_In.G     Sept_In.I     TNoS_Ex.A TT.IG.SH_Ex.C TT.IG.SH_Ex.E
-#             4             2             3             7             3
-# TT.IG.SH_Ex.F
-#             3
+#     Chol_Ex.D       LS_In.C       LS_In.D       LS_In.M       LS_In.N
+#             5            10             2             3             1
+#       LS_In.O       LS_In.P       LS_In.Q       LS_In.R       MS_In.J
+#             1             6             1             3             1
+#       MS_In.K     Sept_In.G     Sept_In.I     TNoS_Ex.A TT.IG.SH_Ex.C
+#             5             4             2             3             7
+# TT.IG.SH_Ex.E TT.IG.SH_Ex.F
+#             3             3
 
 ###############################################################################
 
@@ -182,27 +183,6 @@ save(broad_list_genes_neg,
 
 ###############################################################################
 
-unique(list_genes_neg$cell_type)
-#  [1] "LS_In.C"       "LS_In.D"       "LS_In.M"       "LS_In.N"
-#  [5] "LS_In.O"       "LS_In.P"       "LS_In.Q"       "LS_In.R"
-#  [9] "MS_In.J"       "MS_In.K"       "Sept_In.G"     "Sept_In.I"
-# [13] "TNoS_Ex.A"     "TT.IG.SH_Ex.C" "TT.IG.SH_Ex.E" "TT.IG.SH_Ex.F"
-
-group_1 <- c("LS_In.D", "LS_In.O")
-group_2 <- c("LS_In.C", "LS_In.M", "LS_In.N", "LS_In.P", "LS_In.Q", "LS_In.R")
-group_1 <- list_genes_neg %>%
-    filter(cell_type %in% group_1) %>%
-    select(ensembl) %>%
-    unique() %>%
-    as.vector()
-group_2 <- list_genes_neg %>%
-    filter(!cell_type %in% group_2) %>%
-    select(ensembl) %>%
-    unique() %>%
-    as.vector()
-
-setdiff(group_1, group_2)
-setdiff(group_2, group_1)
 
 
 ######################### Reproducibility information #########################
