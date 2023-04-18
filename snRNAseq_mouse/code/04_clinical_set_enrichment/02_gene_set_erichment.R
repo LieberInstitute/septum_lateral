@@ -25,9 +25,9 @@ load(
 #   gene_list_FDR01
 
 lobstr::obj_size(modeling_results_broad)
-# 4.31 MB
+# 6.62 MB
 lobstr::obj_size(modeling_results)
-# 11.88 MB
+# 34.57 MB
 lobstr::obj_size(gene_list_FDR05)
 # 360.60 kB
 lobstr::obj_size(gene_list_FDR01)
@@ -43,31 +43,32 @@ head(names(modeling_results_broad$enrichment), 10)
 # [1] "t_stat_Astro"  "p_value_Astro" "fdr_Astro"     "t_stat_Chol"
 # [5] "p_value_Chol"  "fdr_Chol"      "t_stat_ChP"    "p_value_ChP"
 # [9] "fdr_ChP"       "t_stat_Endo"
-dim(modeling_results_broad$pairwise)
-# [1] 2635   53
-head(names(modeling_results_broad$pairwise), 10)
-# [1] "t_stat_LS-Astro"  "p_value_LS-Astro" "fdr_LS-Astro"     "t_stat_LS-Chol"
-# [5] "p_value_LS-Chol"  "fdr_LS-Chol"      "t_stat_LS-ChP"    "p_value_LS-ChP"
-# [9] "fdr_LS-ChP"       "t_stat_LS-Endo"
+dim(modeling_results_broad$'pairwise_ct-LS')
+# [1] 5436   53
+head(names(modeling_results_broad$'pairwise_ct-LS'), 10)
+# [1] "t_stat_Astro-LS"  "p_value_Astro-LS" "fdr_Astro-LS"     "t_stat_Chol-LS"
+# [5] "p_value_Chol-LS"  "fdr_Chol-LS"      "t_stat_ChP-LS"    "p_value_ChP-LS"
+# [9] "fdr_ChP-LS"       "t_stat_Endo-LS"
 
 class(modeling_results)
 # [1] "list"
 names(modeling_results)
 # [1] "enrichment" "pairwise"
 dim(modeling_results$enrichment)
-# [1] 4609   32
+# [1] 5126   53
 head(names(modeling_results$enrichment), 10)
-# [1] "t_stat_LS_In.C"  "p_value_LS_In.C" "fdr_LS_In.C"     "t_stat_LS_In.D"
-# [5] "p_value_LS_In.D" "fdr_LS_In.D"     "t_stat_LS_In.M"  "p_value_LS_In.M"
-# [9] "fdr_LS_In.M"     "t_stat_LS_In.N
+#  [1] "t_stat_Chol_Ex.D"  "p_value_Chol_Ex.D" "fdr_Chol_Ex.D"
+#  [4] "t_stat_LS_In.C"    "p_value_LS_In.C"   "fdr_LS_In.C"
+#  [7] "t_stat_LS_In.D"    "p_value_LS_In.D"   "fdr_LS_In.D"
+# [10] "t_stat_LS_In.M"
 dim(modeling_results$pairwise)
-# [1] 4609  272
+# [1] 5126  770
 head(names(modeling_results$pairwise), 10)
-# [1] "t_stat_LS_In.C-LS_In.D"  "p_value_LS_In.C-LS_In.D"
-# [3] "fdr_LS_In.C-LS_In.D"     "t_stat_LS_In.C-LS_In.M"
-# [5] "p_value_LS_In.C-LS_In.M" "fdr_LS_In.C-LS_In.M"
-# [7] "t_stat_LS_In.C-LS_In.N"  "p_value_LS_In.C-LS_In.N"
-# [9] "fdr_LS_In.C-LS_In.N"     "t_stat_LS_In.C-LS_In.O"
+# [1] "t_stat_Chol_Ex.D-LS_In.C"  "p_value_Chol_Ex.D-LS_In.C"
+# [3] "fdr_Chol_Ex.D-LS_In.C"     "t_stat_Chol_Ex.D-LS_In.D"
+# [5] "p_value_Chol_Ex.D-LS_In.D" "fdr_Chol_Ex.D-LS_In.D"
+# [7] "t_stat_Chol_Ex.D-LS_In.M"  "p_value_Chol_Ex.D-LS_In.M"
+# [9] "fdr_Chol_Ex.D-LS_In.M"     "t_stat_Chol_Ex.D-LS_In.N"
 
 class(gene_list_FDR01)
 # [1] "list"
@@ -447,106 +448,112 @@ prwiseTab_ct_LS_broad_glFDR01_ctFDR05
 enrichTab_glFDR05_ctFDR05 <- gene_set_enrichment(gene_list = gene_list_FDR05, modeling_results = modeling_results, model_type = "enrichment", fdr_cut = 0.05)
 enrichTab_glFDR05_ctFDR05
 #           OR         Pval          test NumSig SetSize       ID model_type fdr_cut
-# 1  1.8545409 2.952669e-16       LS_In.C    369    1086      all enrichment    0.05
-# 2  0.4696233 9.999945e-01       LS_In.C     33     245 positive enrichment    0.05
-# 3  2.4662990 1.477459e-28       LS_In.C    336     841 negative enrichment    0.05
-# 4  1.7459873 1.824456e-15       LS_In.D    479    1086      all enrichment    0.05
-# 5  0.1912121 1.000000e+00       LS_In.D     23     245 positive enrichment    0.05
-# 6  2.7805095 1.946466e-40       LS_In.D    456     841 negative enrichment    0.05
-# 7  1.4514419 1.807252e-06       LS_In.M    296    1086      all enrichment    0.05
-# 8  0.3375584 1.000000e+00       LS_In.M     22     245 positive enrichment    0.05
-# 9  1.9511366 2.891457e-15       LS_In.M    274     841 negative enrichment    0.05
-# 10 1.9563108 3.218921e-10       LS_In.N    157    1086      all enrichment    0.05
-# 11 0.4002711 9.995634e-01       LS_In.N     10     245 positive enrichment    0.05
-# 12 2.5288759 1.612629e-16       LS_In.N    147     841 negative enrichment    0.05
-# 13 2.4160002 7.531735e-21       LS_In.O    228    1086      all enrichment    0.05
-# 14 0.3555068 9.999818e-01       LS_In.O     12     245 positive enrichment    0.05
-# 15 3.2469803 1.145346e-32       LS_In.O    216     841 negative enrichment    0.05
-# 16 1.5988780 3.222079e-11       LS_In.P    440    1086      all enrichment    0.05
-# 17 0.2384572 1.000000e+00       LS_In.P     26     245 positive enrichment    0.05
-# 18 2.4015265 8.807368e-30       LS_In.P    414     841 negative enrichment    0.05
-# 19 1.9677972 3.423591e-12       LS_In.Q    195    1086      all enrichment    0.05
-# 20 0.5137980 9.979834e-01       LS_In.Q     16     245 positive enrichment    0.05
-# 21 2.4863938 9.601349e-19       LS_In.Q    179     841 negative enrichment    0.05
-# 22 1.4960341 7.946552e-08       LS_In.R    341    1086      all enrichment    0.05
-# 23 0.4174029 9.999997e-01       LS_In.R     31     245 positive enrichment    0.05
-# 24 1.9762046 6.768559e-17       LS_In.R    310     841 negative enrichment    0.05
-# 25 1.5990604 5.378400e-10       MS_In.J    345    1086      all enrichment    0.05
-# 26 0.3833556 1.000000e+00       MS_In.J     28     245 positive enrichment    0.05
-# 27 2.1564884 5.535260e-21       MS_In.J    317     841 negative enrichment    0.05
-# 28 1.6507490 1.773263e-12       MS_In.K    437    1086      all enrichment    0.05
-# 29 0.2258480 1.000000e+00       MS_In.K     24     245 positive enrichment    0.05
-# 30 2.4982305 3.419559e-32       MS_In.K    413     841 negative enrichment    0.05
-# 31 1.8338992 4.454286e-12     Sept_In.G    244    1086      all enrichment    0.05
-# 32 0.7492586 9.426108e-01     Sept_In.G     30     245 positive enrichment    0.05
-# 33 2.1747008 1.342737e-16     Sept_In.G    214     841 negative enrichment    0.05
-# 34 1.7661357 1.436986e-15     Sept_In.I    446    1086      all enrichment    0.05
-# 35 0.2083167 1.000000e+00     Sept_In.I     22     245 positive enrichment    0.05
-# 36 2.7245824 3.464071e-38     Sept_In.I    424     841 negative enrichment    0.05
-# 37 2.0480786 2.838088e-17     TNoS_Ex.A    277    1086      all enrichment    0.05
-# 38 0.3586776 9.999989e-01     TNoS_Ex.A     17     245 positive enrichment    0.05
-# 39 2.7726209 9.052169e-30     TNoS_Ex.A    260     841 negative enrichment    0.05
-# 40 2.1701936 8.581609e-26 TT.IG.SH_Ex.C    422    1086      all enrichment    0.05
-# 41 0.4571643 9.999984e-01 TT.IG.SH_Ex.C     35     245 positive enrichment    0.05
-# 42 2.9926560 4.439699e-43 TT.IG.SH_Ex.C    387     841 negative enrichment    0.05
-# 43 1.8633690 1.797869e-10 TT.IG.SH_Ex.E    189    1086      all enrichment    0.05
-# 44 0.3423321 9.999829e-01 TT.IG.SH_Ex.E     11     245 positive enrichment    0.05
-# 45 2.4622078 2.393760e-18 TT.IG.SH_Ex.E    178     841 negative enrichment    0.05
-# 46 2.2488348 5.278416e-31 TT.IG.SH_Ex.F    533    1086      all enrichment    0.05
-# 47 0.2570305 1.000000e+00 TT.IG.SH_Ex.F     30     245 positive enrichment    0.05
-# 48 3.6477122 2.741223e-63 TT.IG.SH_Ex.F    503     841 negative enrichment    0.05
+# 1  1.6759137 1.528135e-08     Chol_Ex.D    211    1099      all enrichment    0.05
+# 2  0.6724000 9.783978e-01     Chol_Ex.D     25     252 positive enrichment    0.05
+# 3  2.0117813 1.024594e-12     Chol_Ex.D    186     847 negative enrichment    0.05
+# 4  1.8448670 4.420322e-16       LS_In.C    369    1099      all enrichment    0.05
+# 5  0.4603787 9.999971e-01       LS_In.C     33     252 positive enrichment    0.05
+# 6  2.4718043 8.949557e-29       LS_In.C    336     847 negative enrichment    0.05
+# 7  1.7342849 3.089941e-15       LS_In.D    479    1099      all enrichment    0.05
+# 8  0.1880946 1.000000e+00       LS_In.D     23     252 positive enrichment    0.05
+# 9  2.7812018 1.088146e-40       LS_In.D    456     847 negative enrichment    0.05
+# 10 1.4459703 2.171798e-06       LS_In.M    296    1099      all enrichment    0.05
+# 11 0.3313156 1.000000e+00       LS_In.M     22     252 positive enrichment    0.05
+# 12 1.9574572 1.980449e-15       LS_In.M    274     847 negative enrichment    0.05
+# 13 1.9503481 3.721572e-10       LS_In.N    157    1099      all enrichment    0.05
+# 14 0.3927903 9.996721e-01       LS_In.N     10     252 positive enrichment    0.05
+# 15 2.5373747 1.234385e-16       LS_In.N    147     847 negative enrichment    0.05
+# 16 2.4064508 1.006164e-20       LS_In.O    228    1099      all enrichment    0.05
+# 17 0.3489028 9.999877e-01       LS_In.O     12     252 positive enrichment    0.05
+# 18 3.2556307 7.603599e-33       LS_In.O    216     847 negative enrichment    0.05
+# 19 1.5897604 4.748146e-11       LS_In.P    440    1099      all enrichment    0.05
+# 20 0.2343743 1.000000e+00       LS_In.P     26     252 positive enrichment    0.05
+# 21 2.4051696 5.063967e-30       LS_In.P    414     847 negative enrichment    0.05
+# 22 1.9611287 4.140115e-12       LS_In.Q    195    1099      all enrichment    0.05
+# 23 0.5039550 9.985001e-01       LS_In.Q     16     252 positive enrichment    0.05
+# 24 2.4944015 7.015233e-19       LS_In.Q    179     847 negative enrichment    0.05
+# 25 1.4896438 1.006550e-07       LS_In.R    341    1099      all enrichment    0.05
+# 26 0.4093834 9.999999e-01       LS_In.R     31     252 positive enrichment    0.05
+# 27 1.9822364 4.446531e-17       LS_In.R    310     847 negative enrichment    0.05
+# 28 1.5918534 7.113863e-10       MS_In.J    345    1099      all enrichment    0.05
+# 29 0.3761087 1.000000e+00       MS_In.J     28     252 positive enrichment    0.05
+# 30 2.1623963 3.521923e-21       MS_In.J    317     847 negative enrichment    0.05
+# 31 1.6411978 2.677483e-12       MS_In.K    437    1099      all enrichment    0.05
+# 32 0.2220070 1.000000e+00       MS_In.K     24     252 positive enrichment    0.05
+# 33 2.5016237 1.955792e-32       MS_In.K    413     847 negative enrichment    0.05
+# 34 1.8270050 5.597970e-12     Sept_In.G    244    1099      all enrichment    0.05
+# 35 0.7338369 9.546976e-01     Sept_In.G     30     252 positive enrichment    0.05
+# 36 2.1817661 9.598863e-17     Sept_In.G    214     847 negative enrichment    0.05
+# 37 1.7552004 2.334696e-15     Sept_In.I    446    1099      all enrichment    0.05
+# 38 0.2047548 1.000000e+00     Sept_In.I     22     252 positive enrichment    0.05
+# 39 2.7265192 1.953125e-38     Sept_In.I    424     847 negative enrichment    0.05
+# 40 2.0392981 3.884863e-17     TNoS_Ex.A    277    1099      all enrichment    0.05
+# 41 0.3519989 9.999993e-01     TNoS_Ex.A     17     252 positive enrichment    0.05
+# 42 2.7796804 5.809717e-30     TNoS_Ex.A    260     847 negative enrichment    0.05
+# 43 2.1561354 1.589634e-25 TT.IG.SH_Ex.C    422    1099      all enrichment    0.05
+# 44 0.4481697 9.999992e-01 TT.IG.SH_Ex.C     35     252 positive enrichment    0.05
+# 45 2.9957601 2.521425e-43 TT.IG.SH_Ex.C    387     847 negative enrichment    0.05
+# 46 1.8572679 2.131629e-10 TT.IG.SH_Ex.E    189    1099      all enrichment    0.05
+# 47 0.3359908 9.999884e-01 TT.IG.SH_Ex.E     11     252 positive enrichment    0.05
+# 48 2.4701799 1.754582e-18 TT.IG.SH_Ex.E    178     847 negative enrichment    0.05
+# 49 2.2286815 1.344878e-30 TT.IG.SH_Ex.F    533    1099      all enrichment    0.05
+# 50 0.2525851 1.000000e+00 TT.IG.SH_Ex.F     30     252 positive enrichment    0.05
+# 51 3.6401316 1.595154e-63 TT.IG.SH_Ex.F    503     847 negative enrichment    0.05
 
 enrichTab_glFDR01_ctFDR05 <- gene_set_enrichment(gene_list = gene_list_FDR01, modeling_results = modeling_results, model_type = "enrichment", fdr_cut = 0.05)
 enrichTab_glFDR01_ctFDR05
 #            OR         Pval          test NumSig SetSize       ID model_type fdr_cut
-# 1  1.77569601 3.556561e-03       LS_In.C     40     111      all enrichment    0.05
-# 2  0.86215767 7.142677e-01       LS_In.C     10      46 positive enrichment    0.05
-# 3  2.70451558 9.377675e-05       LS_In.C     30      65 negative enrichment    0.05
-# 4  1.38997852 5.693568e-02       LS_In.D     46     111      all enrichment    0.05
-# 5  0.08757034 9.999999e-01       LS_In.D      2      46 positive enrichment    0.05
-# 6  4.16418950 2.305152e-08       LS_In.D     44      65 negative enrichment    0.05
-# 7  1.38781739 8.044523e-02       LS_In.M     31     111      all enrichment    0.05
-# 8  0.24595389 9.989716e-01       LS_In.M      3      46 positive enrichment    0.05
-# 9  2.73227954 1.032606e-04       LS_In.M     28      65 negative enrichment    0.05
-# 10 1.91232367 1.375925e-02       LS_In.N     18     111      all enrichment    0.05
-# 11 0.21398951 9.892566e-01       LS_In.N      1      46 positive enrichment    0.05
-# 12 3.52553311 6.345668e-05       LS_In.N     17      65 negative enrichment    0.05
-# 13 2.99490193 1.871447e-06       LS_In.O     32     111      all enrichment    0.05
-# 14 0.15740700 9.976564e-01       LS_In.O      1      46 positive enrichment    0.05
-# 15 6.79656829 1.669839e-12       LS_In.O     31      65 negative enrichment    0.05
-# 16 1.29197370 1.169849e-01       LS_In.P     42     111      all enrichment    0.05
-# 17 0.31408590 9.992686e-01       LS_In.P      6      46 positive enrichment    0.05
-# 18 2.65575827 8.349322e-05       LS_In.P     36      65 negative enrichment    0.05
-# 19 1.89695311 8.522401e-03       LS_In.Q     22     111      all enrichment    0.05
-# 20 0.16619125 9.968354e-01       LS_In.Q      1      46 positive enrichment    0.05
-# 21 3.69259433 7.955517e-06       LS_In.Q     21      65 negative enrichment    0.05
-# 22 1.38222661 7.441261e-02       LS_In.R     35     111      all enrichment    0.05
-# 23 0.20599299 9.997907e-01       LS_In.R      3      46 positive enrichment    0.05
-# 24 2.93640720 2.153335e-05       LS_In.R     32      65 negative enrichment    0.05
-# 25 1.03923055 4.678504e-01       MS_In.J     28     111      all enrichment    0.05
-# 26 0.06766617 9.999978e-01       MS_In.J      1      46 positive enrichment    0.05
-# 27 2.21293959 1.764882e-03       MS_In.J     27      65 negative enrichment    0.05
-# 28 1.33987446 8.547356e-02       MS_In.K     42     111      all enrichment    0.05
-# 29 0.26441950 9.997485e-01       MS_In.K      5      46 positive enrichment    0.05
-# 30 2.93363982 1.616024e-05       MS_In.K     37      65 negative enrichment    0.05
-# 31 1.86484906 5.044474e-03     Sept_In.G     28     111      all enrichment    0.05
-# 32 0.51548365 9.418968e-01     Sept_In.G      4      46 positive enrichment    0.05
-# 33 3.25063160 1.874701e-05     Sept_In.G     24      65 negative enrichment    0.05
-# 34 1.36275489 7.320427e-02     Sept_In.I     42     111      all enrichment    0.05
-# 35 0.09992511 9.999992e-01     Sept_In.I      2      46 positive enrichment    0.05
-# 36 3.62240959 3.219459e-07     Sept_In.I     40      65 negative enrichment    0.05
-# 37 1.70381218 1.367835e-02     TNoS_Ex.A     28     111      all enrichment    0.05
-# 38 0.34533545 9.887503e-01     TNoS_Ex.A      3      46 positive enrichment    0.05
-# 39 3.17716411 2.041099e-05     TNoS_Ex.A     25      65 negative enrichment    0.05
-# 40 1.67757991 7.291881e-03 TT.IG.SH_Ex.C     41     111      all enrichment    0.05
-# 41 0.50513590 9.743037e-01 TT.IG.SH_Ex.C      7      46 positive enrichment    0.05
-# 42 3.15680545 5.325087e-06 TT.IG.SH_Ex.C     34      65 negative enrichment    0.05
-# 43 2.12518264 1.879647e-03 TT.IG.SH_Ex.E     24     111      all enrichment    0.05
-# 44 0.52372188 9.186646e-01 TT.IG.SH_Ex.E      3      46 positive enrichment    0.05
-# 45 3.69259433 7.955517e-06 TT.IG.SH_Ex.E     21      65 negative enrichment    0.05
-# 46 1.18161718 2.274638e-01 TT.IG.SH_Ex.F     42     111      all enrichment    0.05
-# 47 0.13345648 9.999987e-01 TT.IG.SH_Ex.F      3      46 positive enrichment    0.05
-# 48 2.94429191 1.518420e-05 TT.IG.SH_Ex.F     39      65 negative enrichment    0.05
+# 1  1.60632716 3.487201e-02     Chol_Ex.D     23     113      all enrichment    0.05
+# 2  0.73742687 8.003561e-01     Chol_Ex.D      5      47 positive enrichment    0.05
+# 3  2.36256260 2.940469e-03     Chol_Ex.D     18      66 negative enrichment    0.05
+# 4  1.75045571 4.199874e-03       LS_In.C     40     113      all enrichment    0.05
+# 5  0.85033138 7.277400e-01       LS_In.C     10      47 positive enrichment    0.05
+# 6  2.66535808 1.083248e-04       LS_In.C     30      66 negative enrichment    0.05
+# 7  1.36940818 6.478599e-02       LS_In.D     46     113      all enrichment    0.05
+# 8  0.08696972 9.999999e-01       LS_In.D      2      47 positive enrichment    0.05
+# 9  4.03696867 3.291828e-08       LS_In.D     44      66 negative enrichment    0.05
+# 10 1.37177438 8.768624e-02       LS_In.M     31     113      all enrichment    0.05
+# 11 0.24355565 9.990665e-01       LS_In.M      3      47 positive enrichment    0.05
+# 12 2.69561368 1.178266e-04       LS_In.M     28      66 negative enrichment    0.05
+# 13 1.89327816 1.485447e-02       LS_In.N     18     113      all enrichment    0.05
+# 14 0.21172761 9.897652e-01       LS_In.N      1      47 positive enrichment    0.05
+# 15 3.49307044 6.870110e-05       LS_In.N     17      66 negative enrichment    0.05
+# 16 2.95505522 2.290595e-06       LS_In.O     32     113      all enrichment    0.05
+# 17 0.15580260 9.978009e-01       LS_In.O      1      47 positive enrichment    0.05
+# 18 6.68031082 2.116354e-12       LS_In.O     31      66 negative enrichment    0.05
+# 19 1.27457189 1.292836e-01       LS_In.P     42     113      all enrichment    0.05
+# 20 0.31111189 9.993550e-01       LS_In.P      6      47 positive enrichment    0.05
+# 21 2.60636329 1.004923e-04       LS_In.P     36      66 negative enrichment    0.05
+# 22 1.87662813 9.357558e-03       LS_In.Q     22     113      all enrichment    0.05
+# 23 0.16448477 9.970218e-01       LS_In.Q      1      47 positive enrichment    0.05
+# 24 3.65289801 8.851459e-06       LS_In.Q     21      66 negative enrichment    0.05
+# 25 1.36524364 8.194583e-02       LS_In.R     35     113      all enrichment    0.05
+# 26 0.20409905 9.998131e-01       LS_In.R      3      47 positive enrichment    0.05
+# 27 2.88937172 2.548509e-05       LS_In.R     32      66 negative enrichment    0.05
+# 28 1.02859487 4.859274e-01       MS_In.J     28     113      all enrichment    0.05
+# 29 0.06710463 9.999980e-01       MS_In.J      1      47 positive enrichment    0.05
+# 30 2.18578845 1.959949e-03       MS_In.J     27      66 negative enrichment    0.05
+# 31 1.32160109 9.528010e-02       MS_In.K     42     113      all enrichment    0.05
+# 32 0.26202841 9.997790e-01       MS_In.K      5      47 positive enrichment    0.05
+# 33 2.87515319 1.993241e-05       MS_In.K     37      66 negative enrichment    0.05
+# 34 1.84310375 5.680203e-03     Sept_In.G     28     113      all enrichment    0.05
+# 35 0.50966625 9.450010e-01     Sept_In.G      4      47 positive enrichment    0.05
+# 36 3.21213731 2.112987e-05     Sept_In.G     24      66 negative enrichment    0.05
+# 37 1.34406549 8.193471e-02     Sept_In.I     42     113      all enrichment    0.05
+# 38 0.09917487 9.999993e-01     Sept_In.I      2      47 positive enrichment    0.05
+# 39 3.53526251 4.244952e-07     Sept_In.I     40      66 negative enrichment    0.05
+# 40 1.68421432 1.521883e-02     TNoS_Ex.A     28     113      all enrichment    0.05
+# 41 0.34168317 9.895069e-01     TNoS_Ex.A      3      47 positive enrichment    0.05
+# 42 3.13820727 2.312554e-05     TNoS_Ex.A     25      66 negative enrichment    0.05
+# 43 1.65360326 8.541093e-03 TT.IG.SH_Ex.C     41     113      all enrichment    0.05
+# 44 0.49941032 9.763931e-01 TT.IG.SH_Ex.C      7      47 positive enrichment    0.05
+# 45 3.10101365 6.467075e-06 TT.IG.SH_Ex.C     34      66 negative enrichment    0.05
+# 46 2.10156270 2.106565e-03 TT.IG.SH_Ex.E     24     113      all enrichment    0.05
+# 47 0.51781889 9.221497e-01 TT.IG.SH_Ex.E      3      47 positive enrichment    0.05
+# 48 3.65289801 8.851459e-06 TT.IG.SH_Ex.E     21      66 negative enrichment    0.05
+# 49 1.16622002 2.462071e-01 TT.IG.SH_Ex.F     42     113      all enrichment    0.05
+# 50 0.13247811 9.999989e-01 TT.IG.SH_Ex.F      3      47 positive enrichment    0.05
+# 51 2.87969675 1.908361e-05 TT.IG.SH_Ex.F     39      66 negative enrichment    0.05
 
 ###############################################################################
 
