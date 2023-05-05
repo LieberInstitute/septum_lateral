@@ -37,11 +37,11 @@ sce.ls
 ## sce.ls.filter has all cell types except the ones that needed to be dropped
 ## sce.ls.LS has only LS clusters
 
-keepnames <- levels(colData(sce.ls)$cellType.final)[-c(4:6, 24)]
-LSnames <- levels(colData(sce.ls)$cellType.final)[10:18]
+all_names <- levels(colData(sce.ls)$cellType.final)[-grep("drop|mixed", levels(colData(sce.ls)$cellType.final))]
+LS_names <- levels(colData(sce.ls)$cellType.final)[grep("LS", levels(colData(sce.ls)$cellType.final))]
 
-sce.ls.filter <- filterSCE(sce.ls, cellType.final %in% keepnames)
-sce.ls.LS <- filterSCE(sce.ls, cellType.final %in% LSnames)
+sce.ls.filter <- filterSCE(sce.ls, cellType.final %in% all_names)
+sce.ls.LS <- filterSCE(sce.ls, cellType.final %in% LS_names)
 
 ###############################################################################
 
@@ -55,7 +55,7 @@ my_theme <- theme_bw() +
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()
     )
 
-cell_colors.ls[names(cell_colors.ls)[-c(10:18)]] <- "#595E60"
+cell_colors.ls[-grep("LS", names(cell_colors.ls))] <- "#edede9"
 
 ###############################################################################
 
@@ -73,7 +73,7 @@ tSNE_cellTypes_no_legend <- ggcells(sce.ls.filter, mapping = aes(x = TSNE.1, y =
 
 
 tSNE_LS_no_legend <- ggcells(sce.ls.LS, mapping = aes(x = TSNE.1, y = TSNE.2, colour = cellType.final)) +
-    geom_point(size = 0.2, alpha = 0.3) +
+    geom_point(size = 0.8, alpha = 0.3) +
     scale_color_manual(values = cell_colors.ls) +
     my_theme +
     coord_equal() +
@@ -106,7 +106,7 @@ UMAP_cellTypes_no_legend <- ggcells(sce.ls.filter, mapping = aes(x = UMAP.1, y =
     theme(legend.position = "None")
 
 UMAP_LS_no_legend <- ggcells(sce.ls.LS, mapping = aes(x = UMAP.1, y = UMAP.2, colour = cellType.final)) +
-    geom_point(size = 0.2, alpha = 0.3) +
+    geom_point(size = 0.8, alpha = 0.3) +
     scale_color_manual(values = cell_colors.ls) +
     my_theme +
     coord_equal() +
