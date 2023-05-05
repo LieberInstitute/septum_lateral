@@ -24,3 +24,11 @@ load(
 
 sce.ls
 
+keepnames <- levels(colData(sce.ls)$cellType.final)[-c(4:6, 24)]
+LSnames <- levels(colData(sce.ls)$cellType.final)[10:18]
+
+sce.ls.filter <- filterSCE(sce.ls, cellType.final %in% keepnames)
+sce.ls.LS <- filterSCE(sce.ls, cellType.final %in% LSnames)
+
+cell_colors.ls[names(cell_colors.ls)[-c(10:18)]] <- "#595E60"
+
