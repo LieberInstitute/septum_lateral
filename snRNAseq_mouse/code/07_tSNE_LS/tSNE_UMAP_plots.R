@@ -80,8 +80,16 @@ tSNE_LS_no_legend <- ggcells(sce.ls.LS, mapping = aes(x = TSNE.1, y = TSNE.2, co
     labs(x = "TSNE Dimension 1", y = "TSNE Dimension 2") +
     theme(legend.position = "None")
 
-tSNE_LS_no_legend +
+tSNE_LS_facet <- tSNE_LS_no_legend +
     facet_wrap(~cellType.final)
+
+ggsave(
+    tSNE_cellTypes_no_legend +
+        tSNE_LS_facet +
+        theme(axis.title.y = element_blank()),
+    filename = here("snRNAseq_mouse","plots", "07_tSNE_LS", "tSNE_cellType_full_facet.pdf"),
+    width = 13
+)
 
 ###############################################################################
 
@@ -105,8 +113,16 @@ UMAP_LS_no_legend <- ggcells(sce.ls.LS, mapping = aes(x = UMAP.1, y = UMAP.2, co
     labs(x = "UMAP Dimension 1", y = "UMAP Dimension 2") +
     theme(legend.position = "None")
 
-UMAP_LS_no_legend +
+UMAP_LS_facet <- UMAP_LS_no_legend +
     facet_wrap(~cellType.final)
+
+ggsave(
+    UMAP_cellTypes_no_legend +
+        UMAP_LS_facet +
+        theme(axis.title.y = element_blank()),
+    filename = here("snRNAseq_mouse","plots", "07_tSNE_LS", "UMAP_cellType_full_facet.pdf"),
+    width = 13
+)
 
 ###############################################################################
 
