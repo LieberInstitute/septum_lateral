@@ -60,8 +60,8 @@ colData(sce_pseudo_LS)
 
 ## Compute PCs
 pca <- prcomp(t(assays(sce_pseudo_LS)$logcounts))
-#metadata(sce_pseudo_LS) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
-#metadata(sce_pseudo_LS)
+# metadata(sce_pseudo_LS) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
+# metadata(sce_pseudo_LS)
 pca_pseudo <- pca$x[, seq_len(20)]
 colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
 reducedDims(sce_pseudo_LS) <- list(PCA = pca_pseudo)
@@ -95,8 +95,8 @@ colData(sce_pseudo_all)
 
 ## Compute PCs
 pca_all <- prcomp(t(assays(sce_pseudo_all)$logcounts))
-#metadata(sce_pseudo_all) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
-#metadata(sce_pseudo_all)
+# metadata(sce_pseudo_all) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
+# metadata(sce_pseudo_all)
 pca_pseudo_all <- pca_all$x[, seq_len(20)]
 colnames(pca_pseudo_all) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo_all))))
 reducedDims(sce_pseudo_all) <- list(PCA = pca_pseudo_all)
@@ -114,7 +114,7 @@ sce_pseudo_all <- scater::runPCA(sce_pseudo_all, name = "runPCA")
 
 #################### Save both pseudobulking results to rda ###################
 
-resave(sce_pseudo_LS, sce_pseudo_all, file = here(
+save(sce_pseudo_LS, sce_pseudo_all, file = here(
     "snRNAseq_mouse",
     "processed_data",
     "SCE",
