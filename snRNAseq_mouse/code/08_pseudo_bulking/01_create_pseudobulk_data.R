@@ -110,3 +110,28 @@ sce_pseudo_all <- scater::runPCA(sce_pseudo_all, name = "runPCA")
 
 ###############################################################################
 
+
+
+#################### Save both pseudobulking results to rda ###################
+
+resave(sce_pseudo_LS, sce_pseudo_all, file = here(
+    "snRNAseq_mouse",
+    "processed_data",
+    "SCE",
+    "sce_pseudobulking_LS_and_broad.rda"
+))
+
+###############################################################################
+
+
+
+######################### Reproducibility information #########################
+
+## Reproducibility information
+print("Reproducibility information:")
+Sys.time()
+proc.time()
+options(width = 120)
+session_info()
+
+###############################################################################
