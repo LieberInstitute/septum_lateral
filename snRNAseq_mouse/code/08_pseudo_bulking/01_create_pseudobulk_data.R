@@ -77,3 +77,36 @@ sce_pseudo_LS <- scater::runPCA(sce_pseudo_LS, name = "runPCA")
 #   more singular values/vectors requested than available
 
 ###############################################################################
+
+
+
+##################### pseudobulking for all cell clusters #####################
+
+## pseudobulking across LS clusters
+sce_pseudo_all <-
+    registration_pseudobulk(sce.ls.filter,
+        var_registration = "cellType.broad",
+        var_sample_id = "Sample",
+        min_ncells = 10
+    )
+
+dim(sce_pseudo_all)
+colData(sce_pseudo_all)
+
+## Compute PCs
+pca_all <- prcomp(t(assays(sce_pseudo_all)$logcounts))
+#metadata(sce_pseudo_all) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
+#metadata(sce_pseudo_all)
+pca_pseudo_all <- pca_all$x[, seq_len(20)]
+colnames(pca_pseudo_all) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo_all))))
+reducedDims(sce_pseudo_all) <- list(PCA = pca_pseudo_all)
+
+## Compute some reduced dims
+set.seed(20230509)
+sce_pseudo_all <- scater::runMDS(sce_pseudo_all, ncomponents = 20)
+sce_pseudo_all <- scater::runPCA(sce_pseudo_all, name = "runPCA")
+# Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
+#   You're computing too large a percentage of total singular values, use a standard svd instead.
+
+###############################################################################
+
