@@ -35,10 +35,11 @@ sce.ls
 ## sce.ls.filter has all cell types except the ones that needed to be dropped
 ## sce.ls.LS has only LS clusters
 
-all_names <- levels(colData(sce.ls)$cellType.final)[-grep("drop|mixed", levels(colData(sce.ls)$cellType.final))]
+all_names <- levels(colData(sce.ls)$cellType.broad)[-grep("drop|mixed", levels(colData(sce.ls)$cellType.final))]
+all_names <- all_names[-grep("mixed", all_names)]
 LS_names <- levels(colData(sce.ls)$cellType.final)[grep("LS", levels(colData(sce.ls)$cellType.final))]
 
-sce.ls.filter <- filterSCE(sce.ls, cellType.final %in% all_names)
+sce.ls.filter <- filterSCE(sce.ls, cellType.broad %in% all_names)
 sce.ls.LS <- filterSCE(sce.ls, cellType.final %in% LS_names)
 
 ###############################################################################
