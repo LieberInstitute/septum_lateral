@@ -100,5 +100,24 @@ pdf(file = here("snRNAseq_mouse/plots/08_pseudo_bulking/sce_pseudo_broad_PCs_v2.
 print(p_all)
 dev.off()
 
+
+colData(sce_pseudo_all)$cell.group <- "non neuronal"
+colData(sce_pseudo_all)$cell.group[colData(sce_pseudo_all)$cellType.broad %in% neuronal_names] <- "neuronal"
+
+p_neur <- plotPCA(
+    sce_pseudo_neuronal,
+    colour_by = "cellType.broad",
+    ncomponents = 12,
+    point_size = 1,
+    label_format = c("%s %02i", " (%i%%)"),
+    percentVar = (metadata(sce_pseudo_neuronal)$PCA_var_explained) * 100
+    )
+#+ scale_color_manual("cellType.broad", values = cell_colors_all)
+
+pdf(file = here("snRNAseq_mouse/plots/08_pseudo_bulking/sce_pseudo_neuronal_PCs.pdf"), width = 14, height = 14)
+print(p_neur)
+dev.off()
+
+
 ###############################################################################
 
