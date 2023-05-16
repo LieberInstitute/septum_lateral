@@ -61,11 +61,11 @@ p_LS <- plotPCA(
     colour_by = "cellType.final",
     ncomponents = 4,
     point_size = 2,
-    label_format = c("%s %02i", " (%i%%)")
-    #percentVar = metadata(sce_pseudo)$PCA_var_explained
+    label_format = c("%s %02i", " (%i%%)"),
+    percentVar = (metadata(sce_pseudo_LS)$PCA_var_explained) * 100
     ) + scale_color_manual("cellType.final",values = cell_colors_LS)
 
-pdf(file = here("snRNAseq_mouse/plots/sce_pseudo_LS_PCs.pdf"), width = 8, height = 8)
+pdf(file = here("snRNAseq_mouse/plots/08_pseudo_bulking/sce_pseudo_LS_PCs.pdf"), width = 8, height = 8)
 print(p_LS)
 dev.off()
 
@@ -73,16 +73,30 @@ dev.off()
 p_all <- plotPCA(
     sce_pseudo_all,
     colour_by = "cellType.broad",
-    ncomponents = 12,
-    point_size = 1,
+    shape_by = "cell.group",
+    ncomponents = 4,
+    point_size = 2,
     label_format = c("%s %02i", " (%i%%)"),
-    #percentVar = metadata(sce_pseudo)$PCA_var_explained
+    percentVar = (metadata(sce_pseudo_all)$PCA_var_explained) * 100
     )
+#+ scale_color_manual("cellType.broad", values = cell_colors_all)
 
-# This needs to be change
-#p_all <- p_all + scale_color_manual("cellType.final", values = cell_colors.ls)
+pdf(file = here("snRNAseq_mouse/plots/08_pseudo_bulking/sce_pseudo_broad_PCs.pdf"), width = 8, height = 8)
+print(p_all)
+dev.off()
 
-pdf(file = here("snRNAseq_mouse/plots/sce_pseudo_broad_PCs.pdf"), width = 14, height = 14)
+## Broad clusters
+p_all <- plotPCA(
+    sce_pseudo_all,
+    colour_by = "cell.group",
+    ncomponents = 4,
+    point_size = 2,
+    label_format = c("%s %02i", " (%i%%)"),
+    percentVar = (metadata(sce_pseudo_all)$PCA_var_explained) * 100
+    )
+#+ scale_color_manual("cellType.broad", values = cell_colors_all)
+
+pdf(file = here("snRNAseq_mouse/plots/08_pseudo_bulking/sce_pseudo_broad_PCs_v2.pdf"), width = 8, height = 8)
 print(p_all)
 dev.off()
 
