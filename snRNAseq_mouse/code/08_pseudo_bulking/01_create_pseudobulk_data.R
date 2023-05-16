@@ -7,6 +7,7 @@ library("CATALYST")
 library("sessioninfo")
 
 
+
 ############################### Load sce object ###############################
 
 load(
@@ -30,6 +31,36 @@ sce.ls
 
 
 
+###################### Function to perform pseudobulking ######################
+
+do_pseudobulk <- function(sce, cell_cluster) {
+    sce_pseudo <-
+        registration_pseudobulk(sce,
+            var_registration = cell_cluster,
+            var_sample_id = "Sample",
+            min_ncells = 10
+        )
+
+    ## Compute PCs
+    pca <- prcomp(t(assays(sce_pseudo)$logcounts))
+    metadata(sce_pseudo) <- list("PCA_var_explained" = (summary(pca))$importance[2, 1:20])
+    metadata(sce_pseudo)
+    pca_pseudo <- pca$x[, seq_len(20)]
+    colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
+    reducedDims(sce_pseudo) <- list(PCA = pca_pseudo)
+
+    ## Compute some reduced dims
+    set.seed(20230509)
+    sce_pseudo <- scater::runMDS(sce_pseudo, ncomponents = 20)
+    sce_pseudo <- scater::runPCA(sce_pseudo, name = "runPCA")
+
+    return(sce_pseudo)
+}
+
+###############################################################################
+
+
+
 ############################## Filter sce object ##############################
 
 ## sce.ls.filter has all cell types except the ones that needed to be dropped
@@ -38,9 +69,11 @@ sce.ls
 all_names <- levels(colData(sce.ls)$cellType.broad)[-grep("drop|mixed", levels(colData(sce.ls)$cellType.final))]
 all_names <- all_names[-grep("mixed", all_names)]
 LS_names <- levels(colData(sce.ls)$cellType.final)[grep("LS", levels(colData(sce.ls)$cellType.final))]
+neuronal_names <- c("Chol", "LS", "Sept", "Str", "MS", "TNoS", "TT.IG.SH", "Thal", "IoC")
 
 sce.ls.filter <- filterSCE(sce.ls, cellType.broad %in% all_names)
 sce.ls.LS <- filterSCE(sce.ls, cellType.final %in% LS_names)
+sce.ls.neuronal <- filterSCE(sce.ls, cellType.broad %in% neuronal_names)
 
 ###############################################################################
 
@@ -49,28 +82,34 @@ sce.ls.LS <- filterSCE(sce.ls, cellType.final %in% LS_names)
 ############################# pseudobulking for LS ############################
 
 ## pseudobulking across LS clusters
-sce_pseudo_LS <-
-    registration_pseudobulk(sce.ls.LS,
-        var_registration = "cellType.final",
-        var_sample_id = "Sample",
-        min_ncells = 10
-    )
+sce_pseudo_LS <- do_pseudobulk(sce.ls.LS, "cellType.final")
+# 2023-05-16 11:47:54 make pseudobulk object
+# 2023-05-16 11:47:56 dropping 6 pseudo-bulked samples that are below 'min_ncells'.
+# 2023-05-16 11:47:56 drop lowly expressed genes
+# 2023-05-16 11:47:57 normalize expression
+# Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
+#   You're computing too large a percentage of total singular values, use a standard svd instead.
+# Warning message:
+# In check_numbers(k = k, nu = nu, nv = nv, limit = min(dim(x)) -  :
+#   more singular values/vectors requested than available
 
-dim(sce_pseudo_LS)
-colData(sce_pseudo_LS)
 
-## Compute PCs
-pca <- prcomp(t(assays(sce_pseudo_LS)$logcounts))
-# metadata(sce_pseudo_LS) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
-# metadata(sce_pseudo_LS)
-pca_pseudo <- pca$x[, seq_len(20)]
-colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
-reducedDims(sce_pseudo_LS) <- list(PCA = pca_pseudo)
+## pseudobulking for broad cell type clusters
+sce_pseudo_all <- do_pseudobulk(sce.ls.filter, "cellType.broad")
+# 2023-05-16 11:49:46 make pseudobulk object
+# 2023-05-16 11:50:03 dropping 5 pseudo-bulked samples that are below 'min_ncells'.
+# 2023-05-16 11:50:03 drop lowly expressed genes
+# 2023-05-16 11:50:04 normalize expression
+# Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
+#   You're computing too large a percentage of total singular values, use a standard svd instead.
 
-## Compute some reduced dims
-set.seed(20230509)
-sce_pseudo_LS <- scater::runMDS(sce_pseudo_LS, ncomponents = 20)
-sce_pseudo_LS <- scater::runPCA(sce_pseudo_LS, name = "runPCA")
+
+## pseudobulking for neuronal broad clusters
+sce_pseudo_neuronal <- do_pseudobulk(sce.ls.neuronal, "cellType.broad")
+# 2023-05-16 11:53:41 make pseudobulk object
+# 2023-05-16 11:53:50 dropping 1 pseudo-bulked samples that are below 'min_ncells'.
+# 2023-05-16 11:53:50 drop lowly expressed genes
+# 2023-05-16 11:53:50 normalize expression
 # Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
 #   You're computing too large a percentage of total singular values, use a standard svd instead.
 # Warning message:
@@ -81,41 +120,9 @@ sce_pseudo_LS <- scater::runPCA(sce_pseudo_LS, name = "runPCA")
 
 
 
-##################### pseudobulking for all cell clusters #####################
-
-## pseudobulking across LS clusters
-sce_pseudo_all <-
-    registration_pseudobulk(sce.ls.filter,
-        var_registration = "cellType.broad",
-        var_sample_id = "Sample",
-        min_ncells = 10
-    )
-
-dim(sce_pseudo_all)
-colData(sce_pseudo_all)
-
-## Compute PCs
-pca_all <- prcomp(t(assays(sce_pseudo_all)$logcounts))
-# metadata(sce_pseudo_all) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
-# metadata(sce_pseudo_all)
-pca_pseudo_all <- pca_all$x[, seq_len(20)]
-colnames(pca_pseudo_all) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo_all))))
-reducedDims(sce_pseudo_all) <- list(PCA = pca_pseudo_all)
-
-## Compute some reduced dims
-set.seed(20230509)
-sce_pseudo_all <- scater::runMDS(sce_pseudo_all, ncomponents = 20)
-sce_pseudo_all <- scater::runPCA(sce_pseudo_all, name = "runPCA")
-# Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
-#   You're computing too large a percentage of total singular values, use a standard svd instead.
-
-###############################################################################
-
-
-
 #################### Save both pseudobulking results to rda ###################
 
-save(sce_pseudo_LS, sce_pseudo_all, file = here(
+save(sce_pseudo_LS, sce_pseudo_all, sce_pseudo_neuronal, file = here(
     "snRNAseq_mouse",
     "processed_data",
     "SCE",
