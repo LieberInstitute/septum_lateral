@@ -31,6 +31,7 @@ load(
 # Loading objects:
 #   sce_pseudo_LS
 #   sce_pseudo_all
+#   sce_pseudo_neuronal
 
 ###############################################################################
 
@@ -41,6 +42,12 @@ load(
 cell_colors_LS <- cell_colors.ls[grep("LS",names(cell_colors.ls))]
 
 cell_colors_LS[1:9] <- c("#58B4E4","#169F74", "#0673B4", "#D56128", "#CC79A8", "#1878B6", "#AEC7E6","#F57E20", "#EFE642")
+
+cell_colors_all <- c(1:length(levels(colData(sce_pseudo_all)$cellType.broad)))
+names(cell_colors_all) <- levels(colData(sce_pseudo_all)$cellType.broad)
+neuronal_names <- c("Chol", "LS", "Sept", "Str", "MS", "TNoS", "TT.IG.SH", "Thal", "IoC")
+cell_colors_all[names(cell_colors_all) %in% neuronal_names] <- "#e68f00"
+cell_colors_all[!names(cell_colors_all) %in% neuronal_names] <- "#006164"
 
 ###############################################################################
 
