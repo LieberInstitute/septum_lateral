@@ -111,37 +111,37 @@ names(keyvals)[keyvals == "#006164"] <- "Microglia specific genes"
 
 
 
+################################ Volcano plot #################################
+
 volcano_plot <- EnhancedVolcano(outGenes_plot,
     x = "logFC",
     y = "P.Value",
     pCutoff = 1e-02,
     FCcutoff = 0,
-    selectLab = genes2plot$Symbol,
-    max.overlaps = n_overlaps,
-    drawConnectors = TRUE,
     lab = rownames(outGenes_plot),
+    selectLab = genes2plot$Symbol,
     labSize = 6.0,
+    drawConnectors = TRUE,
+    arrowheads = FALSE,
+    max.overlaps = Inf,
     labCol = "black",
-    labFace = "bold",
-    boxedLabels = TRUE,
-    colAlpha = 4 / 5,
-    col = c("#a8b6cc", "#a8b6cc", "#1f449c", "#1f449c"),
-     legendLabels = c(
-            "Not sig.", "Not sig.", "FDR < 0.05",
-            "FDR < 0.05"
-        ),
-     caption = paste0("total = ", nrow(outGenes_plot), " genes"),
+    pointSize = c(ifelse(outGenes_plot$ensemblID %in% selected, 6, 2)),
+    colAlpha = c(ifelse(outGenes_plot$ensemblID %in% selected, 1, 2 / 5)),
+    colCustom = keyvals,
+    caption = paste0("total = ", nrow(outGenes_plot), " genes"),
     title = "",
     subtitle = "",
-    legendPosition = "right"
+    legendPosition = "bottom"
 ) +
     ylim(c(0, 8)) +
     coord_flip()
 
-pdf(here("snRNAseq_mouse",
-        "plots",
-        "06_DE_plotting/",
-        "volcano_plot_flip_TrkB-KD.pdf"), height = 10, width = 14)
+pdf(here(
+    "snRNAseq_mouse",
+    "plots",
+    "06_DE_plotting/",
+    "volcano_plot_flip_TrkB-KD.pdf"
+), height = 10, width = 14)
 print(volcano_plot)
 dev.off()
 
