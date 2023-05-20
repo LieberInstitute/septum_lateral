@@ -73,18 +73,43 @@ blue_genes <- c("ENSMUSG00000021373", "ENSMUSG00000021448", "ENSMUSG00000028176"
 ###############################################################################
 
 
-downgene_df <- c("ENSMUSG00000022285", "ENSMUSG00000028524", "ENSMUSG00000029405", "ENSMUSG00000034796", "ENSMUSG00000034958", "ENSMUSG00000037492", "ENSMUSG00000046178", "ENSMUSG00000028176", "ENSMUSG00000033676")
+
+#################### Genes to highlight and color selection ###################
+
+## Selection of genes to highlight
+downgene_df <- c("ENSMUSG00000028524", "ENSMUSG00000029405", "ENSMUSG00000033676", "ENSMUSG00000034796", "ENSMUSG00000037386", "ENSMUSG00000041852", "ENSMUSG00000046178", "ENSMUSG00000049583")
 upgene_df <- sigGenes %>%
     filter(adj.P.Val < 0.01, logFC > 0) %>%
     arrange(desc(abs(logFC))) %>%
-    head(5) %>%
+    head(4) %>%
     select(ensemblID)
 upgene_df <- as.vector(upgene_df$ensemblID)
 selected <- c(downgene_df, upgene_df)
-
 genes2plot <- sigGenes %>% filter(ensemblID %in% selected)
-#genes2plot <- topgenes(genes = sigGenes, p_value_thresh = 0.01, top = 5)
-n_overlaps <- ifelse(length(selected) > 0, Inf, 15)
+
+## Colors for the significant and not significant genes
+keyvals <- ifelse(
+    outGenes_plot$P.Value > 1e-02, "#f0e3d6", "#E2C6A7"
+)
+
+## Assigning colors for each groups of highlited genes
+keyvals[outGenes_plot$ensemblID %in% orange_genes & outGenes_plot$ensemblID %in% selected] <- "#FB8500"
+keyvals[outGenes_plot$ensemblID %in% green_genes & outGenes_plot$ensemblID %in% selected] <- "#789C25"
+keyvals[outGenes_plot$ensemblID %in% blue_genes & outGenes_plot$ensemblID %in% selected] <- "#A5C0DF"
+keyvals[outGenes_plot$ensemblID %in% upgene_df] <- "#006164"
+
+
+## Legend names
+names(keyvals)[keyvals == "#E2C6A7"] <- "FDR < 0.05"
+names(keyvals)[keyvals == "#f0e3d6"] <- "Not significant"
+names(keyvals)[keyvals == "#FB8500"] <- "Septum specific genes"
+names(keyvals)[keyvals == "#789C25"] <- "Neurodevelopmental genes"
+names(keyvals)[keyvals == "#A5C0DF"] <- "Plasticity/synaptic genes"
+names(keyvals)[keyvals == "#006164"] <- "Microglia specific genes"
+
+###############################################################################
+
+
 
 volcano_plot <- EnhancedVolcano(outGenes_plot,
     x = "logFC",
