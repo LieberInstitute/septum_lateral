@@ -60,7 +60,18 @@ rownames(outGenes_plot) <- uniquifyFeatureNames(
 
 
 
-################################ Volcano plot #################################
+############# Create groups of genes according to their function ##############
+
+## This classification was made by Lionel Rodrqiguez based on what we want to
+## talk about in the paper. The orange genes are LS specific, the green ones are
+## related to neurodevelopment, and the blue group has plasticitiy/synaptic genes
+
+orange_genes <- c("ENSMUSG00000022285", "ENSMUSG00000028524", "ENSMUSG00000029405", "ENSMUSG00000034796", "ENSMUSG00000034958", "ENSMUSG00000037492", "ENSMUSG00000046178")
+green_genes <- c("ENSMUSG00000008658", "ENSMUSG00000020297", "ENSMUSG00000033676", "ENSMUSG00000049583", "ENSMUSG00000056755")
+blue_genes <- c("ENSMUSG00000021373", "ENSMUSG00000021448", "ENSMUSG00000028176", "ENSMUSG00000037386", "ENSMUSG00000039419", "ENSMUSG00000041852", "ENSMUSG00000062296")
+
+###############################################################################
+
 
 downgene_df <- c("ENSMUSG00000022285", "ENSMUSG00000028524", "ENSMUSG00000029405", "ENSMUSG00000034796", "ENSMUSG00000034958", "ENSMUSG00000037492", "ENSMUSG00000046178", "ENSMUSG00000028176", "ENSMUSG00000033676")
 upgene_df <- sigGenes %>%
