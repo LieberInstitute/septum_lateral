@@ -52,6 +52,7 @@ rownames(outGenes_plot) <- uniquifyFeatureNames(
 ## talk about in the paper. The orange genes are LS specific, the green ones are
 ## related to neurodevelopment, and the blue group has plasticitiy/synaptic genes
 
+glia_genes <- c("ENSMUSG00000007613", "ENSMUSG00000018008", "ENSMUSG00000018654", "ENSMUSG00000020143")
 orange_genes <- c("ENSMUSG00000022285", "ENSMUSG00000028524", "ENSMUSG00000029405", "ENSMUSG00000034796", "ENSMUSG00000034958", "ENSMUSG00000037492", "ENSMUSG00000046178")
 green_genes <- c("ENSMUSG00000008658", "ENSMUSG00000020297", "ENSMUSG00000033676", "ENSMUSG00000049583", "ENSMUSG00000056755")
 blue_genes <- c("ENSMUSG00000021373", "ENSMUSG00000021448", "ENSMUSG00000028176", "ENSMUSG00000037386", "ENSMUSG00000039419", "ENSMUSG00000041852", "ENSMUSG00000062296")
@@ -63,13 +64,9 @@ blue_genes <- c("ENSMUSG00000021373", "ENSMUSG00000021448", "ENSMUSG00000028176"
 #################### Genes to highlight and color selection ###################
 
 ## Selection of genes to highlight
-downgene_df <- c("ENSMUSG00000028524", "ENSMUSG00000029405", "ENSMUSG00000033676", "ENSMUSG00000034796", "ENSMUSG00000037386", "ENSMUSG00000041852", "ENSMUSG00000046178", "ENSMUSG00000049583")
-upgene_df <- sigGenes %>%
-    filter(adj.P.Val < 0.01, logFC > 0) %>%
-    arrange(desc(abs(logFC))) %>%
-    head(4) %>%
-    select(ensemblID)
-upgene_df <- as.vector(upgene_df$ensemblID)
+downgene_df <- c(orange_genes, green_genes, blue_genes)
+upgene_df <- glia_genes
+#upgene_df <- as.vector(upgene_df$ensemblID)
 selected <- c(downgene_df, upgene_df)
 genes2plot <- sigGenes %>% filter(ensemblID %in% selected)
 
