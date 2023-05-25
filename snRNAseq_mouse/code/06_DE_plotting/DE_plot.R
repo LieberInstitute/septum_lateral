@@ -85,9 +85,9 @@ keyvals[outGenes_plot$ensemblID %in% upgene_df] <- "#006164"
 ## Legend names
 names(keyvals)[keyvals == "#E2C6A7"] <- "FDR < 0.05"
 names(keyvals)[keyvals == "#f0e3d6"] <- "Not significant"
-names(keyvals)[keyvals == "#FB8500"] <- "Septum specific genes"
-names(keyvals)[keyvals == "#789C25"] <- "Neurodevelopmental genes"
-names(keyvals)[keyvals == "#A5C0DF"] <- "Plasticity/synaptic genes"
+names(keyvals)[keyvals == "#FB8500"] <- "Lateral Septum specific genes"
+names(keyvals)[keyvals == "#789C25"] <- "Plasticity genes"
+names(keyvals)[keyvals == "#A5C0DF"] <- "Neurodevelopmental genes"
 names(keyvals)[keyvals == "#006164"] <- "Microglia specific genes"
 
 ###############################################################################
@@ -95,6 +95,39 @@ names(keyvals)[keyvals == "#006164"] <- "Microglia specific genes"
 
 
 ################################ Volcano plot #################################
+
+volcano_plot <- EnhancedVolcano(outGenes_plot,
+    x = "logFC",
+    y = "P.Value",
+    pCutoff = 1e-02,
+    FCcutoff = 0,
+    lab = rownames(outGenes_plot),
+    selectLab = genes2plot$Symbol,
+    labSize = 6.0,
+    drawConnectors = TRUE,
+    arrowheads = FALSE,
+    max.overlaps = Inf,
+    labCol = "black",
+    pointSize = c(ifelse(outGenes_plot$ensemblID %in% selected, 6, 2)),
+    colAlpha = c(ifelse(outGenes_plot$ensemblID %in% selected, 1, 2 / 5)),
+    colCustom = keyvals,
+    caption = paste0("total = ", nrow(outGenes_plot), " genes"),
+    title = "",
+    subtitle = "",
+    legendPosition = "bottom"
+) +
+    ylim(c(0, 8)) +
+    coord_flip()
+
+pdf(here(
+    "snRNAseq_mouse",
+    "plots",
+    "06_DE_plotting/",
+    "volcano_plot_flip_TrkB-KD.pdf"
+), height = 10, width = 14)
+print(volcano_plot)
+dev.off()
+
 
 volcano_plot <- EnhancedVolcano(outGenes_plot,
     x = "logFC",
