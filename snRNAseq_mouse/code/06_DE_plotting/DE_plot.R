@@ -77,8 +77,8 @@ keyvals <- ifelse(
 
 ## Assigning colors for each groups of highlited genes
 keyvals[outGenes_plot$ensemblID %in% orange_genes & outGenes_plot$ensemblID %in% selected] <- "#FB8500"
-keyvals[outGenes_plot$ensemblID %in% green_genes & outGenes_plot$ensemblID %in% selected] <- "#789C25"
-keyvals[outGenes_plot$ensemblID %in% blue_genes & outGenes_plot$ensemblID %in% selected] <- "#A5C0DF"
+keyvals[outGenes_plot$ensemblID %in% green_genes & outGenes_plot$ensemblID %in% selected] <- "#A5C0DF"
+keyvals[outGenes_plot$ensemblID %in% blue_genes & outGenes_plot$ensemblID %in% selected] <- "#789C25"
 keyvals[outGenes_plot$ensemblID %in% upgene_df] <- "#006164"
 
 
@@ -86,8 +86,8 @@ keyvals[outGenes_plot$ensemblID %in% upgene_df] <- "#006164"
 names(keyvals)[keyvals == "#E2C6A7"] <- "FDR < 0.05"
 names(keyvals)[keyvals == "#f0e3d6"] <- "Not significant"
 names(keyvals)[keyvals == "#FB8500"] <- "Lateral Septum specific genes"
-names(keyvals)[keyvals == "#789C25"] <- "Plasticity genes"
-names(keyvals)[keyvals == "#A5C0DF"] <- "Neurodevelopmental genes"
+names(keyvals)[keyvals == "#789C25"] <- "Neurodevelopmental genes"
+names(keyvals)[keyvals == "#A5C0DF"] <- "Plasticity genes"
 names(keyvals)[keyvals == "#006164"] <- "Microglia specific genes"
 
 ###############################################################################
