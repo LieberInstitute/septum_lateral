@@ -3,6 +3,8 @@ library("SingleCellExperiment")
 library("scater")
 library("sessioninfo")
 
+
+
 ################### Load sce object and pseudobulk results ####################
 
 load(
@@ -41,7 +43,7 @@ load(
 
 cell_colors_LS <- cell_colors.ls[grep("LS",names(cell_colors.ls))]
 
-cell_colors_LS[1:9] <- c("#58B4E4","#169F74", "#0673B4", "#D56128", "#CC79A8", "#1878B6", "#AEC7E6","#F57E20", "#EFE642")
+cell_colors_LS[1:9] <- c("#FF7F0E","#FFBB78","#2CA02C","#98DF8A","#D62728", "#FF9896", "#9467BD", "#C5B0D5", "#8C564B")
 
 cell_colors_all <- c(1:length(levels(colData(sce_pseudo_all)$cellType.broad)))
 names(cell_colors_all) <- levels(colData(sce_pseudo_all)$cellType.broad)
