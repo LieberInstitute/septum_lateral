@@ -68,12 +68,16 @@ do_pseudobulk <- function(sce, cell_cluster) {
 
 all_names <- levels(colData(sce.ls)$cellType.broad)[-grep("drop|mixed", levels(colData(sce.ls)$cellType.final))]
 all_names <- all_names[-grep("mixed", all_names)]
-LS_names <- levels(colData(sce.ls)$cellType.final)[grep("LS", levels(colData(sce.ls)$cellType.final))]
-neuronal_names <- c("Chol", "LS", "Sept", "Str", "MS", "TNoS", "TT.IG.SH", "Thal", "IoC")
+LS_names <- levels(colData(sce.ls)$cellType.final)[grep("LS|Sept", levels(colData(sce.ls)$cellType.final))]
+LSept_names <- levels(colData(sce.ls)$cellType.final)[grep("LS|Sept", levels(colData(sce.ls)$cellType.final))]
+neuronal_names <- levels(colData(sce.ls)$cellType.final)[grep("LS|Sept|MS|TT|TNoS", levels(colData(sce.ls)$cellType.final))]
+neuronalbr_names <- c("Chol", "LS", "Sept", "Str", "MS", "TNoS", "TT.IG.SH", "Thal", "IoC")
 
 sce.ls.filter <- filterSCE(sce.ls, cellType.broad %in% all_names)
 sce.ls.LS <- filterSCE(sce.ls, cellType.final %in% LS_names)
-sce.ls.neuronal <- filterSCE(sce.ls, cellType.broad %in% neuronal_names)
+sce.ls.LS.Sept <- filterSCE(sce.ls, cellType.final %in% LSept_names)
+sce.ls.neuronal <- filterSCE(sce.ls, cellType.final %in% neuronal_names)
+sce.ls.neuronal.broad <- filterSCE(sce.ls, cellType.broad %in% neuronalbr_names)
 
 ###############################################################################
 
