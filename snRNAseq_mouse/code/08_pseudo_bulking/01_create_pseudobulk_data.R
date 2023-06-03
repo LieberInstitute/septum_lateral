@@ -145,12 +145,18 @@ sce_pseudo_neuronal.broad <- do_pseudobulk(sce.ls.neuronal.broad, "cellType.broa
 
 #################### Save both pseudobulking results to rda ###################
 
-save(sce_pseudo_LS, sce_pseudo_all, sce_pseudo_neuronal, file = here(
-    "snRNAseq_mouse",
-    "processed_data",
-    "SCE",
-    "sce_pseudobulking_LS_and_broad.rda"
-))
+save(sce_pseudo_all,
+    sce_pseudo_LS,
+    sce_pseudo_LS.Sept,
+    sce_pseudo_neuronal,
+    sce_pseudo_neuronal.broad,
+    file = here(
+        "snRNAseq_mouse",
+        "processed_data",
+        "SCE",
+        "sce_pseudobulking_LS_and_broad.rda"
+    )
+)
 
 ###############################################################################
 
