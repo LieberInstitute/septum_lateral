@@ -85,6 +85,15 @@ sce.ls.neuronal.broad <- filterSCE(sce.ls, cellType.broad %in% neuronalbr_names)
 
 ############################# pseudobulking for LS ############################
 
+## pseudobulking for broad cell type clusters
+sce_pseudo_all <- do_pseudobulk(sce.ls.filter, "cellType.broad")
+# 2023-05-16 11:49:46 make pseudobulk object
+# 2023-05-16 11:50:03 dropping 5 pseudo-bulked samples that are below 'min_ncells'.
+# 2023-05-16 11:50:03 drop lowly expressed genes
+# 2023-05-16 11:50:04 normalize expression
+# Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
+#   You're computing too large a percentage of total singular values, use a standard svd instead.
+
 ## pseudobulking across LS clusters
 sce_pseudo_LS <- do_pseudobulk(sce.ls.LS, "cellType.final")
 # 2023-05-16 11:47:54 make pseudobulk object
@@ -97,9 +106,20 @@ sce_pseudo_LS <- do_pseudobulk(sce.ls.LS, "cellType.final")
 # In check_numbers(k = k, nu = nu, nv = nv, limit = min(dim(x)) -  :
 #   more singular values/vectors requested than available
 
+## pseudobulking across LS and Sept clusters
+sce_pseudo_LS.Sept <- do_pseudobulk(sce.ls.LS.Sept, "cellType.final")
+# 2023-05-16 11:47:54 make pseudobulk object
+# 2023-05-16 11:47:56 dropping 6 pseudo-bulked samples that are below 'min_ncells'.
+# 2023-05-16 11:47:56 drop lowly expressed genes
+# 2023-05-16 11:47:57 normalize expression
+# Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
+#   You're computing too large a percentage of total singular values, use a standard svd instead.
+# Warning message:
+# In check_numbers(k = k, nu = nu, nv = nv, limit = min(dim(x)) -  :
+#   more singular values/vectors requested than available
 
-## pseudobulking for broad cell type clusters
-sce_pseudo_all <- do_pseudobulk(sce.ls.filter, "cellType.broad")
+## pseudobulking for neuronal clusters
+sce_pseudo_neuronal <- do_pseudobulk(sce.ls.neuronal, "cellType.final")
 # 2023-05-16 11:49:46 make pseudobulk object
 # 2023-05-16 11:50:03 dropping 5 pseudo-bulked samples that are below 'min_ncells'.
 # 2023-05-16 11:50:03 drop lowly expressed genes
@@ -107,9 +127,8 @@ sce_pseudo_all <- do_pseudobulk(sce.ls.filter, "cellType.broad")
 # Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
 #   You're computing too large a percentage of total singular values, use a standard svd instead.
 
-
 ## pseudobulking for neuronal broad clusters
-sce_pseudo_neuronal <- do_pseudobulk(sce.ls.neuronal, "cellType.broad")
+sce_pseudo_neuronal.broad <- do_pseudobulk(sce.ls.neuronal.broad, "cellType.broad")
 # 2023-05-16 11:53:41 make pseudobulk object
 # 2023-05-16 11:53:50 dropping 1 pseudo-bulked samples that are below 'min_ncells'.
 # 2023-05-16 11:53:50 drop lowly expressed genes
