@@ -50,13 +50,14 @@ cell_colors_all[names(cell_colors_all) %in% neuronal_names] <- "#e68f00"
 cell_colors_all[!names(cell_colors_all) %in% neuronal_names] <- "#006164"
 
 cell_colors_LS <- cell_colors.ls[grep("LS",names(cell_colors.ls))]
-cell_colors_LS[1:length(cell_colors_LS)] <- c("#FF7F0E","#FFBB78","#2CA02C","#98DF8A","#D62728", "#FF9896", "#9467BD", "#C5B0D5", "#8C564B")
+cell_colors_LS[1:length(cell_colors_LS)] <- c("#D62728","#FF9896","#9467BD","#C5B0D5","#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F")
 
+#ED665D”,  “#AD8BC9”
 cell_colors_LS.Sept <- cell_colors.ls[grep("LS|Sept",names(cell_colors.ls))]
-cell_colors_LS.Sept[1:length(cell_colors_LS.Sept)] <- c("#FF7F0E","#FFBB78","#2CA02C","#98DF8A","#D62728", "#FF9896", "#9467BD", "#C5B0D5", "#f6b5cf", "#7f8080", "#8C564B")
+cell_colors_LS.Sept[1:length(cell_colors_LS.Sept)] <- c("#D62728","#FF9896","#9467BD","#C5B0D5","#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#ED665D", "#AD8BC9","#7F7F7F")
 
 cell_colors_neur <- cell_colors.ls[grep("LS|Sept|MS|TT|TNoS",names(cell_colors.ls))]
-cell_colors_neur[1:length(cell_colors_neur)] <- c("#FF7F0E","#FFBB78","#2CA02C","#98DF8A","#D62728", "#FF9896", "#9467BD", "#C5B0D5", "#58B4E4", "#AEC7E6", "#f6b5cf", "#7f8080", "#8C564B", "#CC79A8", "#EFE642","#ffe6a7", "#3a0ca3")
+cell_colors_neur[1:length(cell_colors_neur)] <- c("#D62728","#FF9896","#9467BD","#C5B0D5","#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#BCBD22", "#DBDB8D", "#ED665D", "#AD8BC9","#7F7F7F", "#6DCCDA", "#999999", "#E69F00", "#56B4E9")
 
 ###############################################################################
 
