@@ -52,7 +52,6 @@ cell_colors_all[!names(cell_colors_all) %in% neuronal_names] <- "#006164"
 cell_colors_LS <- cell_colors.ls[grep("LS",names(cell_colors.ls))]
 cell_colors_LS[1:length(cell_colors_LS)] <- c("#D62728","#FF9896","#9467BD","#C5B0D5","#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F")
 
-#ED665D”,  “#AD8BC9”
 cell_colors_LS.Sept <- cell_colors.ls[grep("LS|Sept",names(cell_colors.ls))]
 cell_colors_LS.Sept[1:length(cell_colors_LS.Sept)] <- c("#D62728","#FF9896","#9467BD","#C5B0D5","#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#ED665D", "#AD8BC9","#7F7F7F")
 
