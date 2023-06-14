@@ -2,7 +2,7 @@ library("here")
 library("spatialLIBD")
 library("SingleCellExperiment")
 library("scater")
-library("jaffelab")
+#library("jaffelab")
 library("CATALYST")
 library("sessioninfo")
 
