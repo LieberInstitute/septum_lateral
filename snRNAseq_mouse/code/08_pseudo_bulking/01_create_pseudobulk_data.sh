@@ -23,7 +23,7 @@ module load conda_R
 module list
 
 ## Edit with your job command
-Rscript 01_create_pseudobulk_data
+Rscript 01_create_pseudobulk_data.R
 
 echo "**** Job ends ****"
 date
