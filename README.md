@@ -1,5 +1,7 @@
 # septum_lateral
 
+[![DOI](https://zenodo.org/badge/445640720.svg)](https://zenodo.org/badge/latestdoi/445640720)
+
 
 ## Internal
 
