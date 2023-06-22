@@ -25,7 +25,7 @@ sce.ls.small$Sample <- as.factor(sce.ls.small$Sample)
 sce.ls.small <- registerAppOptions(sce.ls.small, color.maxlevels = length(cell_cols.clean))
 iSEE(
     sce.ls.small,
-    appTitle = "mm_LS_2022",
+    appTitle = "snRNAseq_lateral_septum",
     initial = initial,
     colormap = ExperimentColorMap(colData = list(
         Sample = function(n) {
