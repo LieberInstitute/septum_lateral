@@ -104,6 +104,7 @@ save(
         "snRNAseq_mouse",
         "code",
         "03_iSEE_apps",
+        "snRNA-seq_app",
         "sce_for_iSEE_LS.rda"
     )
 )
