@@ -12,7 +12,7 @@ namely:
 We provide the following interactive websites, organized by dataset with
 software labeled by emojis:
 
--  snRNA-seq (n = 4)
+- snRNA-seq (n = 4)
   - 👀
     [snRNAseq_lateral_septum](https://libd.shinyapps.io/snRNAseq_lateral_septum/): main website for the snRNA-seq data from this study.
 
