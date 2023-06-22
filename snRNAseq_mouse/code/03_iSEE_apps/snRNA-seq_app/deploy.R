@@ -1,6 +1,6 @@
 library("rsconnect")
 
-source("token.R")
+# source("token.R")
 
 options(repos = BiocManager::repositories())
 rsconnect::deployApp(

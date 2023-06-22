@@ -9,7 +9,7 @@ stopifnot(all(unique(sce.ls.small$cellType.final) %in% names(cell_cols.clean)))
 
 ## Don't run this on app.R since we don't want to run this every single time
 # lobstr::obj_size(sce.ls.small)
-# 876.33 MB
+# 876.34 MB
 
 source("initial.R", print.eval = TRUE)
 
