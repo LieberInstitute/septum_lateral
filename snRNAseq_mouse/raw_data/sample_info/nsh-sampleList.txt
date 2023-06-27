@@ -1,0 +1,9 @@
+SampleID,Condition,Sex
+4_1,GFP,M
+10_2,GFP,M
+10_4,GFP,M
+11_4,GFP,M
+10_1,Cre,M
+11_1,Cre,M
+11_2,Cre,M
+13_2,Cre,M
