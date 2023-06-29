@@ -1,4 +1,7 @@
-# septum_lateral
+septum_lateral
+================
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![DOI](https://zenodo.org/badge/445640720.svg)](https://zenodo.org/badge/latestdoi/445640720)
 
@@ -14,9 +17,11 @@ software labeled by emojis:
 
 - snRNA-seq (n = 4)
   - 👀
-    [snRNAseq_lateral_septum](https://libd.shinyapps.io/snRNAseq_lateral_septum/): main website for the snRNA-seq data from this study.
+    [snRNAseq_lateral_septum](https://libd.shinyapps.io/snRNAseq_lateral_septum/):
+    main website for the snRNA-seq data from this study.
 
 ## Internal
 
-* JHPCE path: `/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse`
-* Files at `snRNAseq_mouse` are mostly organized following https://github.com/LieberInstitute/template_project.
+- JHPCE path: `/dcs04/lieber/marmaypag/pilotLS_LIBD1070/snRNAseq_mouse`
+- Files at `snRNAseq_mouse` are mostly organized following
+  <https://github.com/LieberInstitute/template_project>.
