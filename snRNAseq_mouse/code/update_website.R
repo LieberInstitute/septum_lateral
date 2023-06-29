@@ -12,5 +12,6 @@ with_dir(here(), {
 with_dir(
     here(), {
     system("cd ../septum_lateral_website")
+    system("pwd")
     system("git commit -am -'Updated website with snRNAseq_mouse/code/update_website.R'; git push origin gh-pages")
 })
