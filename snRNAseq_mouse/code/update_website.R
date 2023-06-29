@@ -1,12 +1,16 @@
 library("here")
 library("withr")
 
+## To clone septum_lateral_website we used:
+# git clone git@github.com:LieberInstitute/septum_lateral.git --branch gh-pages --single-branch septum_lateral_website
+
 with_dir(here(), {
     rmarkdown::render("README.Rmd", "html_document")
-    system("mv README.html ~/Dropbox/Code/spatialDLPFC_website/index.html")
+    system("mv README.html ../septum_lateral_website/index.html")
 })
 
 with_dir(
-    "~/Dropbox/Code/spatialDLPFC_website",
-    system("git ci -am -'Updated website with code/update_website.R'; git push origin gh-pages")
-)
+    here(), {
+    system("cd ../septum_lateral_website")
+    system("git ci -am -'Updated website with snRNAseq_mouse/code/update_website.R'; git push origin gh-pages")
+})
