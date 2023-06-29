@@ -13,6 +13,11 @@ TODO
 
 TODO
 
+<img src="http://research.libd.org/septum_lateral/img/study_overview.png" width="1000px" align="left" />
+
+**Figure title**. (**A**) Description about A. (**B**) Description about
+B.
+
 ## Interactive websites:
 
 All of these interactive websites are powered by open source software,
