@@ -50,7 +50,7 @@ software labeled by emojis:
     [snRNAseq_lateral_septum](https://libd.shinyapps.io/snRNAseq_lateral_septum/): main website for the snRNA-seq data from this study.
 - bulk RNA-seq (n = 8)
   - 👀
-    [TODO](https://libd.shinyapps.io/TODO/): similar to `snRNAseq_lateral_septum`, but for the bulk RNA-seq data.
+    [bulkseq_lateral_septum](https://libd.shinyapps.io/bulkseq_lateral_septum/): similar to `snRNAseq_lateral_septum`, but for the bulk RNA-seq data.
     
 ## Contact
 
