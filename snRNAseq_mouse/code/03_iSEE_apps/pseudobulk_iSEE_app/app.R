@@ -29,7 +29,7 @@ colData(rse_gene) <- cbind(
 
 rse_gene$Condition <- as.factor(rse_gene$Condition)
 
-#rse_gene <- registerAppOptions(rse_gene, color.maxlevels = length(cell_cols.clean))
+#rse_gene <- registerAppOptions(rse_gene, color.maxlevels = length(Sample_ID)
 iSEE(
     rse_gene,
     appTitle = "bulkRNA-seq_lateral_septum",
@@ -45,7 +45,7 @@ iSEE(
             return(cols)
         }#,
         # SampleID = function(n) {
-        #     return(cell_cols.clean)
+        #     return(Sample_ID)
         # }
     ))
 )

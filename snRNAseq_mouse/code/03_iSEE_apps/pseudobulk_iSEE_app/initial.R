@@ -4,7 +4,7 @@ initial <- list()
 # Settings for Row data table 1
 ################################################################################
 
-initial[["RowDataTable1"]] <- new("RowDataTable", Selected = "Ntrk2", Search = "", SearchColumns = c("",
+initial[["RowDataTable1"]] <- new("RowDataTable", Selected = "Gm37180", Search = "", SearchColumns = c("",
 "", "", "", "", "", ""), HiddenColumns = character(0), VersionInfo = list(
     iSEE = structure(list(c(2L, 12L, 0L)), class = c("package_version",
     "numeric_version"))), PanelId = c(RowDataTable = 1L), PanelHeight = 600L,
@@ -17,10 +17,10 @@ initial[["RowDataTable1"]] <- new("RowDataTable", Selected = "Ntrk2", Search = "
 # Settings for Feature assay plot 1
 ################################################################################
 
-initial[["FeatureAssayPlot1"]] <- new("FeatureAssayPlot", Assay = "counts", XAxis = "Column data",
+initial[["FeatureAssayPlot1"]] <- new("FeatureAssayPlot", Assay = "logcounts", XAxis = "Column data",
     XAxisColumnData = "Condition", XAxisFeatureName = "4933401J01Rik",
     XAxisFeatureSource = "---", XAxisFeatureDynamicSource = FALSE,
-    YAxisFeatureName = "Ntrk2", YAxisFeatureSource = "RowDataTable1",
+    YAxisFeatureName = "Gm37180", YAxisFeatureSource = "RowDataTable1",
     YAxisFeatureDynamicSource = TRUE, FacetRowByColData = "Sex",
     FacetColumnByColData = "Sex", ColorByColumnData = "SAMPLE_ID",
     ColorByFeatureNameAssay = "counts", ColorBySampleNameColor = "#FF0000",
