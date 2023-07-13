@@ -13,7 +13,7 @@ TODO
 
 TODO
 
-<img src="http://research.libd.org/septum_lateral/img/study_overview.png" width="1000px" align="left" />
+<!-- <img src="http://research.libd.org/septum_lateral/img/study_overview.png" width="1000px" align="left" /> -->
 
 **Figure title**. (**A**) Description about A. (**B**) Description about
 B.
