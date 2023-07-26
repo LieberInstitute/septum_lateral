@@ -35,7 +35,7 @@ iSEE(
     appTitle = "bulkRNA-seq_lateral_septum",
     initial = initial,
     colormap = ExperimentColorMap(colData = list(
-        Sample = function(n) {
+        Condition = function(n) {
             cols <- paletteer::paletteer_d(
                 palette = "RColorBrewer::Dark2",
                 n = length(unique(rse_gene$Condition))
@@ -43,9 +43,15 @@ iSEE(
             cols <- as.vector(cols)
             names(cols) <- levels(rse_gene$Condition)
             return(cols)
-        }#,
-        # SampleID = function(n) {
-        #     return(Sample_ID)
-        # }
+        },
+        SAMPLE_ID = function(n) {
+            cols <- paletteer::paletteer_d(
+                palette = "basetheme::royal",
+                n = length(unique(rse_gene$SAMPLE_ID))
+            )
+            cols <- as.vector(cols)
+            names(cols) <- levels(rse_gene$SAMPLE_ID)
+            return(cols)
+        }
     ))
 )
