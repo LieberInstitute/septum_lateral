@@ -10,25 +10,28 @@ septum_lateral
 Welcome to the septum_lateral project! These experiments generated
 several interactive websites for you to browse and download.
 
-In our previous work\[LINK old manuscript\], we demonstrated that
-expression of tropomyosin kinase receptor B (TrkB) in LS neurons is
-required for social novelty recognition. To better understand how TrkB
-signaling may control social behavior, we locally knocked down TrkB in
-the LS and used bulk RNA-sequencing to identify changes in gene
-expression between 4 mice with TrkB knockdown in the LS (cre) and 4
-control mice with viral expression of GFP (GFP). Additionally, we
-generated molecular profiles for LS cell types using single nucleus
-RNA-sequencing (snRNA-seq) on N = 4 samples (generated from n=4 males,
-n=4 females, each sample contained pooled LS dissections of 2 mice of
-the same sex). Once these datasets were generated, our final goal was to
-intersect them to identify whether DEGs identified from the TrkB
-knockdown bulk RNA-seq data are enriched in the cell types identified
-using our snRNA-seq data.
+In our previous work,
+[www.nature.com/articles/s41386-022-01487-y](https://www.nature.com/articles/s41386-022-01487-y),
+we demonstrated that expression of tropomyosin kinase receptor B (TrkB)
+in LS neurons is required for social novelty recognition. To better
+understand how TrkB signaling may control social behavior, we locally
+knocked down TrkB in the LS and used bulk RNA-sequencing to identify
+changes in gene expression between 4 mice with TrkB knockdown in the LS
+(cre) and 4 control mice with viral expression of GFP (GFP).
+Additionally, we generated molecular profiles for LS cell types using
+single nucleus RNA-sequencing (snRNA-seq) on N = 4 samples (generated
+from n=4 males, n=4 females, each sample contained pooled LS dissections
+of 2 mice of the same sex). Once these datasets were generated, our
+final goal was to intersect them to identify whether DEGs identified
+from the TrkB knockdown bulk RNA-seq data are enriched in the cell types
+identified using our snRNA-seq data.
 
 For more detailed information about study design and experimental
-results, please refer to our manuscript \[LINK MANUSCRIPT\]. This work
-was performed by Keri Martinowich, Stephanie Cerceo Page, and Leonardo
-Collado-Torres teams at the Lieber Institute for Brain Development.
+results, please refer to our manuscript
+[www.biorxiv.org/content/10.1101/2023.06.29.547069v2](https://www.biorxiv.org/content/10.1101/2023.06.29.547069v2).
+This work was performed by Keri Martinowich, Stephanie Cerceo Page, and
+Leonardo Collado-Torres teams at the Lieber Institute for Brain
+Development.
 
 This project involves the GitHub repository
 [github.com/LieberInstitute/septum_lateral](https://github.com/LieberInstitute/septum_lateral)
