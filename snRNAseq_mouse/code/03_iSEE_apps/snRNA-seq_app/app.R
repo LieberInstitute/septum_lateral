@@ -3,13 +3,14 @@ library("iSEE")
 library("shiny")
 library("paletteer")
 
+
 load("sce_for_iSEE_LS.rda", verbose = TRUE)
 
 stopifnot(all(unique(sce.ls.small$cellType.final) %in% names(cell_cols.clean)))
 
 ## Don't run this on app.R since we don't want to run this every single time
 # lobstr::obj_size(sce.ls.small)
-# 876.34 MB
+# 876.42 MB
 
 source("initial.R", print.eval = TRUE)
 
@@ -23,6 +24,7 @@ colData(sce.ls.small) <- cbind(
 sce.ls.small$Sample <- as.factor(sce.ls.small$Sample)
 
 sce.ls.small <- registerAppOptions(sce.ls.small, color.maxlevels = length(cell_cols.clean))
+
 iSEE(
     sce.ls.small,
     appTitle = "snRNAseq_lateral_septum",
